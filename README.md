@@ -1,4 +1,4 @@
-# hello-world
+# SCOREBASE Display Screens
 
 ## Project setup
 ```

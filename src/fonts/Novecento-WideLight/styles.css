@@ -1,0 +1,8 @@
+
+@font-face {
+  font-family: 'Novecento-WideLight';
+  src: url('Novecento-WideLight.eot?#iefix') format('embedded-opentype'),  url('Novecento-WideLight.otf')  format('opentype'),
+	     url('Novecento-WideLight.woff') format('woff'), url('Novecento-WideLight.ttf')  format('truetype'), url('Novecento-WideLight.svg#Novecento-WideLight') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
