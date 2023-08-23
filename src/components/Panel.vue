@@ -315,8 +315,6 @@ export default {
           ) {
             this.latestTimestamp = this.latestScore.LastUpdatedTimestamp;
             this.latestExercise = await this.getLatestExerciseFromLatestScore();
-            console.log(this.latestScore);
-            console.log(this.latestExercise);
             this.showLatestScore = true;
             setTimeout(() => (this.showLatestScore = false), 4000);
           }
