@@ -265,7 +265,11 @@ export default {
       await this.fetchExerciseNumbers();
       await this.fetchRounds();
       if (this.isValueNullOrEmpty(this.latestRound) && this.rounds.length > 0) {
-        this.latestRound = this.exerciseNumbers.slice(-1)[0].RoundName;
+        if (this.exerciseNumbers.length > 0) {
+          this.latestRound = this.exerciseNumbers.slice(-1)[0].RoundName;
+        } else {
+          this.latestRound = this.rounds[0].RoundName;
+        }
       }
       this.exercisesInLatestRound = this.rounds.filter(
         (item) => item.RoundName === this.latestRound
