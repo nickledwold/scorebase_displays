@@ -1,10 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Panel from "./components/Panel.vue";
 import RankedScores from "./components/RankedScores.vue";
+import Home from "./components/Home.vue";
 
 const routerInstance = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/",
+      component: Home,
+      name: "Home",
+      meta: { title: "Home page" },
+    },
     {
       path: "/panel/:panelNumber",
       component: Panel,

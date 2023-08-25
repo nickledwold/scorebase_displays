@@ -12,7 +12,7 @@
       </div>
 
       <transition-group name="fade">
-        <div v-if="categories.length === 0" class="splash"></div>
+        <div v-if="categories.length == 0" class="splash"></div>
         <div v-else>
           <table class="banner">
             <tr>
@@ -58,7 +58,7 @@
                   colspan="2"
                 >
                   {{
-                    this.currentCategory.Discipline === "TRS"
+                    this.currentCategory.Discipline == "TRS"
                       ? "Competitors"
                       : "Competitor"
                   }}
@@ -85,7 +85,7 @@
                   "
                 >
                   {{
-                    this.currentCategory.CompType === 1
+                    this.currentCategory.CompType == 1
                       ? "Total"
                       : this.exercisesInLatestRound > 1
                       ? this.latestRound + " Total"
@@ -95,31 +95,27 @@
               </tr>
               <template
                 v-for="competitor in this.competitors"
-                :key="competitor.CompetitorId"
+                :key="competitor"
               >
                 <transition-group name="list" tag="tbody" mode="out-in">
-                  <tr class="scores-row" :key="competitor.CompetitorId">
+                  <tr class="scores-row" :key="competitor">
                     <td rowspan="2" class="scores-pos-0">
                       {{
                         isValueNullOrEmpty(competitor.ZeroRank)
                           ? "-"
-                          : this.currentCategory.CompType === 0
+                          : this.currentCategory.CompType == 0
                           ? competitor.DisplayZeroRank
                           : competitor.DisplayCumulativeRank
                       }}
                     </td>
-                    <td
-                      rowspan="2"
-                      class="scores-flag"
-                      :key="competitor.CompetitorId"
-                    >
+                    <td rowspan="2" class="scores-flag">
                       <img
                         :src="getFlagImageSource(competitor.Nation)"
                         width="40"
                       />
                     </td>
                     <td
-                      v-if="currentCategory.Discipline === 'TRS'"
+                      v-if="currentCategory.Discipline == 'TRS'"
                       class="scores-name"
                     >
                       {{ competitor.Surname1.toUpperCase() }},
@@ -257,7 +253,7 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      if (this.categories.length === 0) return;
+      if (this.categories.length == 0) return;
       if (this.categoryIndex >= this.categories.length) {
         this.categoryIndex = 0;
       }
@@ -272,25 +268,25 @@ export default {
         }
       }
       this.exercisesInLatestRound = this.rounds.filter(
-        (item) => item.RoundName === this.latestRound
+        (item) => item.RoundName == this.latestRound
       )[0].NumberOfExercises;
 
       let tempRound = this.latestRound;
-      if (this.latestRound.charAt(0).toUpperCase() === "Q") {
-        if (this.countRoundsStartingWithLetter("Q") === 1) {
+      if (this.latestRound.charAt(0).toUpperCase() == "Q") {
+        if (this.countRoundsStartingWithLetter("Q") == 1) {
           tempRound = tempRound.slice(0, -1);
         }
         this.currentRound = tempRound.replace("Q", "Qualification ");
       }
-      if (this.latestRound.charAt(0).toUpperCase() === "F") {
-        if (this.countRoundsStartingWithLetter("F") === 1) {
+      if (this.latestRound.charAt(0).toUpperCase() == "F") {
+        if (this.countRoundsStartingWithLetter("F") == 1) {
           tempRound = tempRound.slice(0, -1);
         }
         this.currentRound = tempRound.replace("F", "Final ");
       }
       this.getExercisesForLatestRound();
       await this.fetchCompetitors();
-      if (this.competitorsWithRanks.length === 0) {
+      if (this.competitorsWithRanks.length == 0) {
         await this.fetchQualifyingStartList();
         this.noScores = true;
       } else {
@@ -313,7 +309,7 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      if (this.exerciseNumbers.length === 0) return;
+      if (this.exerciseNumbers.length == 0) return;
       this.latestRound =
         this.exerciseNumbers[this.exerciseNumbers.length - 1].RoundName;
     },
@@ -330,6 +326,7 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+      tempData = tempData.filter((item) => item.RoundName == this.latestRound);
       return tempData;
     },
     async populateCompetitorExercises() {
@@ -381,18 +378,18 @@ export default {
         });
     },
     getImageSource(discipline) {
-      if (discipline === undefined) discipline = "TRA";
+      if (discipline == undefined) discipline = "TRA";
       return require(`@/assets/${discipline}.png`);
     },
     isValueNullOrEmpty(value) {
-      return value === null || value === "" || value === undefined;
+      return value == null || value == "" || value == undefined;
     },
     countRoundsStartingWithLetter(letter) {
       let count = 0;
-      if (this.rounds === undefined) return count;
+      if (this.rounds == undefined) return count;
       for (let i = 0; i < this.rounds.length; i++) {
         if (
-          this.rounds[i].RoundName.charAt(0).toUpperCase() ===
+          this.rounds[i].RoundName.charAt(0).toUpperCase() ==
           letter.toUpperCase()
         ) {
           count++;
@@ -401,15 +398,15 @@ export default {
       return count;
     },
     getExercisesForLatestRound() {
-      if (this.exerciseNumbers === undefined) return [];
+      if (this.exerciseNumbers == undefined) return [];
       let newArray = this.exerciseNumbers.filter(
-        (item) => item.RoundName === this.latestRound
+        (item) => item.RoundName == this.latestRound
       );
       if (!this.compareArrays(newArray, this.roundExercises))
         this.roundExercises = newArray;
     },
     getFlagImageSource(countryCode) {
-      if (countryCode === undefined) countryCode = "GBR";
+      if (countryCode == undefined) countryCode = "GBR";
       return require(`@/assets/${countryCode}.png`);
     },
     formattedNumber(numberAsString, decimalPlaces) {
@@ -417,7 +414,7 @@ export default {
       return parsedNumber.toFixed(decimalPlaces);
     },
     compareArrays(array1, array2) {
-      return JSON.stringify(array1) === JSON.stringify(array2);
+      return JSON.stringify(array1) == JSON.stringify(array2);
     },
   },
 };
@@ -469,22 +466,20 @@ export default {
   opacity: 0;
 }
 
-/* 1. declare transition */
-.list-move,
+.list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.5s ease;
 }
 
-/* 2. declare enter from and leave to state */
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: scaleY(0.01) translate(30px, 0);
+  transform: translateX(30px);
 }
 
-/* 3. ensure leaving items are taken out of layout flow so that moving
-      animations can be calculated correctly. */
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
 .list-leave-active {
   position: absolute;
 }
