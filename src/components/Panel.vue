@@ -208,7 +208,16 @@
           <table class="ranktable">
             <tr>
               <td class="ranktable_header">Rank</td>
-              <td class="ranktable_number">
+              <td
+                v-if="
+                  this.latestCategory.CompType === 0 &&
+                  this.latestScore.F1Total > 0
+                "
+                class="ranktable_number"
+              >
+                {{ this.latestScore.DisplayZeroRank }}
+              </td>
+              <td v-else class="ranktable_number">
                 {{ this.latestScore.DisplayCumulativeRank }}
               </td>
             </tr>
@@ -249,6 +258,7 @@ export default {
       latestScore: {},
       categoryRoundExercise: {},
       latestExercise: {},
+      latestCategory: {},
       showLatestScore: false,
       latestTimestamp: new Date(),
     };
@@ -298,6 +308,19 @@ export default {
           console.error("Error:", error);
         });
     },
+    async fetchCategory() {
+      await fetch(
+        "http://localhost:3000/api/categories?catId=" + this.latestScore.CatId
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.latestCategory = data[0];
+          console.log(this.latestCategory);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
     async fetchLatestScores() {
       await fetch(
         "http://localhost:3000/api/latestScore?panelNumber=" + this.panelNumber
@@ -315,8 +338,9 @@ export default {
           ) {
             this.latestTimestamp = this.latestScore.LastUpdatedTimestamp;
             this.latestExercise = await this.getLatestExerciseFromLatestScore();
+            await this.fetchCategory();
             this.showLatestScore = true;
-            setTimeout(() => (this.showLatestScore = false), 4000);
+            setTimeout(() => (this.showLatestScore = false), 6000);
           }
         })
         .catch((error) => {

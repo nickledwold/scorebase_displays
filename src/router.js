@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Panel from "./components/Panel.vue";
+import RankedScores from "./components/RankedScores.vue";
 
 const routerInstance = createRouter({
   history: createWebHistory(),
@@ -9,6 +10,12 @@ const routerInstance = createRouter({
       component: Panel,
       name: "Panel",
       meta: { title: "Panel Display" },
+    },
+    {
+      path: "/ranked",
+      component: RankedScores,
+      name: "Ranked",
+      meta: { title: "Ranked Display" },
     },
   ],
 });
