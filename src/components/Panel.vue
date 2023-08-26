@@ -283,16 +283,31 @@ export default {
     }, 1000);
   },
   methods: {
-    updateTime() {
-      var currentDate = new Date();
-      var hours = currentDate.getHours().toString().padStart(2, "0");
-      var minutes = currentDate.getMinutes().toString().padStart(2, "0");
-      var currentTime = hours + ":" + minutes;
-      this.currentTime = currentTime;
+    async updateTime() {
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/serverClock"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.time);
+          this.currentTime = data.time;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
     fetchPanelStatus() {
       fetch(
-        "http://localhost:3000/api/panelStatus?panelNumber=" + this.panelNumber
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/panelStatus?panelNumber=" +
+          this.panelNumber
       )
         .then((response) => response.json())
         .then((data) => {
@@ -304,7 +319,11 @@ export default {
     },
     async fetchCategoryRoundExercise(catId, currentExercise) {
       await fetch(
-        "http://localhost:3000/api/categoryRoundExercises?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categoryRoundExercises?catId=" +
           catId +
           "&exerciseNumber=" +
           currentExercise
@@ -319,7 +338,12 @@ export default {
     },
     async fetchCategory() {
       await fetch(
-        "http://localhost:3000/api/categories?catId=" + this.latestScore.CatId
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categories?catId=" +
+          this.latestScore.CatId
       )
         .then((response) => response.json())
         .then((data) => {
@@ -332,7 +356,12 @@ export default {
     },
     async fetchLatestScores() {
       await fetch(
-        "http://localhost:3000/api/latestScore?panelNumber=" + this.panelNumber
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/latestScore?panelNumber=" +
+          this.panelNumber
       )
         .then((response) => response.json())
         .then(async (data) => {

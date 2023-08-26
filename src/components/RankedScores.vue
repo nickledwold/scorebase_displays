@@ -239,15 +239,31 @@ export default {
     }, 2000);
   },
   methods: {
-    updateTime() {
-      var currentDate = new Date();
-      var hours = currentDate.getHours().toString().padStart(2, "0");
-      var minutes = currentDate.getMinutes().toString().padStart(2, "0");
-      var currentTime = hours + ":" + minutes;
-      this.currentTime = currentTime;
+    async updateTime() {
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/serverClock"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.time);
+          this.currentTime = data.time;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
     async fetchDisplayCategories() {
-      await fetch("http://localhost:3000/api/displayCategories")
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/displayCategories"
+      )
         .then((response) => response.json())
         .then((data) => {
           this.categories = data;
@@ -301,7 +317,11 @@ export default {
     },
     async fetchExerciseNumbers() {
       await fetch(
-        "http://localhost:3000/api/exerciseNumbers?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/exerciseNumbers?catId=" +
           this.currentCategory.CatId
       )
         .then((response) => response.json())
@@ -318,7 +338,11 @@ export default {
     async fetchCompetitorExercises(competitorId) {
       let tempData;
       await fetch(
-        "http://localhost:3000/api/competitorRoundTotal?competitorId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/competitorRoundTotal?competitorId=" +
           competitorId
       )
         .then((response) => response.json())
@@ -341,7 +365,11 @@ export default {
     },
     async fetchCompetitors() {
       await fetch(
-        "http://localhost:3000/api/competitorRanks?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/competitorRanks?catId=" +
           this.currentCategory.CatId +
           "&compType=" +
           this.currentCategory.CompType
@@ -356,7 +384,11 @@ export default {
     },
     async fetchQualifyingStartList() {
       await fetch(
-        "http://localhost:3000/api/qualifyingStartList?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/qualifyingStartList?catId=" +
           this.currentCategory.CatId
       )
         .then((response) => response.json())
@@ -369,7 +401,12 @@ export default {
     },
     async fetchRounds() {
       await fetch(
-        "http://localhost:3000/api/rounds?catId=" + this.currentCategory.CatId
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/rounds?catId=" +
+          this.currentCategory.CatId
       )
         .then((response) => response.json())
         .then((data) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="cis-bodydiv">
-    <div class="cis-time">12:34</div>
+    <div class="cis-time">{{ currentTime }}</div>
 
     <div class="cis-logosb">
       <img src="../assets/scorebase.png" height="25" />
@@ -380,7 +380,13 @@ export default {
   },
   methods: {
     async fetchPanelData() {
-      await fetch("http://localhost:3000/api/panelStatus")
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/panelStatus"
+      )
         .then((response) => response.json())
         .then((data) => {
           this.tempPanelStatuses = data;
@@ -407,7 +413,14 @@ export default {
     },
     async fetchCategory(catId) {
       let tempData;
-      await fetch("http://localhost:3000/api/categories?catId=" + catId)
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categories?catId=" +
+          catId
+      )
         .then((response) => response.json())
         .then((data) => {
           tempData = data[0];
@@ -455,7 +468,11 @@ export default {
     },
     async fetchCategoryRoundExercise(catId, currentExercise) {
       await fetch(
-        "http://localhost:3000/api/categoryRoundExercises?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categoryRoundExercises?catId=" +
           catId +
           "&exerciseNumber=" +
           currentExercise
@@ -471,7 +488,12 @@ export default {
     async fetchLatestScoreForPanel(panelNumber) {
       let tempData;
       await fetch(
-        "http://localhost:3000/api/latestScore?panelNumber=" + panelNumber
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/latestScore?panelNumber=" +
+          panelNumber
       )
         .then((response) => response.json())
         .then((data) => {
@@ -482,12 +504,22 @@ export default {
         });
       return tempData;
     },
-    updateTime() {
-      var currentDate = new Date();
-      var hours = currentDate.getHours().toString().padStart(2, "0");
-      var minutes = currentDate.getMinutes().toString().padStart(2, "0");
-      var currentTime = hours + ":" + minutes;
-      this.currentTime = currentTime;
+    async updateTime() {
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/serverClock"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.time);
+          this.currentTime = data.time;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
     getImageSource(discipline) {
       if (this.isValueNullOrEmpty(discipline)) discipline = "TRA";

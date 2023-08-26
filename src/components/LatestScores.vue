@@ -320,12 +320,16 @@ export default {
           console.error("Error:", error);
         });
     },
-    updateTime() {
-      var currentDate = new Date();
-      var hours = currentDate.getHours().toString().padStart(2, "0");
-      var minutes = currentDate.getMinutes().toString().padStart(2, "0");
-      var currentTime = hours + ":" + minutes;
-      this.currentTime = currentTime;
+    async updateTime() {
+      await fetch("http://localhost:3000/api/serverClock")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.time);
+          this.currentTime = data.time;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
     getImageSource(discipline) {
       if (discipline == undefined) discipline = "TRA";

@@ -1,9 +1,11 @@
 <template>
-  <html>
-    <body class="w3-light-grey">
+  <div class="online-html-class">
+    <div class="w3-light-grey">
       <div class="w3-content">
         <header style="padding-top: 20px" class="w3-container w3-center">
-          <a href="index.html"><img src="img/logo.png" width="250px" /></a>
+          <a class="online-a" href="index.html"
+            ><img src="img/logo.png" width="250px"
+          /></a>
         </header>
       </div>
       <div class="eventlogo">
@@ -25,10 +27,10 @@
       <div class="w0-container" style="max-width: 800px">
         <div class="tabs">
           <ul class="tab-links">
-            <li class="active"><a href="#TRA">TRA</a></li>
-            <li><a href="#TRS">TRS</a></li>
-            <li><a href="#DMT">DMT</a></li>
-            <li><a href="#TUM">TUM</a></li>
+            <li class="active"><a class="online-a" href="#TRA">TRA</a></li>
+            <li><a class="online-a" href="#TRS">TRS</a></li>
+            <li><a class="online-a" href="#DMT">DMT</a></li>
+            <li><a class="online-a" href="#TUM">TUM</a></li>
           </ul>
 
           <div class="tab-content">
@@ -36,7 +38,7 @@
               <div class="disciplinetitle">Individual Trampoline</div>
               <hr class="discipline" />
               <div v-for="category in traCategories" :key="category.CatId">
-                <a :href="`/online/${category.CatId}`">{{
+                <a class="online-a" :href="`/online/${category.CatId}`">{{
                   category.Category
                 }}</a
                 ><br />
@@ -47,7 +49,7 @@
               <div class="disciplinetitle">Synchronised Trampoline</div>
               <hr class="discipline" />
               <div v-for="category in trsCategories" :key="category.CatId">
-                <a :href="`/online/${category.CatId}`">{{
+                <a class="online-a" :href="`/online/${category.CatId}`">{{
                   category.Category
                 }}</a
                 ><br />
@@ -58,7 +60,7 @@
               <div class="disciplinetitle">Double Mini-Trampoline</div>
               <hr class="discipline" />
               <div v-for="category in dmtCategories" :key="category.CatId">
-                <a :href="`/online/${category.CatId}`">{{
+                <a class="online-a" :href="`/online/${category.CatId}`">{{
                   category.Category
                 }}</a
                 ><br />
@@ -69,7 +71,7 @@
               <div class="disciplinetitle">Tumbling</div>
               <hr class="discipline" />
               <div v-for="category in tumCategories" :key="category.CatId">
-                <a :href="`/online/${category.CatId}`">{{
+                <a class="online-a" :href="`/online/${category.CatId}`">{{
                   category.Category
                 }}</a
                 ><br />
@@ -80,8 +82,8 @@
       </div>
 
       <div class="footer">+ SCOREBASE {{ currentYear }}</div>
-    </body>
-  </html>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -120,7 +122,9 @@ export default {
   },
   methods: {
     async fetchCategories() {
-      await fetch("http://localhost:3000/api/categories")
+      await fetch(
+        "http://" + process.env.API_IP_ADDRESS + ":3000/api/categories"
+      )
         .then((response) => response.json())
         .then((data) => {
           this.categories = data;
@@ -134,5 +138,5 @@ export default {
 </script>
 
 <style scoped>
-/*@import "../stylesheets/results.style.css";*/
+@import "../stylesheets/results.style.css";
 </style>

@@ -69,11 +69,8 @@
 	unicode-range: U+0030-0039;
 	}
 
-b {
-  font-family: Gotham Book;
-}
 
-html {
+.online-html-class {
 box-sizing:border-box;
 -ms-text-size-adjust:100%;
 -webkit-text-size-adjust:100%;
@@ -83,12 +80,12 @@ overflow-x:hidden;
 	font-family:Encode Light;
 }
 
-a {
+.online-a {
 	color: #363636;
 	text-decoration: none;
 } 
 
-a:hover {
+.online-a:hover {
 	color: #878787;
 
 }
@@ -97,49 +94,28 @@ a:hover {
 box-sizing:inherit;
 }
 
-body {
+.online-body {
 margin:0;
 	background-color: #ffffff;
 	color: #000000;
 	font-family: Encode Light;
 }
 
-progress {
+.online-progress {
 vertical-align:baseline;
 }
 
-audio:not([controls]) {
-display:none;
-height:0;
-}
 
-a {
+.online-a {
 background-color:transparent;
 -webkit-text-decoration-skip:objects;
 color:inherit;
 }
 
-a:active,a:hover {
+.online-a:active,.online-a:hover {
 outline-width:0;
 }
-
-abbr[title] {
-border-bottom:none;
-text-decoration:underline dotted;
-}
-
-dfn {
-font-style:italic;
-}
-
-mark {
-background:#ff0;
-color:#ffffff;
-}
-
-small {
-font-size:80%;
-}
+/*
 
 sub,sup {
 font-size:75%;
@@ -1760,16 +1736,13 @@ max-width:100%;
 }
 }
 
-/*----- Tabs -----*/
 .tabs {
 	width:100%;
-	float:none; /*to make sure there is no active float*/
+	float:none; 
     display: inline-block;
 	font: Gotham Bold, sans-serif;
 }
 
-/*----- Tab Links -----*/
-/* Clearfix */
 	.tab-links:after {
 	display:inline-block;
 	clear:both;
@@ -1780,7 +1753,7 @@ max-width:100%;
 .tab-links li {
 	margin:0px 2px 0px 0px;
 	list-style:none;
-	float:none; /*to make sure there is no active float*/
+	float:none; 
     display: inline-block;
 	font-family: Gotham Bold, sans-serif;
 }
@@ -1808,7 +1781,6 @@ li.active a, li.active a:hover {
 	font-family: Encode Bold, sans-serif;
 }
 
-/*----- Content of Tabs -----*/
 .tab-content {
 	padding:0px 20px;
 	border: 1px solid rgb(152, 152, 152);
@@ -1866,4 +1838,4 @@ hr.discipline {
 	padding-top:12px;
 	text-align: center;
 	vertical-align: middle;
-}
+}*/
