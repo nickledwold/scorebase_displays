@@ -13,7 +13,11 @@
         v-for="panelStatus in this.panelStatuses"
         :key="panelStatus.PanelNo"
       >
-        <div v-if="panelStatus.latestExercise">
+        <div
+          v-if="
+            panelStatus.latestExercise && panelStatus.latestExercise.Exercise
+          "
+        >
           <transition name="slideup" mode="out-in">
             <div
               class="latest-categoryname"
@@ -237,6 +241,7 @@ export default {
         );
       }
       this.panelStatuses = this.tempPanelStatuses;
+      console.log(this.panelStatuses);
     },
     async fetchCategory(catId) {
       let tempData;

@@ -13,7 +13,13 @@
         v-for="panelStatus in this.panelStatuses"
         :key="panelStatus.PanelNo"
       >
-        <div v-if="panelStatus.latestScore && panelStatus.latestExercise">
+        <div
+          v-if="
+            panelStatus.latestScore &&
+            panelStatus.latestExercise &&
+            panelStatus.latestExercise.Exercise
+          "
+        >
           <table class="cis-panel-table">
             <tr>
               <transition name="slideup" mode="out-in">
@@ -181,7 +187,9 @@
         <div v-else>
           <table class="cis-panel-table">
             <tr>
-              <td class="cis-panel"></td>
+              <td class="cis-panel">
+                <img :src="getImageSource('TRA')" width="55" />
+              </td>
               <td class="cis-categoryname">Panel {{ panelStatus.PanelNo }}</td>
               <td class="cis-exerciseno">Scores Coming Soon</td>
             </tr>
@@ -482,7 +490,7 @@ export default {
       this.currentTime = currentTime;
     },
     getImageSource(discipline) {
-      if (discipline == undefined) discipline = "TRA";
+      if (this.isValueNullOrEmpty(discipline)) discipline = "TRA";
       console.log(discipline);
       return require(`@/assets/${discipline}.png`);
     },
