@@ -5,6 +5,8 @@
     <ul class="custom-list">
       <li>/panel/{panelNumber}</li>
       <li>/ranked</li>
+      <li>/latest</li>
+      <li>/cis</li>
     </ul>
   </div>
 </template>

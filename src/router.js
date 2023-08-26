@@ -3,6 +3,8 @@ import Panel from "./components/Panel.vue";
 import RankedScores from "./components/RankedScores.vue";
 import LatestScores from "./components/LatestScores.vue";
 import CommentaryInformationSystem from "./components/CommentaryInformationSystem.vue";
+import OnlineResults from "./components/OnlineResults.vue";
+import OnlineCategories from "./components/OnlineCategories.vue";
 import Home from "./components/Home.vue";
 
 const routerInstance = createRouter({
@@ -37,6 +39,18 @@ const routerInstance = createRouter({
       component: CommentaryInformationSystem,
       name: "CommentaryInformationSystem",
       meta: { title: "Commentary Information System Display" },
+    },
+    {
+      path: "/online",
+      component: OnlineCategories,
+      name: "OnlineScoringCategories",
+      meta: { title: "Online Scoring Categories Display" },
+    },
+    {
+      path: "/online/:catId",
+      component: OnlineResults,
+      name: "OnlineScoringResults",
+      meta: { title: "Online Scoring Results Display" },
     },
   ],
 });
