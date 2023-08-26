@@ -4,19 +4,19 @@
       <source src="../assets/rankvideo.mp4" type="video/mp4" />
     </video>
     <div id="displayrank" class="overlay">
-      <div class="time">
+      <div class="ranked-time">
         {{ currentTime }}
       </div>
-      <div class="logos">
+      <div class="ranked-logos">
         <img src="../assets/bg.png" height="50" />
       </div>
 
       <transition-group name="fade">
-        <div v-if="categories.length == 0" class="splash"></div>
+        <div v-if="categories.length == 0" class="ranked-splash"></div>
         <div v-else>
-          <table class="banner">
+          <table class="ranked-banner">
             <tr>
-              <td class="comp-group-icon">
+              <td class="ranked-comp-group-icon">
                 <transition name="fade" mode="out-in">
                   <img
                     :src="disciplineImageSource"
@@ -26,20 +26,20 @@
                 </transition>
               </td>
               <transition name="slideup" mode="out-in">
-                <td class="comp-group" :key="categoryTransitionKey">
+                <td class="ranked-comp-group" :key="categoryTransitionKey">
                   {{ this.currentCategory.Category }}
                 </td>
               </transition>
             </tr>
           </table>
-          <div class="round">
+          <div class="ranked-round">
             <transition name="slideup" mode="out-in">
               <td :key="roundTransitionKey">{{ currentRound }}</td>
             </transition>
           </div>
           <transition name="slideright" mode="out-in">
-            <table class="scores-table" :key="tableTransitionKey">
-              <tr class="header-row">
+            <table class="ranked-scores-table" :key="tableTransitionKey">
+              <tr class="ranked-header-row">
                 <th
                   style="
                     text-align: center;
@@ -88,8 +88,8 @@
                     this.currentCategory.CompType == 1
                       ? "Total"
                       : this.exercisesInLatestRound > 1
-                      ? this.latestRound + " Total"
-                      : this.latestRound
+                      ? this.rankedRound + " Total"
+                      : this.rankedRound
                   }}
                 </th>
               </tr>
@@ -98,8 +98,8 @@
                 :key="competitor"
               >
                 <transition-group name="list" tag="tbody" mode="out-in">
-                  <tr class="scores-row" :key="competitor">
-                    <td rowspan="2" class="scores-pos-0">
+                  <tr class="ranked-scores-row" :key="competitor">
+                    <td rowspan="2" class="ranked-scores-pos-0">
                       {{
                         isValueNullOrEmpty(competitor.ZeroRank)
                           ? "-"
@@ -108,7 +108,7 @@
                           : competitor.DisplayCumulativeRank
                       }}
                     </td>
-                    <td rowspan="2" class="scores-flag">
+                    <td rowspan="2" class="ranked-scores-flag">
                       <img
                         :src="getFlagImageSource(competitor.Nation)"
                         width="40"
@@ -116,12 +116,12 @@
                     </td>
                     <td
                       v-if="currentCategory.Discipline == 'TRS'"
-                      class="scores-name"
+                      class="ranked-scores-name"
                     >
                       {{ competitor.Surname1.toUpperCase() }},
                       {{ competitor.Surname2.toUpperCase() }}
                     </td>
-                    <td v-else class="scores-name">
+                    <td v-else class="ranked-scores-name">
                       {{ competitor.Surname1.toUpperCase() }}
                       {{ competitor.FirstName1 }}
                     </td>
@@ -131,7 +131,7 @@
                     >
                       <td
                         v-if="this.exercisesInLatestRound > 1"
-                        class="scores-tri-set-Tot"
+                        class="ranked-scores-tri-set-Tot"
                         rowspan="2"
                       >
                         <b>{{
@@ -149,7 +149,7 @@
                     </template>
                     <td
                       v-show="!noScores"
-                      class="scores-tri-fin-Totb"
+                      class="ranked-scores-tri-fin-Totb"
                       rowspan="2"
                     >
                       <b>{{
@@ -163,11 +163,13 @@
                     </td>
                   </tr>
 
-                  <tr class="scores-row">
-                    <td class="scores-club">{{ competitor.DisplayClub }}</td>
+                  <tr class="ranked-scores-row">
+                    <td class="ranked-scores-club">
+                      {{ competitor.DisplayClub }}
+                    </td>
                   </tr>
 
-                  <tr class="space-row"></tr>
+                  <tr class="ranked-space-row"></tr>
                 </transition-group>
               </template>
             </table>
@@ -260,25 +262,25 @@ export default {
       this.currentCategory = this.categories[this.categoryIndex];
       await this.fetchExerciseNumbers();
       await this.fetchRounds();
-      if (this.isValueNullOrEmpty(this.latestRound) && this.rounds.length > 0) {
+      if (this.isValueNullOrEmpty(this.rankedRound) && this.rounds.length > 0) {
         if (this.exerciseNumbers.length > 0) {
-          this.latestRound = this.exerciseNumbers.slice(-1)[0].RoundName;
+          this.rankedRound = this.exerciseNumbers.slice(-1)[0].RoundName;
         } else {
-          this.latestRound = this.rounds[0].RoundName;
+          this.rankedRound = this.rounds[0].RoundName;
         }
       }
       this.exercisesInLatestRound = this.rounds.filter(
-        (item) => item.RoundName == this.latestRound
+        (item) => item.RoundName == this.rankedRound
       )[0].NumberOfExercises;
 
-      let tempRound = this.latestRound;
-      if (this.latestRound.charAt(0).toUpperCase() == "Q") {
+      let tempRound = this.rankedRound;
+      if (this.rankedRound.charAt(0).toUpperCase() == "Q") {
         if (this.countRoundsStartingWithLetter("Q") == 1) {
           tempRound = tempRound.slice(0, -1);
         }
         this.currentRound = tempRound.replace("Q", "Qualification ");
       }
-      if (this.latestRound.charAt(0).toUpperCase() == "F") {
+      if (this.rankedRound.charAt(0).toUpperCase() == "F") {
         if (this.countRoundsStartingWithLetter("F") == 1) {
           tempRound = tempRound.slice(0, -1);
         }
@@ -310,7 +312,7 @@ export default {
           console.error("Error:", error);
         });
       if (this.exerciseNumbers.length == 0) return;
-      this.latestRound =
+      this.rankedRound =
         this.exerciseNumbers[this.exerciseNumbers.length - 1].RoundName;
     },
     async fetchCompetitorExercises(competitorId) {
@@ -326,7 +328,7 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      tempData = tempData.filter((item) => item.RoundName == this.latestRound);
+      tempData = tempData.filter((item) => item.RoundName == this.rankedRound);
       return tempData;
     },
     async populateCompetitorExercises() {
@@ -400,7 +402,7 @@ export default {
     getExercisesForLatestRound() {
       if (this.exerciseNumbers == undefined) return [];
       let newArray = this.exerciseNumbers.filter(
-        (item) => item.RoundName == this.latestRound
+        (item) => item.RoundName == this.rankedRound
       );
       if (!this.compareArrays(newArray, this.roundExercises))
         this.roundExercises = newArray;
@@ -410,7 +412,8 @@ export default {
       return require(`@/assets/${countryCode}.png`);
     },
     formattedNumber(numberAsString, decimalPlaces) {
-      const parsedNumber = parseFloat(numberAsString);
+      let parsedNumber = parseFloat(numberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
       return parsedNumber.toFixed(decimalPlaces);
     },
     compareArrays(array1, array2) {
@@ -420,7 +423,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../stylesheets/displayrank.style.css";
 @import "../stylesheets/videostyle.style.css";
 

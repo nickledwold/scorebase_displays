@@ -1,0 +1,696 @@
+@font-face {
+  font-family: "Gotham Book";
+  src: url("../fonts/Gotham-Book.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham Light";
+  src: url("../fonts/Gotham-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham Medium";
+  src: url("../fonts/Gotham-Medium.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham Bold";
+  src: url("../fonts/Gotham-Bold.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.cis-bodydiv {
+  position: fixed;
+  width: 99.5%;
+  height: 100%;
+  right: 0px;
+  bottom: 0;
+  left: 5px;
+  top: 5px;
+  padding: 0;
+}
+
+.cis-bodycontrol-fire {
+  background-color: #2b2b2b;
+}
+
+.cis-latestscorepanel {
+  float: left;
+  width: 50%;
+  height: 93%;
+  margin: none;
+  padding: none;
+  background-color: #161616;
+}
+.cis-latesttitle {
+  color: #ffffff;
+  padding-right: 15px;
+  padding-top: 8px;
+  font-family: Gotham Bold;
+  font-size: 45px;
+  padding-bottom: 0px;
+  text-transform: uppercase;
+  text-align: left;
+}
+.cis-panelstatuspanel {
+  float: right;
+  width: 49.5%;
+  height: 93%;
+  padding: none;
+  margin: none;
+  background-color: #161616;
+}
+.cis-statustitle {
+  color: #ffffff;
+  padding-left: 15px;
+  padding-top: 8px;
+  font-family: Gotham Light;
+  font-size: 45px;
+  padding-bottom: 0px;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.cis-panel-table {
+  color: #ffffff;
+  border-collapse: collapse;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  font-family: Myriad Pro;
+  width: 97%;
+  table-layout: auto;
+}
+
+.cis-categoryname {
+  font-family: Gotham Bold, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  color: #ffffff;
+  text-align: left;
+  margin-top: 0px;
+  padding-bottom: 5px;
+  width: 55%;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.cis-exerciseno {
+  font-family: Gotham Light, sans-serif;
+  text-align: right;
+  color: #ffffff;
+  font-size: 20px;
+  white-space: nowrap;
+  margin-top: 0px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  width: 40%;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.cis-panel-table-name {
+  color: #ffffff;
+  border-collapse: collapse;
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  padding: 0px;
+  font-family: Myriad Pro;
+  width: 47%;
+  table-layout: auto;
+  background-color: #2e2e2e;
+  float: left;
+  height: 60px;
+}
+
+.cis-panel {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-bottom: 5px;
+  padding-right: 0px;
+  table-layout: fixed;
+  width: 30px;
+}
+
+.cis-latest {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 68px;
+  float: right;
+  position: absolute;
+  top: 992px;
+  right: 6%;
+  text-align: right;
+  height: 80px;
+  width: 1500px;
+  color: #ffffff;
+}
+
+.cis-latestcontrol {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 100px;
+  float: left;
+  position: absolute;
+  top: 15px;
+  left: 1%;
+  text-align: left;
+  height: 100px;
+  width: 1500px;
+  z-index: 99;
+  color: #ffffff;
+}
+
+.cis-time {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 55px;
+  float: right;
+  position: absolute;
+  top: 1005px;
+  left: 1%;
+  text-align: left;
+  height: 60px;
+  width: 1500px;
+  color: #ffffff;
+}
+
+.cis-logobg {
+  float: left;
+  position: absolute;
+  top: 1015px;
+  left: 1%;
+  text-align: center;
+  height: 40px;
+  z-index: 99;
+}
+
+.cis-logosb {
+  float: right;
+  position: absolute;
+  top: 1026px;
+  right: 1.5%;
+  text-align: center;
+  height: 40px;
+  z-index: 99;
+}
+
+.cis-timecontrol {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 300px;
+  position: absolute;
+  top: 30px;
+  left: 3%;
+  text-align: left;
+  height: 100px;
+  width: 100px;
+  z-index: 99;
+  color: #ffffff;
+}
+
+.cis-timecontrol-fire {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 70px;
+  position: absolute;
+  top: 10px;
+  left: 1%;
+  text-align: left;
+  z-index: 99;
+  color: #ffffff;
+}
+
+.cis-logotime {
+  float: right;
+  position: absolute;
+  top: 958px;
+  left: 1%;
+  text-align: left;
+  height: 100px;
+  width: 1500px;
+  z-index: 99;
+}
+
+.cis-panelno {
+  font-family: Gotham Light, sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 10%;
+  padding-top: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  width: 120px;
+  height: 10px;
+}
+
+.cis-flag {
+  text-align: center;
+  vertical-align: middle;
+  table-layout: fixed;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin: none;
+  width: 60px;
+}
+
+.cis-rank {
+  text-align: center;
+  font-size: 15px;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 100px;
+  table-layout: fixed;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 100%;
+}
+
+.cis-name {
+  font-family: Gotham Book, sans-serif;
+  text-align: left;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+}
+
+.cis-nametrs {
+  font-family: Gotham Book, sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-left: 5px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+}
+
+.cis-clubname {
+  font-family: Gotham Light, sans-serif;
+  text-align: left;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  vertical-align: top;
+  white-space: nowrap;
+  table-layout: fixed;
+  line-height: 100%;
+  overflow: hidden;
+}
+
+.cis-namecomingsoon {
+  font-family: Gotham Book, sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-left: 30px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+}
+
+.cis-scores-table {
+  color: #ffffff;
+  border-collapse: collapse;
+  margin-top: 0px;
+  margin-bottom: 35px;
+  margin-right: 10px;
+  margin-left: auto;
+  float: right;
+  width: 35%;
+  height: 60px;
+  min-height: 60px;
+  max-height: 60px;
+  table-layout: fixed;
+}
+
+.cis-scores-table-blank {
+  color: #ffffff;
+  border-collapse: collapse;
+  margin-top: 0px;
+  margin-bottom: 35px;
+  margin-right: 10px;
+  margin-left: auto;
+  float: right;
+  width: 35%;
+  height: 60px;
+  table-layout: fixed;
+  overflow: hidden;
+}
+
+.cis-scoretable_header {
+  text-align: center;
+  width: 60px;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+  font-weight: bold;
+  table-layout: fixed;
+  color: #000000;
+  line-height: 100%;
+  font-family: Gotham Book, sans-serif;
+  background-color: rgb(233, 233, 233);
+  overflow: hidden;
+}
+.cis-scoretable_headere {
+  text-align: center;
+  width: 60px;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+  font-weight: bold;
+  table-layout: fixed;
+  color: #000000;
+  line-height: 100%;
+  font-family: Gotham Book, sans-serif;
+  background-color: rgb(233, 233, 233);
+  overflow: hidden;
+}
+.cis-scoretable_score {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 5px;
+  padding-left: 5px;
+  white-space: nowrap;
+  font-weight: normal;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+  font-family: Gotham Light;
+  background-color: rgba(197, 197, 197);
+  color: #000000;
+}
+.cis-scoretable_headertot {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  width: 60px;
+  table-layout: fixed;
+  background-color: rgb(233, 233, 233);
+  font-family: Gotham Book, sans-serif;
+  color: #000000;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.cis-scoretable_scoretot {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 15px;
+  padding-left: 15px;
+  white-space: nowrap;
+  font-weight: normal;
+  line-height: 50%;
+  width: 30px;
+  table-layout: fixed;
+  overflow: hidden;
+  font-family: Gotham Book;
+  background-color: rgba(197, 197, 197);
+  color: #000000;
+}
+.cis-scoretable_space {
+  text-align: center;
+  white-space: nowrap;
+  font-weight: normal;
+  line-height: 15%;
+  width: 2px;
+  table-layout: fixed;
+  overflow: hidden;
+}
+.cis-scoretable_headerrank {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  width: 20px;
+  table-layout: fixed;
+  background-color: rgb(233, 233, 233);
+  font-family: Gotham Bold, sans-serif;
+  color: #000000;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.cis-scoretable_scorerank {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 6px;
+  white-space: nowrap;
+  font-weight: normal;
+  line-height: 50%;
+  table-layout: fixed;
+  overflow: hidden;
+  font-family: Gotham Bold;
+  background-color: rgba(197, 197, 197);
+  color: #000000;
+}
+.cis-scoretable_headerd {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 20px;
+  padding-right: 5px;
+  padding-left: 5px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+}
+.cis-scoretable_scored {
+  text-align: center;
+  font-size: 14px;
+  padding-right: 5px;
+  padding-left: 5px;
+  white-space: nowrap;
+  font-weight: normal;
+  line-height: 100%;
+  table-layout: fixed;
+}
+
+.cis-comp-group-icon {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 25px;
+  padding-left: 0px;
+  text-align: center;
+  width: 100px;
+}
+
+.cis-status-table-name {
+  color: #ffffff;
+  border-collapse: collapse;
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-bottom: 35px;
+  margin-right: 0px;
+  padding: 0px;
+  font-family: Myriad Pro;
+  width: 98%;
+  table-layout: auto;
+  background-color: #252525;
+  float: left;
+  height: 60px;
+}
+.cis-statusheadergo {
+  font-family: Gotham Book, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+  background-color: #268f30;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: none;
+  width: 200px;
+}
+.cis-statusstatusgo {
+  font-family: Gotham Bold, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  vertical-align: top;
+  white-space: nowrap;
+  table-layout: fixed;
+  line-height: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+  background-color: #268f30;
+  border: none;
+  color: #ffffff;
+  width: 200px;
+}
+
+.cis-statusheadersoon {
+  font-family: Gotham Book, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+  background-color: #434343;
+  color: #000000;
+  text-transform: uppercase;
+  border: none;
+  width: 200px;
+}
+.cis-statusstatussoon {
+  font-family: Gotham Bold, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  vertical-align: top;
+  white-space: nowrap;
+  table-layout: fixed;
+  line-height: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+  background-color: #434343;
+  border: none;
+  color: #ffffff;
+  width: 200px;
+}
+.cis-statusheaderwait {
+  font-family: Gotham Book, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+  background-color: #dfaa2e;
+  color: #000000;
+  text-transform: uppercase;
+  border: none;
+  width: 200px;
+}
+.cis-statusstatuswait {
+  font-family: Gotham Bold, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  vertical-align: top;
+  white-space: nowrap;
+  table-layout: fixed;
+  line-height: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+  background-color: #dfaa2e;
+  border: none;
+  color: #000000;
+  width: 200px;
+}
+.cis-statusheadergo {
+  font-family: Gotham Book, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+  background-color: #268f30;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: none;
+  width: 200px;
+}
+
+.cis-namestatus {
+  font-family: Gotham Book, sans-serif;
+  text-align: left;
+  font-size: 16px;
+  padding-top: 8px;
+  padding-left: 0px;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 100%;
+  table-layout: fixed;
+  overflow: hidden;
+}
+
+.cis-clubnamestatus {
+  font-family: Gotham Light, sans-serif;
+  text-align: left;
+  font-size: 16px;
+  padding-top: 6px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  vertical-align: top;
+  white-space: nowrap;
+  table-layout: fixed;
+  line-height: 100%;
+  overflow: hidden;
+}

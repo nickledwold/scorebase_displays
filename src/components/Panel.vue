@@ -5,8 +5,8 @@
     </video>
     <transition-group name="slide">
       <div key="panelStatus" class="overlay" v-show="!showLatestScore">
-        <div class="holding-panel">Panel {{ panelNumber }}</div>
-        <div class="holding-time">{{ currentTime }}</div>
+        <div class="panel-holding-panel">Panel {{ panelNumber }}</div>
+        <div class="panel-holding-time">{{ currentTime }}</div>
         <transition-group name="fade">
           <div
             v-if="
@@ -15,37 +15,43 @@
             "
           >
             <transition-group name="fade">
-              <div v-if="this.panelStatus.Status === 0" class="holding-next">
+              <div
+                v-if="this.panelStatus.Status === 0"
+                class="panel-holding-next"
+              >
                 UP NEXT
               </div>
-              <div v-if="this.panelStatus.Status === 1" class="holding-on">
+              <div
+                v-if="this.panelStatus.Status === 1"
+                class="panel-holding-on"
+              >
                 ON NOW
               </div>
             </transition-group>
-            <div class="namebg1">
+            <div class="panel-namebg1">
               <transition name="slide" mode="out-in">
                 <div
                   v-if="this.panelStatus.NextToCompeteDiscipline === 'TRS'"
                   :key="syncNameTransitionKey"
                 >
-                  <div class="holding-name1trs">
+                  <div class="panel-holding-name1trs">
                     {{ this.panelStatus.NextToCompeteSurname1 }}
                   </div>
-                  <div class="holding-name2trs">
+                  <div class="panel-holding-name2trs">
                     {{ this.panelStatus.NextToCompeteSurname2 }}
                   </div>
                 </div>
                 <div v-else :key="nameTransitionKey">
-                  <div class="holding-surname">
+                  <div class="panel-holding-surname">
                     {{ this.panelStatus.NextToCompeteSurname1 }}
                   </div>
-                  <div class="holding-forename">
+                  <div class="panel-holding-forename">
                     {{ this.panelStatus.NextToCompeteFirstName1 }}
                   </div>
                 </div>
               </transition>
               <transition name="slide" mode="out-in">
-                <div class="holding-club" :key="clubTransitionKey">
+                <div class="panel-holding-club" :key="clubTransitionKey">
                   {{ this.panelStatus.NextToCompeteClub }}
                 </div>
               </transition>
@@ -53,7 +59,7 @@
             <transition name="slide" mode="out-in">
               <div
                 v-if="this.panelStatus.NextToCompeteNation != undefined"
-                class="holding-flag"
+                class="panel-holding-flag"
                 :key="nationTransitionKey"
               >
                 <img
@@ -62,24 +68,27 @@
                 />
               </div>
             </transition>
-            <div class="catbg1">
+            <div class="panel-catbg1">
               <transition name="slide" mode="out-in">
-                <div class="holding-category" :key="categoryTransitionKey">
+                <div
+                  class="panel-holding-category"
+                  :key="categoryTransitionKey"
+                >
                   {{ this.panelStatus.NextToCompeteCategory }}
                 </div>
               </transition>
             </div>
-            <div class="statuslabel">Status</div>
+            <div class="panel-statuslabel">Status</div>
             <transition-group name="fade">
               <div
                 v-if="this.panelStatus.Status === 0"
-                class="holding-statuswait"
+                class="panel-holding-statuswait"
               >
                 WAIT
               </div>
               <div
                 v-if="this.panelStatus.Status === 1"
-                class="holding-statusgo"
+                class="panel-holding-statusgo"
               >
                 GO
               </div>
@@ -91,54 +100,54 @@
               this.panelStatus.NextToCompeteCategory === ''
             "
           >
-            <div class="splash"></div>
+            <div class="panel-splash"></div>
           </div>
         </transition-group>
       </div>
       <div key="latestScore" class="overlay" v-show="showLatestScore">
         <div v-if="this.latestScore && this.latestExercise">
-          <div class="latestnameclub">
+          <div class="panel-latestnameclub">
             <table>
               <tr>
-                <td class="name1" colspan="2">
+                <td class="panel-name1" colspan="2">
                   {{ this.latestScore.FirstName1 }}
                 </td>
               </tr>
               <tr>
-                <td class="name2" colspan="2">
+                <td class="panel-name2" colspan="2">
                   {{ this.latestScore.Surname1 }}
                 </td>
               </tr>
               <tr>
-                <td class="latestflag">
+                <td class="panel-latestflag">
                   <img
                     :src="getImageSource(this.latestScore.Nation)"
                     width="60"
                   />
                 </td>
-                <td class="clubname">{{ this.latestScore.Club }}</td>
+                <td class="panel-clubname">{{ this.latestScore.Club }}</td>
               </tr>
             </table>
           </div>
-          <table class="scoretable">
+          <table class="panel-scoretable">
             <tr
               v-if="
                 this.latestScore.Discipline === 'DMT' ||
                 this.latestScore.Discipline === 'TUM'
               "
             >
-              <td class="scoretable_headerblank"></td>
-              <td class="scoretable_scoreblank"></td>
+              <td class="panel-scoretable_headerblank"></td>
+              <td class="panel-scoretable_scoreblank"></td>
             </tr>
             <tr>
-              <td colspan="2" class="Exercise">
+              <td colspan="2" class="panel-Exercise">
                 {{ this.latestExercise.RoundName }} | Exercise
                 {{ this.latestExercise.Exercise }}
               </td>
             </tr>
             <tr>
-              <td class="scoretable_header">E</td>
-              <td class="scoretable_score">
+              <td class="panel-scoretable_header">E</td>
+              <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Execution, 2) }}
               </td>
             </tr>
@@ -148,40 +157,40 @@
                 this.latestScore.Discipline === 'TRS'
               "
             >
-              <td class="scoretable_header">H</td>
-              <td class="scoretable_score">
+              <td class="panel-scoretable_header">H</td>
+              <td class="panel-scoretable_score">
                 {{
                   formattedNumber(this.latestExercise.HorizontalDisplacement, 2)
                 }}
               </td>
             </tr>
             <tr>
-              <td class="scoretable_header">D</td>
-              <td class="scoretable_score">
+              <td class="panel-scoretable_header">D</td>
+              <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Difficulty, 1) }}
               </td>
             </tr>
             <tr v-if="this.latestScore.Discipline === 'TRS'">
-              <td class="scoretable_header">S</td>
-              <td class="scoretable_score">
+              <td class="panel-scoretable_header">S</td>
+              <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Synchronisation, 2) }}
               </td>
             </tr>
             <tr v-else-if="this.latestScore.Discipline === 'TRA'">
-              <td class="scoretable_header">T</td>
-              <td class="scoretable_score">
+              <td class="panel-scoretable_header">T</td>
+              <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.TimeOfFlight, 2) }}
               </td>
             </tr>
             <tr>
-              <td class="scoretable_headerpen">P</td>
+              <td class="panel-scoretable_headerpen">P</td>
               <td
                 v-if="this.latestExercise.Penalty > 0"
-                class="scoretable_scorepen"
+                class="panel-scoretable_scorepen"
               >
                 -{{ formattedNumber(this.latestExercise.Penalty, 1) }}
               </td>
-              <td v-else class="scoretable_scorepen">
+              <td v-else class="panel-scoretable_scorepen">
                 {{ formattedNumber(this.latestExercise.Penalty, 1) }}
               </td>
             </tr>
@@ -191,33 +200,33 @@
                 this.latestScore.Discipline === 'TUM'
               "
             >
-              <td class="scoretable_headerblank"></td>
-              <td class="scoretable_scoreblank"></td>
+              <td class="panel-scoretable_headerblank"></td>
+              <td class="panel-scoretable_scoreblank"></td>
             </tr>
           </table>
-          <table class="scoretabletotal">
+          <table class="panel-scoretabletotal">
             <tr>
-              <td class="scoretabletotal_header">Exercise Total</td>
+              <td class="panel-scoretabletotal_header">Exercise Total</td>
             </tr>
             <tr>
-              <td class="scoretabletotal_score">
+              <td class="panel-scoretabletotal_score">
                 {{ formattedNumber(this.latestExercise.Total, 2) }}
               </td>
             </tr>
           </table>
-          <table class="ranktable">
+          <table class="panel-ranktable">
             <tr>
-              <td class="ranktable_header">Rank</td>
+              <td class="panel-ranktable_header">Rank</td>
               <td
                 v-if="
                   this.latestCategory.CompType === 0 &&
                   this.latestScore.F1Total > 0
                 "
-                class="ranktable_number"
+                class="panel-ranktable_number"
               >
                 {{ this.latestScore.DisplayZeroRank }}
               </td>
-              <td v-else class="ranktable_number">
+              <td v-else class="panel-ranktable_number">
                 {{ this.latestScore.DisplayCumulativeRank }}
               </td>
             </tr>
@@ -359,6 +368,7 @@ export default {
       let tempLatestExercise = {};
 
       for (const exercise of exercises) {
+        if (!exercise) continue;
         const totalProperty = `${exercise.propertyPrefix}Total`;
         if (!this.isValueNullOrEmpty(this.latestScore[totalProperty])) {
           await this.fetchCategoryRoundExercise(
@@ -388,17 +398,18 @@ export default {
       return require(`@/assets/${countryCode}.png`);
     },
     isValueNullOrEmpty(value) {
-      return value === null || value === "";
+      return (value == null || value == "" || value == undefined) && value != 0;
     },
     formattedNumber(numberAsString, decimalPlaces) {
-      const parsedNumber = parseFloat(numberAsString);
+      let parsedNumber = parseFloat(numberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
       return parsedNumber.toFixed(decimalPlaces);
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 @import "../stylesheets/panel.style.css";
 @import "../stylesheets/videostyle.style.css";
 

@@ -1,0 +1,476 @@
+@font-face {
+	font-family: 'Gotham Book';
+	src: url('../fonts/Gotham-Book.otf')  format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	
+  }
+
+@font-face {
+	font-family: 'Gotham Light';
+	src: url('../fonts/Gotham-Light.otf')  format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	
+  }
+
+@font-face {
+	font-family: 'Gotham Medium';
+	src: url('../fonts/Gotham-Medium.otf')  format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	
+  }
+
+@font-face {
+	font-family: 'Gotham Bold';
+	src: url('../fonts/Gotham-Bold.otf')  format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	
+  }  
+
+.latest-bodycontrol-fire {
+	background-color: #2b2b2b;
+}
+
+.latest-panel-table {
+    color: #ffffff;
+	border-collapse:collapse;
+	margin-top:53px;
+	margin-left: 15px;
+	margin-bottom: 0px;
+	font-family: Myriad Pro;
+	float: left;
+	width: 48%;
+	table-layout: fixed;
+	background-color:rgba(0, 0, 0, 0.15);
+}
+
+.latest-categoryname {
+	font-family: Gotham Bold, sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size:40px;
+	color: #ffffff;
+	text-align:left;
+	margin-top:18px;
+	padding-top:25px;
+	padding-bottom:5px;
+	padding-left:30px;
+	height: 0px;
+	width: 900px;
+	float: left;
+
+}
+.latest-exerciseno {
+	font-family: Gotham Light, sans-serif;
+	text-align: right;
+	color: #ffffff;
+	font-size:40px;
+	padding-top:25px;
+	padding-right:20px;
+	white-space:nowrap;
+	margin-top: 18px;
+	text-transform: uppercase;
+	float:right;
+}
+
+.latest-scores-table {
+    color: #ffffff;
+	border-collapse:collapse;
+	margin-top:10px;
+	margin-bottom: 2px;
+	margin-right:10px;
+	margin-left: auto;
+	float: right;
+	width:50%;
+	height:125px;
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.latest-comingsoon-table {
+    color: #ffffff;
+	border-collapse:collapse;
+	width: 100%;
+	height:125px;
+	min-height: 125px;
+	max-height: 125px;
+	table-layout: auto;
+	overflow: hidden;
+	font-family: Gotham Book, sans-serif;
+	text-align:left;
+	font-size:40px;
+	white-space:nowrap;
+	font-weight:bold;
+	vertical-align: middle;
+}
+.latest-comingsoon-cell {
+    color: #ffffff;
+	font-family: Gotham Book, sans-serif;
+	text-align:left;
+	font-size:40px;
+	padding-left: 30px;
+	padding-top: 30px;
+	white-space:nowrap;
+	font-weight:bold;
+	vertical-align: middle;
+	text-transform: uppercase;
+}
+
+.latest-latest {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:68px;
+	float: right;
+	position: absolute;
+    top: 992px;
+	right: 6%;
+	text-align: right;
+    height: 80px;
+    width: 1500px;
+	color: #ffffff;
+}
+
+.latest-latestcontrol {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:100px;
+	float: left;
+	position: absolute;
+    top: 15px;
+	left: 1%;
+	text-align: left;
+    height: 100px;
+    width: 1500px;
+	z-index: 99;
+	color: #ffffff;
+}
+
+.latest-time {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:65px;
+	float: right;
+	position: absolute;
+    top: 983px;
+	left: 12%;
+	text-align: left;
+    height: 80px;
+    width: 1500px;
+	color: #ffffff;
+}
+
+.latest-logos {
+	float: right;
+	position: absolute;
+    top: 995px;
+	left: 2%;
+	text-align: center;
+    height: 40px;
+	z-index: 99;
+}
+
+.latest-timecontrol {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:300px;
+	position: absolute;
+    top: 30px;
+	left:3%;
+	text-align: left;
+    height: 100px;
+    width: 100px;
+	z-index: 99;
+	color: #ffffff;
+}
+
+.latest-timecontrol-fire {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:70px;
+	position: absolute;
+    top: 10px;
+	left:1%;
+	text-align: left;
+	z-index: 99;
+	color: #ffffff;
+}
+
+.latest-logotime {
+	float: right;
+	position: absolute;
+    top: 958px;
+	left: 1%;
+	text-align: left;
+    height: 100px;
+    width: 1500px;
+	z-index: 99;
+}
+
+.latest-panelno {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size:32px;
+	color: #ffffff;
+	text-align:center;
+	line-height: 10%;
+	padding-top:20px;
+	padding-left:0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	width: 120px;
+	height: 10px;
+}
+.latest-panel {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size: 40px;
+	line-height: 100%;
+	text-align:center;
+	vertical-align: middle;
+	padding-top:10px;
+	padding-left:0px;
+	padding-bottom:0px;
+	padding-right:0px;
+	height:100px;
+	table-layout: fixed;
+	width: 180px;
+}
+.latest-flag {
+	font-family: Gotham Light, sans-serif;
+	text-transform: uppercase;
+	font-size: 40px;
+	line-height: 100%;
+	text-align:center;
+	vertical-align: middle;
+	padding-top:0px;
+	padding-left:10px;
+	padding-bottom:0px;
+	padding-right:10px;
+	table-layout: fixed;
+	width: 40px;
+}
+.latest-rank {
+	text-align:center;
+	font-size:35px;
+	padding-top:20px;
+	padding-left:5px;
+	padding-right:5px;
+	width:100px;
+	table-layout: fixed;
+	overflow: hidden;
+	white-space:nowrap;
+	line-height:100%;
+}
+.latest-name {
+	font-family: Gotham Book, sans-serif;
+	text-align:left;
+	font-size:40px;
+	padding-top:20px;
+	padding-left:0px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height:100%;
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.latest-nametrs {
+	font-family: Gotham Book, sans-serif;
+	text-transform: uppercase;
+	text-align:left;
+	font-size:40px;
+	padding-top:5px;
+	padding-left:30px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height:100%;
+	table-layout: fixed;
+	overflow: hidden;
+}
+.latest-namecomingsoon {
+	font-family: Gotham Book, sans-serif;
+	text-transform: uppercase;
+	text-align:left;
+	font-size:40px;
+	padding-top:5px;
+	padding-left:30px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height:100%;
+	table-layout: fixed;
+}
+.latest-clubname {
+	font-family: Gotham Light, sans-serif;
+	text-align:left;
+	font-size:35px;
+	padding-top:10px;
+	padding-bottom:25px;
+	padding-left:0px;
+	vertical-align: top;
+	white-space:nowrap;
+	table-layout: fixed;
+	line-height: 100%;
+	overflow: hidden;
+}
+
+.latest-scoretable_header {
+	text-align:center;
+	width: 60px;
+	font-size:42px;
+	padding-top:8px;
+	padding-right:5px;
+	padding-left:5px;
+	padding-bottom: 8px;
+	white-space:nowrap;
+	font-weight:bold;
+	table-layout: fixed;
+	color: #ffffff;
+	line-height: 100%;
+	font-family: Gotham Book, sans-serif;
+	background-color:rgba(255, 255, 255, 0.15);
+	overflow: hidden;
+}
+.latest-scoretable_headere {
+	text-align:center;
+	width: 80px;
+	font-size:42px;
+	padding-top:8px;
+	padding-right:5px;
+	padding-left:5px;
+	padding-bottom: 8px;
+	white-space:nowrap;
+	font-weight:bold;
+	table-layout: fixed;
+	color: #ffffff;
+	line-height: 100%;
+	font-family: Gotham Book, sans-serif;
+	background-color:rgba(255, 255, 255, 0.15);
+	overflow: hidden;
+}
+.latest-scoretable_score {
+	text-align:center;
+	font-size:40px;
+	padding-top:12px;
+	padding-bottom: 12px;
+	padding-right:5px;
+	padding-left:5px;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height: 100%;
+	table-layout: fixed;
+	overflow: hidden;
+	font-family: Gotham Light;
+	background-color:rgba(0, 0, 0, 0.15);
+
+}
+.latest-scoretable_headertot {
+	text-align:center;
+	font-size:40px;
+	padding-top:8px;
+	padding-right:20px;
+	padding-left:20px;
+	padding-bottom: 8px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height: 100%;
+	width: 55px;
+	table-layout: fixed;
+	background-color: #141414;
+	font-family: Gotham Book, sans-serif;
+	text-transform: uppercase;
+	overflow: hidden;
+}
+.latest-scoretable_scoretot {
+	text-align:center;
+	font-size:40px;
+	padding-top:12px;
+	padding-bottom: 12px;
+	padding-right:15px;
+	padding-left:15px;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height: 50%;
+	width: 40px;
+	table-layout: fixed;
+	overflow: hidden;
+	font-family: Gotham Book;
+	background-color:rgba(0, 0, 0, 0.3);
+
+}
+.latest-scoretable_space {
+	text-align:center;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height: 40%;
+	width: 2px;
+	table-layout: fixed;
+	overflow: hidden;
+}
+.latest-scoretable_headerrank {
+	text-align:center;
+	font-size:40px;
+	padding-top:8px;
+	padding-bottom: 8px;
+	padding-right:15px;
+	padding-left:15px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height: 100%;
+	width: 20px;
+	table-layout: fixed;
+	background-color: #ffffff;
+	color: #000000;
+	font-family: Gotham Book, sans-serif;
+	text-transform: uppercase;
+	overflow: hidden;
+}
+.latest-scoretable_scorerank {
+	text-align:center;
+	font-size:40px;
+	padding-top:12px;
+	padding-bottom: 12px;
+	padding-right:5px;
+	padding-left:5px;
+	padding-bottom:6px;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height: 50%;
+	table-layout: fixed;
+	overflow: hidden;
+	font-family: Gotham Book;
+	background-color:rgba(255, 255, 255, 0.15);
+
+}
+.latest-scoretable_headerd {
+	text-align:center;
+	font-size:42px;
+	padding-top:20px;
+	padding-right:5px;
+	padding-left:5px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height: 100%;
+	table-layout: fixed;
+}
+.latest-scoretable_scored {
+	text-align:center;
+	font-size:42px;
+	padding-right:5px;
+	padding-left:5px;
+	white-space:nowrap;
+	font-weight:normal;
+	line-height: 100%;
+	table-layout: fixed;
+}
+
+.latest-comp-group-icon {	
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 25px;
+	padding-left: 0px;
+	text-align: center;
+	width: 100px;
+}

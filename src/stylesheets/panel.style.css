@@ -36,7 +36,7 @@
 }
 
 
-.bodydiv{
+.panel-bodydiv{
 	overflow:hidden; 
     border: 0px; 
     margin: 0px;
@@ -45,7 +45,7 @@
     position: absolute;
 	}
 
-.name1 {
+.panel-name1 {
 	font-family: Gotham Bold; 
 	font-size: 90px; 
 	color: #FFFFFF;
@@ -61,7 +61,7 @@
 	max-width: 1040px;
 }
 
-.name2 {
+.panel-name2 {
 	font-family: Gotham Book; 
 	line-height: 90%;
 	font-size: 80px; 
@@ -76,7 +76,7 @@
 	max-width: 1040px;
 }
 
-.name1trs {
+.panel-name1trs {
 	font-family: Gotham Bold; 
 	font-size: 85px; 
 	color: #FFFFFF;
@@ -87,7 +87,7 @@
 	line-height: 100%; 
 	text-transform: uppercase;
 }
-.name2trs {
+.panel-name2trs {
 	font-family: Gotham Bold; 
 	font-size: 85px; 
 	color: #FFFFFF;
@@ -99,7 +99,7 @@
 	text-transform: uppercase;
 }
 
-.latestflag {
+.panel-latestflag {
 	font-size:45px;
 	color: #FFFFFF; 
 	text-align:left; 
@@ -116,7 +116,7 @@
 	max-width: 60px;
 	}
 
-.clubname {
+.panel-clubname {
 font-size:42px;
 color: #FFFFFF; 
 text-align:left; 
@@ -133,7 +133,7 @@ width: 880px;
 max-width: 800px;
 }
 
-.scoretable {
+.panel-scoretable {
 width:60%; 
 margin-left:auto; 
 margin-right:auto;
@@ -145,7 +145,7 @@ margin-top:30px;
 text-align: center;
 }
 
-.Exercise {
+.panel-Exercise {
 text-align:center;
 font-family: Gotham Light, sans-serif; 
 text-transform:uppercase;
@@ -157,7 +157,7 @@ padding-bottom: 20px;
 border-spacing: none;
 }
 
-.scoretable_header {
+.panel-scoretable_header {
 text-align:center;
 font-family: Gotham Book, sans-serif; 
 color: white;
@@ -171,7 +171,7 @@ min-width: 230px;
 max-width: 230px;
 }
 
-.scoretable_score {
+.panel-scoretable_score {
 text-align: left;
 font-family: Gotham Light, sans-serif; 
 color: white;
@@ -184,7 +184,7 @@ border-spacing: 0px;
 background-color: rgba(0,0,0,.2);
 }
 
-.scoretable_headerblank {
+.panel-scoretable_headerblank {
 text-align:center;
 font-family: Gotham Book, sans-serif; 
 color: #043f6a;
@@ -195,7 +195,7 @@ border-spacing: 0px;
 display: inline-block;
 }
 
-.scoretable_scoreblank {
+.panel-scoretable_scoreblank {
 font-family: Gotham Light, sans-serif; 
 color: #043f6a;
 border-collapse: separate; 
@@ -206,7 +206,7 @@ border-spacing: 0px;
 display: inline-block;
 }
 
-.scoretable_headerpen {
+.panel-scoretable_headerpen {
 text-align:center;
 font-family: Gotham Book, sans-serif; 
 color: white;
@@ -221,7 +221,7 @@ max-width: 20px;
 width: 20px;
 }
 
-.scoretable_scorepen {
+.panel-scoretable_scorepen {
 text-align: left;
 font-family: Gotham Light, sans-serif; 
 color: white;
@@ -234,7 +234,7 @@ border-spacing: 0px;
 background-color: rgba(0,0,0,.5);
 }
 
-.scoretabletotal {
+.panel-scoretabletotal {
 width:98%; 
 margin-left:auto; 
 margin-right:auto;
@@ -243,7 +243,7 @@ padding-top: 5px;
 border-spacing: 0px;
 }
 
-.scoretabletotal_header {
+.panel-scoretabletotal_header {
 text-align:center;
 font-family: Gotham Light, sans-serif; 
 color: white;
@@ -257,7 +257,7 @@ text-transform:uppercase;
 
 }
 
-.scoretabletotal_score {
+.panel-scoretabletotal_score {
 text-align:center;
 font-family: Gotham Medium, sans-serif; 
 color: white;
@@ -270,7 +270,7 @@ border-spacing: 0px;
 display: block;
 }
 
-.ranktable {
+.panel-ranktable {
 align:left;
 border-collapse: separate; 
 padding-top: 59px; 
@@ -279,12 +279,12 @@ border-spacing: 0px;
 table-layout: auto;
 }
 
-.latestnameclub{
+.panel-latestnameclub{
 	background-color: rgba(228, 228, 228, 0.08); 
 	table-layout: auto;
 }
 
-.ranktable_header {
+.panel-ranktable_header {
 text-align:left;
 font-family: Gotham Light, sans-serif; 
 color: white;
@@ -298,7 +298,7 @@ border-spacing: 0px;
 text-transform:uppercase;
 }
 
-.ranktable_number {
+.panel-ranktable_number {
 text-align:left;
 font-family: Gotham Bold, sans-serif; 
 color: white;
@@ -311,21 +311,21 @@ padding-right: 5px;
 border-spacing: 0px;
 }
 
-.score-disp-page {
+.panel-score-disp-page {
     overflow:hidden;
 	width:100%;
     background:url(http://10.0.0.3/bucs_bg.png) no-repeat, -webkit-gradient( linear, left top, left bottom, color-stop(0, #961b23),color-stop(1, #961b23) );
 }
 
-.results-page {
+.panel-results-page {
 	border:0px;
 }
 
-.logo-page {
+.panel-logo-page {
     background-color:#2f0c0c;
 }
 
-.banner {
+.panel-banner {
     background-color:transparent;
 	margin-left:10px;
 	margin-top:25px;
@@ -336,7 +336,7 @@ border-spacing: 0px;
 	width:100%;
 }
 
-.comp-title {
+.panel-comp-title {
     color:#ffffff;
     font-family: Myriad Pro, sans-serif;
 	text-transform: uppercase;
@@ -351,7 +351,7 @@ border-spacing: 0px;
 	border: 0px;
 	
 }
-.comp-group-icon {	
+.panel-comp-group-icon {	
 	border-radius: 3px;
 	width:300px;
 	height:130px;
@@ -364,7 +364,7 @@ border-spacing: 0px;
 }
 
 
-.holding-panel {
+.panel-holding-panel {
 	color:#ffffff;
     font-family: Gotham Bold;
 	text-transform: uppercase;
@@ -381,7 +381,7 @@ border-spacing: 0px;
 	z-index: 99;
 }
 
-.holding-time {
+.panel-holding-time {
 	float: left;
 	position: absolute;
     top: 1725px;
@@ -396,7 +396,7 @@ border-spacing: 0px;
 	z-index: 99;
 }
 
-.holding-next {
+.panel-holding-next {
 	float: left;
 	position: fixed;
     top: 450px;
@@ -416,7 +416,7 @@ border-spacing: 0px;
 	z-index: 120;
 }
 
-.holding-on {
+.panel-holding-on {
 	float: left;
 	position: fixed;
     top: 450px;
@@ -436,7 +436,7 @@ border-spacing: 0px;
 	z-index: 120;
 }
 
-.statuslabel {
+.panel-statuslabel {
 	float: right;
 	position: fixed;
     top: 1215px;
@@ -455,7 +455,7 @@ border-spacing: 0px;
 	-webkit-transform: rotate(270deg);
 }
 
-.holding-statusgo {
+.panel-holding-statusgo {
 	float: right;
 	position: fixed;
     top: 1120px;
@@ -473,7 +473,7 @@ border-spacing: 0px;
 	background-color: #268f30;
 	box-shadow: 3px 8px 5px 0px rgba(0,0,0,0.1);
 }
-.holding-statuswait {
+.panel-holding-statuswait {
 	float: right;
 	position: fixed;
     top: 1120px;
@@ -492,7 +492,7 @@ border-spacing: 0px;
 	box-shadow: 3px 8px 5px 0px rgba(0,0,0,0.1);
 }
 
-.namebg1 {
+.panel-namebg1 {
 	position: fixed;
     top: 650px;
 	left: 0%;
@@ -507,7 +507,7 @@ border-spacing: 0px;
 }
 
 
-.holding-surname {
+.panel-holding-surname {
 	text-align: left;
     font-family: Gotham Bold, sans-serif;
 	text-transform: uppercase;
@@ -521,7 +521,7 @@ border-spacing: 0px;
 	max-height: 120px;
 }
 
-.holding-forename {
+.panel-holding-forename {
 	text-align: left;
     font-family: Gotham Book, sans-serif;
 	text-transform: none;
@@ -533,7 +533,7 @@ border-spacing: 0px;
 	max-height: 100px;
 }
 
-.holding-name1trs {
+.panel-holding-name1trs {
 	text-align: left;
     font-family: Gotham Bold, sans-serif;
 	text-transform: uppercase;
@@ -541,7 +541,7 @@ border-spacing: 0px;
 	padding-top:0px;
 }
 
-.holding-name2trs {
+.panel-holding-name2trs {
 	text-align: left;
     font-family: Gotham Bold, sans-serif;
 	text-transform: uppercase;
@@ -549,7 +549,7 @@ border-spacing: 0px;
 	padding-top:0px;
 }
 
-.holding-flag {
+.panel-holding-flag {
     font-family: Gotham Light, sans-serif;
 	font-size: 50px;
 	padding-top:950px;
@@ -561,7 +561,7 @@ border-spacing: 0px;
 	z-index: 999;
 }
 
-.holding-club {
+.panel-holding-club {
 	text-align: left;
 	vertical-align: middle;
     font-family: Gotham Light, sans-serif;
@@ -576,7 +576,7 @@ border-spacing: 0px;
 	overflow: hidden;
 }
 
-.catbg1 {
+.panel-catbg1 {
 	position: fixed;
 	margin: auto;
     top: 1450px;
@@ -590,7 +590,7 @@ border-spacing: 0px;
 	color:#dedede;
 }
 
-.holding-category {
+.panel-holding-category {
 	text-align: center;
 	margin: auto;
 	padding-top: 45px;
@@ -600,13 +600,13 @@ border-spacing: 0px;
 	text-transform: uppercase;
 	color:#ffffff;
 }
-.holding-discipline {
+.panel-holding-discipline {
 	text-align: center;
 	margin: auto;
 	padding-top: 20px;
 }
 
-.holding-panel-control {
+.panel-holding-panel-control {
 	color:#ffffff;
     font-family: Myriad Pro, sans-serif;
 	text-transform: uppercase;
@@ -621,7 +621,7 @@ border-spacing: 0px;
 	width:100%;
 }
 
-.holding-panel-bottom {
+.panel-holding-panel-bottom {
 	color:#ffffff;
     font-family: Myriad Pro, sans-serif;
 	text-transform: uppercase;
@@ -637,7 +637,7 @@ border-spacing: 0px;
 	width:100%;
 }
 
-.pm-panel {
+.panel-pm-panel {
 	color:#ffffff;
 	background-color:#2c2c2c;
     font-family: Myriad Pro, sans-serif;
@@ -650,7 +650,7 @@ border-spacing: 0px;
 	margin: auto;
 	vertical-align: middle;
 }
-.pm-panelg {
+.panel-pm-panelg {
 	color:#ffffff;
 	background-color:#228B22;
     font-family: Myriad Pro, sans-serif;
@@ -664,7 +664,7 @@ border-spacing: 0px;
 	vertical-align: middle;
 	
 }
-.pm-td {
+.panel-pm-td {
 	color:#ffffff;
 	background-color:#000000;
     font-family: Myriad Pro, sans-serif;
@@ -690,7 +690,7 @@ border-spacing: 0px;
   z-index: -100;
 }
 
-.comp-venue {
+.panel-comp-venue {
     color:#ffffff;
     font-family: Myriad Pro, sans-serif;
     font-size:65px;
@@ -699,12 +699,12 @@ border-spacing: 0px;
 	border:0px;
 }
 
-.scores-frame { 
+.panel-scores-frame { 
 	background: -webkit-gradient( linear, left top, left bottom, color-stop(0, #961b23), color-stop(1, #961b23) );
 	width:98%;
 }
 
-.slist-iframe {
+.panel-slist-iframe {
     margin:0;
     padding: 0;
     width:100%;
@@ -712,7 +712,7 @@ border-spacing: 0px;
     border: 0;
 }
 
-.comp-group {	
+.panel-comp-group {	
 	border-radius: 3px;
 	width:1920px;
 	height:100px;
@@ -732,7 +732,7 @@ border-spacing: 0px;
 	/*border: 2px solid #a36f70;*/
 }
 
-.comp-group-icon {	
+.panel-comp-group-icon {	
 	border-radius: 3px;
 	width:200px;
 	height:100px;
@@ -747,16 +747,16 @@ border-spacing: 0px;
 	font-family: Myriad Pro, sans-serif;
 	font-weight:bold;
 }
-.results-logo {
+.panel-results-logo {
 	padding-right:0px;
 	align:left;
 }
-.horizontal-rule {
+.panel-horizontal-rule {
     height:0px;
     background-color:#ffffff;
 }
 
-.scores-table {
+.panel-scores-table {
     font-family: Myriad Pro, sans-serif;
     font-size:25px;
 	font-weight:normal;
@@ -767,14 +767,14 @@ border-spacing: 0px;
 	margin-top:15px;
 	line-height:100%;
 }
-.space {
+.panel-space {
 	height:5px;
 	width:25px;
 }	
-.gap {
+.panel-gap {
 	width:5px;
 }	
-.announce-table {
+.panel-announce-table {
     font-family: Myriad Pro, sans-serif;
     font-size:10px;
     color: #ffffff;
@@ -783,7 +783,7 @@ border-spacing: 0px;
     border-collapse:collapse;
 }
 
-.announce-scores {
+.panel-announce-scores {
     font-family: Myriad Pro, sans-serif;
     font-size:12px;
     color: #ffffff;
@@ -791,7 +791,7 @@ border-spacing: 0px;
     width: 100%;
 }
 
-.announce-iframe {
+.panel-announce-iframe {
 
     margin:0;
     padding: 0;
@@ -800,15 +800,15 @@ border-spacing: 0px;
     border: 0px white solid;
 }
 
-.highlight {
+.panel-highlight {
 }
 
-.lowlight {
+.panel-lowlight {
 }
-.space {
+.panel-space {
 	height:5px;
 }	
-.scores-pos {
+.panel-scores-pos {
     text-align:center;
 	padding-top:5px;
 	padding-right:10px;
@@ -819,7 +819,7 @@ border-spacing: 0px;
 	font-weight:bold;
 }
 
-.scores-name {
+.panel-scores-name {
 	text-align:left;
     border-color:#a0a0a0;
 	padding-top:10px;
@@ -831,7 +831,7 @@ border-spacing: 0px;
 	line-height:100%;
 }
 
-.scores-club {
+.panel-scores-club {
 	text-align:left;
     font-style:normal;
 	font-family: Myriad Pro, sans-serif;
@@ -846,7 +846,7 @@ border-spacing: 0px;
 	line-height:100%;
 }
 
-.scores-tri-set-E {
+.panel-scores-tri-set-E {
     text-align:center;
     border-color:#a0a0a0;
 	padding-top:10px;
@@ -856,19 +856,19 @@ border-spacing: 0px;
 	background-color:#6d1a1c;
 		line-height:100%;
 }
-.scores-tri-set-ET {
+.panel-scores-tri-set-ET {
     text-align:center;
 	border-top:thin solid;
     border-color:#adadad;
 	padding-top:10px;
 }
-.scores-tri-set-D {
+.panel-scores-tri-set-D {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
 	padding-top:10px;
 }
-.scores-tri-set-P {
+.panel-scores-tri-set-P {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
@@ -877,7 +877,7 @@ border-spacing: 0px;
 	
 }
 
-.scores-tri-set-ToF {
+.panel-scores-tri-set-ToF {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
@@ -885,7 +885,7 @@ border-spacing: 0px;
 	
 }
 
-.scores-tri-set-Tot {
+.panel-scores-tri-set-Tot {
     text-align:center;
 	padding-top:10px;
 	padding-right:0px;
@@ -896,7 +896,7 @@ border-spacing: 0px;
 		line-height:100%;
 }
 
-.scores-tri-vol-E {
+.panel-scores-tri-vol-E {
     text-align:center;
     border-color:#a0a0a0;
 	padding-top:5px;
@@ -907,26 +907,26 @@ border-spacing: 0px;
 	line-height:100%;
 
 }
-.scores-tri-vol-ET {
+.panel-scores-tri-vol-ET {
     text-align:center;
     border-color:#adadad;
 	
 }
-.scores-tri-vol-D {
+.panel-scores-tri-vol-D {
     text-align:center;
 
 }
-.scores-tri-vol-P {
+.panel-scores-tri-vol-P {
     text-align:center;
 	border-color:#adadad;
 	border-right:thin solid;
 }
 
-.scores-tri-vol-ToF {
+.panel-scores-tri-vol-ToF {
     text-align:center;
 }
 
-.scores-tri-vol-Tot {
+.panel-scores-tri-vol-Tot {
     text-align:center;
 	padding-top:5px;
 	padding-right:0px;
@@ -937,29 +937,29 @@ border-spacing: 0px;
 	line-height:100%;
 }
 
-.scores-tri-fin-E {
+.panel-scores-tri-fin-E {
     text-align:center;
 }
-.scores-tri-fin-E1 {
+.panel-scores-tri-fin-E1 {
     text-align:center;
 }
-.scores-tri-fin-ET {
+.panel-scores-tri-fin-ET {
     text-align:center;
     border-color:#adadad;
 }
-.scores-tri-fin-D {
+.panel-scores-tri-fin-D {
     text-align:center;
 }
-.scores-tri-fin-P {
+.panel-scores-tri-fin-P {
     text-align:center;
     border-color:#adadad;
 	border-right:thin solid;
 }
-.scores-tri-fin-ToF {
+.panel-scores-tri-fin-ToF {
     text-align:center;
 }
 
-.scores-tri-fin-Tot {
+.panel-scores-tri-fin-Tot {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -972,7 +972,7 @@ border-spacing: 0px;
 	line-height:100%;
 	
 }
-.scores-tri-fin-Totb {
+.panel-scores-tri-fin-Totb {
     text-align:center;
 	padding-bottom:0px;
 	padding-right:0px;
@@ -985,7 +985,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-tri-fin-Totboth {
+.panel-scores-tri-fin-Totboth {
     text-align:center;
 	padding-bottom:0px;
 	padding-right:0px;
@@ -998,7 +998,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-trs-fin-Tot {
+.panel-scores-trs-fin-Tot {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -1009,7 +1009,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-trs-fin-Totb {
+.panel-scores-trs-fin-Totb {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -1020,7 +1020,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-dmt-fin-Tot {
+.panel-scores-dmt-fin-Tot {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -1033,7 +1033,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-dmt-set-Tot {
+.panel-scores-dmt-set-Tot {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -1043,7 +1043,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-dmt-vol-Tot {
+.panel-scores-dmt-vol-Tot {
     text-align:center;
 	padding-right:0px;
 	padding-left:0px;
@@ -1053,7 +1053,7 @@ border-spacing: 0px;
 	font-weight:bold;
 	line-height:100%;
 }
-.scores-trs-set-E {
+.panel-scores-trs-set-E {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
@@ -1061,36 +1061,28 @@ border-spacing: 0px;
 	line-height:100%;
 	
 }
-.scores-trs-set-ET {
+.panel-scores-trs-set-ET {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
 	padding-top:5px;
 	
 }
-.scores-trs-set-H {
+.panel-scores-trs-set-H {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
 	padding-top:5px;
 	
 }
-.scores-trs-set-D {
+.panel-scores-trs-set-D {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
 	padding-top:5px;
 	
 }
-.scores-trs-set-P {
-    text-align:center;
-    border-top:thin solid;
-    border-color:#adadad;
-	padding-top:5px;
-	
-}
-
-.scores-trs-set-S {
+.panel-scores-trs-set-P {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
@@ -1098,7 +1090,15 @@ border-spacing: 0px;
 	
 }
 
-.scores-trs-set-Tot {
+.panel-scores-trs-set-S {
+    text-align:center;
+    border-top:thin solid;
+    border-color:#adadad;
+	padding-top:5px;
+	
+}
+
+.panel-scores-trs-set-Tot {
     text-align:center;
     border-top:thin solid;
     border-color:#adadad;
@@ -1110,24 +1110,24 @@ border-spacing: 0px;
 	
 }
 
-.scores-trs-vol-E {
+.panel-scores-trs-vol-E {
     text-align:center;
 
 }
-.scores-trs-vol-ET {
+.panel-scores-trs-vol-ET {
     text-align:center;
     border-color:#adadad;
 
 }
-.scores-trs-vol-H {
+.panel-scores-trs-vol-H {
     text-align:center;
 
 }
-.scores-trs-vol-D {
+.panel-scores-trs-vol-D {
     text-align:center;
 
 }
-.scores-trs-vol-P {
+.panel-scores-trs-vol-P {
     text-align:center;
     border-color:#adadad;
 	padding-top:5px;
@@ -1135,12 +1135,12 @@ border-spacing: 0px;
 }
 
 
-.scores-trs-vol-S {
+.panel-scores-trs-vol-S {
     text-align:center;
 	
 }
 
-.scores-trs-vol-Tot {
+.panel-scores-trs-vol-Tot {
     text-align:center;
 	padding-right:35px;
 	padding-left:35px;
@@ -1149,33 +1149,33 @@ border-spacing: 0px;
 
 }
 
-.scores-trs-fin-E {
+.panel-scores-trs-fin-E {
     text-align:center;
 
 }
-.scores-trs-fin-E1 {
-    text-align:center;
-	
-}
-.scores-trs-fin-ET {
+.panel-scores-trs-fin-E1 {
     text-align:center;
 	
 }
-.scores-trs-fin-H {
+.panel-scores-trs-fin-ET {
+    text-align:center;
+	
+}
+.panel-scores-trs-fin-H {
     text-align:center;
 
 }
-.scores-trs-fin-D {
+.panel-scores-trs-fin-D {
     text-align:center;
 
 }
 
-.scores-trs-fin-S {
+.panel-scores-trs-fin-S {
     text-align:center;
 
 }
 
-.splash {
+.panel-splash {
     position: absolute;
 	left: 0;
 	top: 0;
