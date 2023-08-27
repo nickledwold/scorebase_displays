@@ -4,13 +4,13 @@
       <div class="w3-content">
         <header style="padding-top: 20px" class="w3-container w3-center">
           <a class="online-a" href="index.html"
-            ><img src="img/logo.png" width="250px"
+            ><img src="../assets/logo.png" width="250"
           /></a>
         </header>
       </div>
-      <div class="eventlogo">
+      <div class="online-eventlogo">
         <br />
-        <img src="img/bgcolour.png" height="45px" />
+        <img src="../assets/bgcolour.png" height="45" />
         <br />
       </div>
       <header class="wblue-container w3-center">
@@ -25,63 +25,49 @@
       </div>
 
       <div class="w0-container" style="max-width: 800px">
-        <div class="tabs">
-          <ul class="tab-links">
-            <li class="active"><a class="online-a" href="#TRA">TRA</a></li>
-            <li><a class="online-a" href="#TRS">TRS</a></li>
-            <li><a class="online-a" href="#DMT">DMT</a></li>
-            <li><a class="online-a" href="#TUM">TUM</a></li>
+        <div class="online-tabs">
+          <ul class="online-tab-links">
+            <li
+              v-for="(tab, index) in tabs"
+              :key="index"
+              :class="{ active: tab.active }"
+              @click="selectTab(index)"
+            >
+              <a class="online-a">{{ tab.label }}</a>
+            </li>
           </ul>
 
-          <div class="tab-content">
-            <div id="TRA" class="tab active">
-              <div class="disciplinetitle">Individual Trampoline</div>
+          <div
+            v-for="tab in filteredTabs"
+            :key="tab.label"
+            class="online-tab-content"
+          >
+            <div
+              :id="tab.label"
+              class="online-tab"
+              :class="{ active: tab.active }"
+            >
+              <div class="disciplinetitle">{{ tab.title }}</div>
               <hr class="discipline" />
-              <div v-for="category in traCategories" :key="category.CatId">
-                <a class="online-a" :href="`/online/${category.CatId}`">{{
-                  category.Category
-                }}</a
-                ><br />
-              </div>
-            </div>
-
-            <div id="TRS" class="tab">
-              <div class="disciplinetitle">Synchronised Trampoline</div>
-              <hr class="discipline" />
-              <div v-for="category in trsCategories" :key="category.CatId">
-                <a class="online-a" :href="`/online/${category.CatId}`">{{
-                  category.Category
-                }}</a
-                ><br />
-              </div>
-            </div>
-
-            <div id="DMT" class="tab">
-              <div class="disciplinetitle">Double Mini-Trampoline</div>
-              <hr class="discipline" />
-              <div v-for="category in dmtCategories" :key="category.CatId">
-                <a class="online-a" :href="`/online/${category.CatId}`">{{
-                  category.Category
-                }}</a
-                ><br />
-              </div>
-            </div>
-
-            <div id="TUM" class="tab">
-              <div class="disciplinetitle">Tumbling</div>
-              <hr class="discipline" />
-              <div v-for="category in tumCategories" :key="category.CatId">
-                <a class="online-a" :href="`/online/${category.CatId}`">{{
-                  category.Category
-                }}</a
-                ><br />
-              </div>
+              <transition name="collapse" mode="out-in">
+                <div v-if="tab.active" :key="tab.label">
+                  <div
+                    v-for="category in filteredCategories(tab.label)"
+                    :key="category.CatId"
+                  >
+                    <a class="online-a" :href="`/online/${category.CatId}`">{{
+                      category.Category
+                    }}</a>
+                    <br />
+                  </div>
+                </div>
+              </transition>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="footer">+ SCOREBASE {{ currentYear }}</div>
+      <div class="online-footer">+ SCOREBASE {{ currentYear }}</div>
     </div>
   </div>
 </template>
@@ -93,13 +79,21 @@ export default {
     return {
       currentYear: new Date().getFullYear(),
       categories: [],
+      tabs: [
+        { label: "TRA", active: true, title: "Individual Trampoline" },
+        { label: "TRS", active: false, title: "Synchronised Trampoline" },
+        { label: "DMT", active: false, title: "Double Mini-Trampoline" },
+        { label: "TUM", active: false, title: "Tumbling" },
+      ],
     };
   },
   computed: {
-    traCategories() {
-      return this.categories.filter(
-        (category) => category.Discipline === "TRA"
-      );
+    filteredCategories() {
+      return (tabLabel) => {
+        return this.categories.filter(
+          (category) => category.Discipline === tabLabel
+        );
+      };
     },
     trsCategories() {
       return this.categories.filter(
@@ -116,6 +110,9 @@ export default {
         (category) => category.Discipline === "DMT"
       );
     },
+    filteredTabs: function () {
+      return this.tabs.filter((tab) => tab.active);
+    },
   },
   created() {
     this.fetchCategories();
@@ -123,15 +120,25 @@ export default {
   methods: {
     async fetchCategories() {
       await fetch(
-        "http://" + process.env.API_IP_ADDRESS + ":3000/api/categories"
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categories"
       )
         .then((response) => response.json())
         .then((data) => {
           this.categories = data;
+          console.log(data);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+    },
+    selectTab(index) {
+      this.tabs.forEach((tab, tabIndex) => {
+        tab.active = tabIndex === index;
+      });
     },
   },
 };
@@ -139,4 +146,14 @@ export default {
 
 <style scoped>
 @import "../stylesheets/results.style.css";
+
+.collapse-enter-active,
+.collapse-leave-active {
+  transition: max-height 0.5s ease-in-out;
+}
+.collapse-enter,
+.collapse-leave-to {
+  max-height: 0;
+  overflow: hidden;
+}
 </style>

@@ -219,7 +219,13 @@ export default {
   },
   methods: {
     async fetchPanelData() {
-      await fetch("http://localhost:3000/api/panelStatus")
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/panelStatus"
+      )
         .then((response) => response.json())
         .then((data) => {
           this.tempPanelStatuses = data;
@@ -245,7 +251,14 @@ export default {
     },
     async fetchCategory(catId) {
       let tempData;
-      await fetch("http://localhost:3000/api/categories?catId=" + catId)
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categories?catId=" +
+          catId
+      )
         .then((response) => response.json())
         .then((data) => {
           tempData = data[0];
@@ -258,7 +271,12 @@ export default {
     async fetchLatestScoreForPanel(panelNumber) {
       let tempData;
       await fetch(
-        "http://localhost:3000/api/latestScore?panelNumber=" + panelNumber
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/latestScore?panelNumber=" +
+          panelNumber
       )
         .then((response) => response.json())
         .then((data) => {
@@ -307,7 +325,11 @@ export default {
     },
     async fetchCategoryRoundExercise(catId, currentExercise) {
       await fetch(
-        "http://localhost:3000/api/categoryRoundExercises?catId=" +
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/categoryRoundExercises?catId=" +
           catId +
           "&exerciseNumber=" +
           currentExercise
@@ -321,7 +343,13 @@ export default {
         });
     },
     async updateTime() {
-      await fetch("http://localhost:3000/api/serverClock")
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/serverClock"
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data.time);
