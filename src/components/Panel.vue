@@ -3,10 +3,9 @@
     <video id="myVideo" playsinline autoplay muted loop>
       <source src="../assets/panelvideo.mp4" type="video/mp4" />
     </video>
+
     <transition-group name="slide">
       <div key="panelStatus" class="overlay" v-show="!showLatestScore">
-        <div class="panel-holding-panel">Panel {{ panelNumber }}</div>
-        <div class="panel-holding-time">{{ currentTime }}</div>
         <transition-group name="fade">
           <div
             v-if="
@@ -29,7 +28,7 @@
               </div>
             </transition-group>
             <div class="panel-namebg1">
-              <transition name="slide" mode="out-in">
+              <transition name="slideleft" mode="out-in">
                 <div
                   v-if="this.panelStatus.NextToCompeteDiscipline === 'TRS'"
                   :key="syncNameTransitionKey"
@@ -50,21 +49,23 @@
                   </div>
                 </div>
               </transition>
-              <transition name="slide" mode="out-in">
+              <transition name="slideleft" mode="out-in">
                 <div class="panel-holding-club" :key="clubTransitionKey">
                   {{ this.panelStatus.NextToCompeteClub }}
                 </div>
               </transition>
             </div>
-            <transition name="slide" mode="out-in">
+            <transition name="flip" mode="out-in">
               <div
                 v-if="this.panelStatus.NextToCompeteNation != undefined"
                 class="panel-holding-flag"
-                :key="nationTransitionKey"
+                :key="competitorTransitionKey"
               >
                 <img
-                  :src="getImageSource(this.panelStatus.NextToCompeteNation)"
-                  width="70"
+                  :src="
+                    getFlagImageSource(this.panelStatus.NextToCompeteNation)
+                  "
+                  width="90"
                 />
               </div>
             </transition>
@@ -74,6 +75,19 @@
                   class="panel-holding-category"
                   :key="categoryTransitionKey"
                 >
+                  <img
+                    :src="
+                      getFlagImageSource(
+                        this.panelStatus.NextToCompeteDiscipline
+                      )
+                    "
+                    height="90"
+                    style="
+                      padding-right: 10px;
+                      padding-bottom: 10px;
+                      vertical-align: middle;
+                    "
+                  />
                   {{ this.panelStatus.NextToCompeteCategory }}
                 </div>
               </transition>
@@ -100,90 +114,123 @@
               this.panelStatus.NextToCompeteCategory === ''
             "
           >
-            <div class="panel-splash"></div>
+            <div class="holding-empty">
+              <img src="../assets/panelholding.webp" height="900" />
+            </div>
           </div>
         </transition-group>
       </div>
       <div key="latestScore" class="overlay" v-show="showLatestScore">
         <div v-if="this.latestScore && this.latestExercise">
+          <div class="panel-latestflag">
+            <img
+              :src="getFlagImageSource(this.latestScore.Nation)"
+              width="110"
+            />
+          </div>
           <div class="panel-latestnameclub">
             <table>
               <tr>
-                <td class="panel-name1" colspan="2">
-                  {{ this.latestScore.FirstName1 }}
-                </td>
+                <td class="panel-name1">{{ this.latestScore.Surname1 }}</td>
               </tr>
               <tr>
-                <td class="panel-name2" colspan="2">
-                  {{ this.latestScore.Surname1 }}
-                </td>
+                <td class="panel-name2">{{ this.latestScore.FirstName1 }}</td>
               </tr>
               <tr>
-                <td class="panel-latestflag">
-                  <img
-                    :src="getImageSource(this.latestScore.Nation)"
-                    width="60"
-                  />
-                </td>
                 <td class="panel-clubname">{{ this.latestScore.Club }}</td>
               </tr>
             </table>
           </div>
           <table class="panel-scoretable">
-            <tr
-              v-if="
-                this.latestScore.Discipline === 'DMT' ||
-                this.latestScore.Discipline === 'TUM'
-              "
-            >
-              <td class="panel-scoretable_headerblank"></td>
-              <td class="panel-scoretable_scoreblank"></td>
-            </tr>
             <tr>
-              <td colspan="2" class="panel-Exercise">
+              <td colspan="7" class="panel-Exercise">
                 {{ this.latestExercise.RoundName }} | Exercise
                 {{ this.latestExercise.Exercise }}
               </td>
             </tr>
+
             <tr>
+              <td
+                v-if="
+                  this.latestScore.Discipline === 'DMT' ||
+                  this.latestScore.Discipline === 'TUM'
+                "
+                class="panel-scoretable_headerblank"
+              ></td>
               <td class="panel-scoretable_header">E</td>
+              <td
+                v-if="
+                  this.latestScore.Discipline === 'TRA' ||
+                  this.latestScore.Discipline === 'TRS'
+                "
+                class="panel-scoretable_header"
+              >
+                H
+              </td>
+              <td class="panel-scoretable_header">D</td>
+
+              <td
+                v-if="this.latestScore.Discipline == 'TRS'"
+                class="panel-scoretable_header"
+              >
+                S
+              </td>
+              <td
+                v-if="this.latestScore.Discipline == 'TRA'"
+                class="panel-scoretable_header"
+              >
+                T
+              </td>
+
+              <td class="panel-scoretable_headerpen">P</td>
+              <td class="panel-scoretable_headerblank"></td>
+              <td class="panel-scoretable_headertotal">Total</td>
+              <td
+                v-if="
+                  this.latestScore.Discipline === 'DMT' ||
+                  this.latestScore.Discipline === 'TUM'
+                "
+                class="panel-scoretable_headerblank"
+              ></td>
+            </tr>
+
+            <tr>
+              <td
+                v-if="
+                  this.latestScore.Discipline === 'DMT' ||
+                  this.latestScore.Discipline === 'TUM'
+                "
+                class="panel-scoretable_scoreblank"
+              ></td>
               <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Execution, 2) }}
               </td>
-            </tr>
-            <tr
-              v-if="
-                this.latestScore.Discipline === 'TRA' ||
-                this.latestScore.Discipline === 'TRS'
-              "
-            >
-              <td class="panel-scoretable_header">H</td>
-              <td class="panel-scoretable_score">
+              <td
+                v-if="
+                  this.latestScore.Discipline === 'TRA' ||
+                  this.latestScore.Discipline === 'TRS'
+                "
+                class="panel-scoretable_score"
+              >
                 {{
                   formattedNumber(this.latestExercise.HorizontalDisplacement, 2)
                 }}
               </td>
-            </tr>
-            <tr>
-              <td class="panel-scoretable_header">D</td>
               <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Difficulty, 1) }}
               </td>
-            </tr>
-            <tr v-if="this.latestScore.Discipline === 'TRS'">
-              <td class="panel-scoretable_header">S</td>
-              <td class="panel-scoretable_score">
+              <td
+                v-if="this.latestScore.Discipline == 'TRS'"
+                class="panel-scoretable_score"
+              >
                 {{ formattedNumber(this.latestExercise.Synchronisation, 2) }}
               </td>
-            </tr>
-            <tr v-else-if="this.latestScore.Discipline === 'TRA'">
-              <td class="panel-scoretable_header">T</td>
-              <td class="panel-scoretable_score">
+              <td
+                v-if="this.latestScore.Discipline == 'TRA'"
+                class="panel-scoretable_score"
+              >
                 {{ formattedNumber(this.latestExercise.TimeOfFlight, 2) }}
               </td>
-            </tr>
-            <tr>
-              <td class="panel-scoretable_headerpen">P</td>
               <td
                 v-if="this.latestExercise.Penalty > 0"
                 class="panel-scoretable_scorepen"
@@ -193,47 +240,51 @@
               <td v-else class="panel-scoretable_scorepen">
                 {{ formattedNumber(this.latestExercise.Penalty, 1) }}
               </td>
-            </tr>
-            <tr
-              v-if="
-                this.latestScore.Discipline === 'DMT' ||
-                this.latestScore.Discipline === 'TUM'
-              "
-            >
-              <td class="panel-scoretable_headerblank"></td>
               <td class="panel-scoretable_scoreblank"></td>
-            </tr>
-          </table>
-          <table class="panel-scoretabletotal">
-            <tr>
-              <td class="panel-scoretabletotal_header">Exercise Total</td>
-            </tr>
-            <tr>
-              <td class="panel-scoretabletotal_score">
+              <td class="panel-scoretable_scoretotal">
                 {{ formattedNumber(this.latestExercise.Total, 2) }}
               </td>
-            </tr>
-          </table>
-          <table class="panel-ranktable">
-            <tr>
-              <td class="panel-ranktable_header">Rank</td>
               <td
                 v-if="
-                  this.latestCategory.CompType === 0 &&
-                  this.latestScore.F1Total > 0
+                  this.latestScore.Discipline === 'DMT' ||
+                  this.latestScore.Discipline === 'TUM'
                 "
-                class="panel-ranktable_number"
-              >
-                {{ this.latestScore.DisplayZeroRank }}
-              </td>
-              <td v-else class="panel-ranktable_number">
-                {{ this.latestScore.DisplayCumulativeRank }}
-              </td>
+                class="panel-scoretable_scoreblank"
+              ></td>
             </tr>
           </table>
         </div>
       </div>
     </transition-group>
+    <transition name="slideleft" mode="out-in">
+      <div
+        :key="showLatestScore ? 'latestScore' : 'panelStatus'"
+        class="transition-container"
+      >
+        <div v-if="!showLatestScore" class="panel-holding-panel-title">
+          Panel {{ panelNumber }}<span> |</span>
+        </div>
+        <div v-if="!showLatestScore" class="panel-holding-time">
+          {{ currentTime }}
+        </div>
+        <div v-if="showLatestScore" class="panel-ranktable">
+          <table>
+            <tr>
+              <td class="panel-ranktable_header">Rank</td>
+              <td
+                v-if="latestCategory.CompType === 0 && latestScore.F1Total > 0"
+                class="panel-ranktable_number"
+              >
+                {{ latestScore.DisplayZeroRank }}
+              </td>
+              <td v-else class="panel-ranktable_number">
+                {{ latestScore.DisplayCumulativeRank }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -251,13 +302,28 @@ export default {
       return this.panelStatus.NextToCompeteCategory || "no-category";
     },
     syncNameTransitionKey() {
-      return this.panelStatus.NextToCompeteSurname1 || "no-name";
+      return (
+        this.panelStatus.NextToCompeteSurname1 +
+          this.panelStatus.NextToCompeteSurname2 || "no-name"
+      );
     },
     nameTransitionKey() {
-      return this.panelStatus.NextToCompeteFirstName1 || "no-name";
+      return (
+        this.panelStatus.NextToCompeteFirstName1 +
+          this.panelStatus.NextToCompeteSurname1 || "no-name"
+      );
     },
     nationTransitionKey() {
       return this.panelStatus.NextToCompeteNation || "no-nation";
+    },
+    competitorTransitionKey() {
+      return (
+        this.panelStatus.NextToCompeteFirstName1 +
+          this.panelStatus.NextToCompeteFirstName2 +
+          this.panelStatus.NextToCompeteSurname1 +
+          this.panelStatus.NextToCompeteSurname2 +
+          this.panelStatus.NextToCompeteClub || "no-competitor"
+      );
     },
   },
   data() {
@@ -378,7 +444,7 @@ export default {
             this.latestExercise = await this.getLatestExerciseFromLatestScore();
             await this.fetchCategory();
             this.showLatestScore = true;
-            setTimeout(() => (this.showLatestScore = false), 6000);
+            setTimeout(() => (this.showLatestScore = false), 8000);
           }
         })
         .catch((error) => {
@@ -422,9 +488,13 @@ export default {
 
       return tempLatestExercise;
     },
-    getImageSource(countryCode) {
+    getFlagImageSource(countryCode) {
       if (countryCode === undefined) countryCode = "GBR";
       return require(`@/assets/${countryCode}.png`);
+    },
+    getImageSource(discipline) {
+      if (discipline == undefined) discipline = "TRA";
+      return require(`@/assets/${discipline}.png`);
     },
     isValueNullOrEmpty(value) {
       return (value == null || value == "" || value == undefined) && value != 0;
@@ -444,7 +514,7 @@ export default {
 
 .slide-leave-active,
 .slide-enter-active {
-  transition: 1s;
+  transition: 0.5s;
 }
 .slide-enter-from {
   transform: translate(100%, 0);
@@ -466,5 +536,34 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.slideleft-enter-active,
+.slideleft-leave-active {
+  transition: 0.5s;
+}
+
+.slideleft-enter-from,
+.slideleft-leave-to {
+  transform: translateX(-100%);
+}
+.slideright-enter-active,
+.slideright-leave-active {
+  transition: 1s;
+}
+
+.slideright-enter-from,
+.slideright-leave-to {
+  transform: translateX(150%);
+}
+
+.flip-enter-active,
+.flip-leave-active {
+  transition: 0.5s;
+}
+
+.flip-enter-from,
+.flip-leave-to {
+  transform: rotateY(90deg);
 }
 </style>
