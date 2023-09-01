@@ -50,7 +50,7 @@ const routerInstance = createRouter({
       path: "/online/:catId",
       component: OnlineResults,
       name: "OnlineScoringResults",
-      meta: { title: "Online Scoring Results Display" },
+      meta: { title: "Online Scoring Results" },
     },
   ],
 });

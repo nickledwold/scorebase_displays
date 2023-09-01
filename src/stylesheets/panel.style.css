@@ -274,7 +274,7 @@ body {
 .panel-ranktable {
   float: left;
   position: absolute;
-  top: 860px;
+  top: 920px;
   text-align: left;
   font-size: 120px;
   border-collapse: separate;
@@ -286,7 +286,7 @@ body {
 .panel-holding-time {
   float: left;
   position: absolute;
-  top: 880px;
+  top: 937px;
   left: 26%;
   text-align: left;
   color: #ffffff;
@@ -299,7 +299,7 @@ body {
 .panel-holding-panel-title {
   float: left;
   position: absolute;
-  top: 880px;
+  top: 937px;
   left: 2%;
   text-align: left;
   color: #ffffff;
@@ -390,7 +390,7 @@ body {
   table-layout: fixed;
 }
 
-span {
+.panel-span {
   text-align: left;
   color: #ffffff;
   font-family: Gotham Light, sans-serif;

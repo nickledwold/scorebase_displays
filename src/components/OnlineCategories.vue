@@ -33,7 +33,7 @@
               :class="{ active: tab.active }"
               @click="selectTab(index)"
             >
-              <a class="online-a">{{ tab.label }}</a>
+              <a>{{ tab.label }}</a>
             </li>
           </ul>
 
@@ -60,6 +60,7 @@
                     }}</a>
                     <br />
                   </div>
+                  <div class="padding"></div>
                 </div>
               </transition>
             </div>
@@ -149,7 +150,7 @@ export default {
 
 .collapse-enter-active,
 .collapse-leave-active {
-  transition: max-height 0.5s ease-in-out;
+  transition: 1s;
 }
 .collapse-enter,
 .collapse-leave-to {

@@ -262,7 +262,7 @@
         class="transition-container"
       >
         <div v-if="!showLatestScore" class="panel-holding-panel-title">
-          Panel {{ panelNumber }}<span> |</span>
+          Panel {{ panelNumber }}<span class="panel-span"> |</span>
         </div>
         <div v-if="!showLatestScore" class="panel-holding-time">
           {{ currentTime }}

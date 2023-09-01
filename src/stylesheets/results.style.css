@@ -68,7 +68,13 @@
   unicode-range: U+0030-0039;
 }
 
+#app {
+  margin-top: 0;
+}
+
 .online-html-class {
+  height: 100%;
+  width: 100%;
   box-sizing: border-box;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -83,8 +89,8 @@
   text-decoration: none;
 }
 
-.online-a:hover {
-  color: #878787;
+a.online-a:hover {
+  color: #878787 !important;
 }
 
 *,
@@ -1775,6 +1781,10 @@ hr {
   }
 }
 
+.padding {
+  padding: 5px;
+}
+
 .online-tabs {
   width: 100%;
   float: none;
@@ -1789,7 +1799,7 @@ hr {
 }
 
 .online-tab-links li {
-  margin: 0px 2px 0px 0px;
+  margin: 0px 5px 0px 0px;
   list-style: none;
   float: none;
   display: inline-block;
@@ -1838,13 +1848,13 @@ li.active a:hover {
 }
 
 .disciplinetitle {
-  padding: 0px 0px;
+  padding: 15px 0px 0px 0px;
   font-size: 16px;
   color: #000000;
   font-family: Gotham Medium;
   text-transform: uppercase;
 }
-*/ .discipline {
+.discipline {
   -moz-box-sizing: border-box;
   -moz-float-edge: margin-box;
   color: gray;
@@ -1855,7 +1865,6 @@ li.active a:hover {
   overflow: visible;
   border: 0;
   border-top: 1px solid #eee;
-  margin: 20px 0;
 }
 
 .online-eventlogo {
