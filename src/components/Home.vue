@@ -7,6 +7,8 @@
       <li>/ranked</li>
       <li>/latest</li>
       <li>/cis</li>
+      <li>/online</li>
+      <li>/online/{catId}</li>
     </ul>
   </div>
 </template>

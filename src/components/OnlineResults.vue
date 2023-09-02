@@ -90,7 +90,13 @@
             <table class="results-top-name">
               <tr class="results-name">
                 <td rowspan="2" class="results-scores-pos">
-                  {{ result.Rank }}
+                  {{
+                    this.noResults
+                      ? result.RunningOrderNumber
+                      : result.Rank
+                      ? result.Rank
+                      : result.RunningOrderNumber
+                  }}
                 </td>
                 <td class="results-scores-name">
                   {{ result.fullNameReversed }}
@@ -102,22 +108,48 @@
                 </td>
               </tr>
             </table>
-            <div class="filterElements qualification">
+            <div
+              v-if="!noResults && result.Exercises.length > 0"
+              class="filterElements qualification"
+            >
               <table class="results-scores-table">
                 <tr class="results-headers">
                   <th class="results-scores-routine2">Exercise</th>
                   <th class="results-scores-routine3" colspan="2">E</th>
-                  <th class="results-scores-routine3">H</th>
+                  <th
+                    v-if="
+                      this.categoryData.Discipline == 'TRA' ||
+                      this.categoryData.Discipline == 'TRS'
+                    "
+                    class="results-scores-routine3"
+                  >
+                    H
+                  </th>
                   <th class="results-scores-routine3">D</th>
-                  <th class="results-scores-routine3">T</th>
+                  <th
+                    v-if="
+                      this.categoryData.Discipline == 'TRA' ||
+                      this.categoryData.Discipline == 'TRS'
+                    "
+                    class="results-scores-routine3"
+                  >
+                    {{ this.categoryData.Discipline == "TRS" ? "S" : "T" }}
+                  </th>
                   <th class="results-scores-routine3">Pen</th>
                   <th class="results-scores-routine3">Total</th>
                   <th class="results-scores-routine3">Rank</th>
                   <th class="results-scores-routinevid">Video</th>
                 </tr>
-                <tr>
-                  <td class="results-scores-routine">1</td>
-                  <td class="results-scores-tri-set-E">16.80</td>
+                <tr
+                  v-for="exercise in result.Exercises"
+                  :key="exercise.ExerciseNumber"
+                >
+                  <td class="results-scores-routine">
+                    {{ exercise.ExerciseNumber }}
+                  </td>
+                  <td class="results-scores-tri-set-E">
+                    {{ formattedNumber(exercise.Execution, 2) }}
+                  </td>
                   <td class="results-scores-median-select">
                     <label
                       id="expand$exerciseNumber$competitorid"
@@ -125,12 +157,44 @@
                       >[+]</label
                     >
                   </td>
-                  <td class="results-scores-tri-set-H">9.90</td>
-                  <td class="results-scores-tri-set-D">15.4</td>
-                  <td class="results-scores-tri-set-ToF">16.57</td>
-                  <td class="results-scores-tri-set-P">-0.2</td>
-                  <td class="results-scores-tri-set-Tot">53.76</td>
-                  <td class="results-scores-tri-set-Tot">1</td>
+                  <td
+                    v-if="
+                      this.categoryData.Discipline == 'TRA' ||
+                      this.categoryData.Discipline == 'TRS'
+                    "
+                    class="results-scores-tri-set-H"
+                  >
+                    {{ formattedNumber(exercise.HorizontalDisplacement, 2) }}
+                  </td>
+                  <td class="results-scores-tri-set-D">
+                    {{ formattedNumber(exercise.Difficulty, 1) }}
+                  </td>
+                  <td
+                    v-if="
+                      this.categoryData.Discipline == 'TRA' ||
+                      this.categoryData.Discipline == 'TRS'
+                    "
+                    class="results-scores-tri-set-ToF"
+                  >
+                    {{
+                      this.categoryData.Discipline == "TRS"
+                        ? formattedNumber(exercise.Synchronisation, 2)
+                        : formattedNumber(exercise.TimeOfFlight, 2)
+                    }}
+                  </td>
+                  <td class="results-scores-tri-set-P">
+                    {{
+                      exercise.Penalty > 0
+                        ? "-" + formattedNumber(exercise.Penalty, 1)
+                        : formattedNumber(exercise.Penalty, 1)
+                    }}
+                  </td>
+                  <td class="results-scores-tri-set-Tot">
+                    {{ formattedNumber(exercise.Total, 2) }}
+                  </td>
+                  <td class="results-scores-tri-set-Tot">
+                    {{ exercise.Rank }}
+                  </td>
 
                   <td class="results-scores-tri-vid">
                     <div class="results-box">
@@ -140,7 +204,10 @@
                     </div>
                     <div id="popup1" class="results-overlay">
                       <div class="results-popup">
-                        <p>LEDWOLD Nicholas<br />Exercise 1<br /><br /></p>
+                        <p>
+                          {{ result.fullNameReversed }}<br />Exercise
+                          {{ exercise.ExerciseNumber }}<br /><br />
+                        </p>
 
                         <h2>SELECT ANGLE</h2>
                         <a class="close" href="#">&times;</a>
@@ -268,116 +335,6 @@
                     </table>
                   </td>
                 </tr>
-
-                <tr>
-                  <td class="results-scores-routine">2</td>
-                  <td class="results-scores-tri-set-E">14.50</td>
-                  <td class="results-scores-median-select">
-                    <label
-                      id="expand$exerciseNumber$competitorid"
-                      onclick="toggle(this)"
-                      >[+]</label
-                    >
-                  </td>
-                  <td class="results-scores-tri-set-H">9.90</td>
-                  <td class="results-scores-tri-set-D">15.4</td>
-                  <td class="results-scores-tri-set-ToF">16.57</td>
-                  <td class="results-scores-tri-set-P">-0.2</td>
-                  <td class="results-scores-tri-set-Tot">53.76</td>
-                  <td class="results-scores-tri-set-Tot">1</td>
-
-                  <td class="results-scores-tri-vid">
-                    <div class="results-box">
-                      <a class="results-button" href="#popup2"
-                        ><img src="../assets/videoicon.png" width="25"
-                      /></a>
-                    </div>
-
-                    <div id="popup2" class="results-overlay">
-                      <div class="results-popup">
-                        <h2>SELECT ANGLE</h2>
-                        <a class="close" href="#">&times;</a>
-                        <div class="content">
-                          <table class="angletable">
-                            <tr>
-                              <td colspan="2" class="anglevideotitle">
-                                Angle 1
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="anglevideo">
-                                <a href="[videourl.mp4]"
-                                  ><img
-                                    src="../assets/videoicon.png"
-                                    width="25"
-                                /></a>
-                              </td>
-                              <td class="anglevideo">
-                                <a href="[videourl.mp4]"
-                                  ><img
-                                    src="../assets/videoicon.png"
-                                    width="25"
-                                /></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="2" class="anglevideotitle">
-                                Angle 2
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="anglevideo">
-                                <a href="[videourl.mp4]"
-                                  ><img
-                                    src="../assets/videoicon.png"
-                                    width="25"
-                                /></a>
-                              </td>
-                              <td class="anglevideo">
-                                <a href="[videourl.mp4]"
-                                  ><img
-                                    src="../assets/videoicon.png"
-                                    width="25"
-                                /></a>
-                              </td>
-                            </tr>
-                          </table>
-                          <h3>
-                            High quality videos may not be immediately available
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td
-                    class="results-scores-tri-medians"
-                    colspan="100%"
-                    style="display: none"
-                    id="medians$exerciseNumber$competitorid"
-                  >
-                    <table class="results-median">
-                      <tr>
-                        <td class="results-medianheadtitle">Element</td>
-                        <td class="results-medianhead"></td>
-                      </tr>
-                      <tr>
-                        <td class="results-medianheadtitle">Median 1</td>
-                        <td class="results-medianscore"></td>
-                      </tr>
-                      <tr>
-                        <td class="results-medianheadtitle">Median 2</td>
-                        <td class="results-medianscore"></td>
-                      </tr>
-                      <tr>
-                        <td class="results-medianheadtitle">Sum</td>
-                        <td class="results-medianscore"></td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
               </table>
               <table class="results-total-table">
                 <tr>
@@ -435,6 +392,7 @@ export default {
       categoryData: {},
       resultsData: {},
       searchParam: "",
+      noResults: false,
     };
   },
   created() {
@@ -466,7 +424,7 @@ export default {
           process.env.VUE_APP_API_IP_ADDRESS +
           ":" +
           process.env.VUE_APP_API_PORT +
-          "/api/liveResults?catId=" +
+          "/api/onlineResults?catId=" +
           this.catId +
           "&compType=" +
           this.categoryData.CompType
@@ -478,14 +436,31 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      this.resultsData = tempData.map((x) => {
+      let competitorsWithScores = tempData.filter(
+        (competitor) => competitor.Exercises.length > 0
+      );
+      console.log(competitorsWithScores);
+      if (competitorsWithScores.length == 0) {
+        this.noResults = true;
+        tempData.sort((a, b) => {
+          if (a.Q1Flight < b.Q1Flight) return -1;
+          if (a.Q1Flight > b.Q1Flight) return 1;
+          if (a.Q1StartNo < b.Q1StartNo) return -1;
+          if (a.Q1StartNo > b.Q1StartNo) return 1;
+          return 0;
+        });
+      } else {
+        this.noResults = false;
+      }
+      console.log(this.noResults);
+      this.resultsData = tempData.map((x, i) => {
         let fullName =
           this.categoryData.Discipline == "TRS"
-            ? x.Surname1 + " " + x.Surname2
+            ? x.Surname1 + ", " + x.Surname2
             : x.FirstName1 + " " + x.Surname1;
         let fullNameReversed =
           this.categoryData.Discipline == "TRS"
-            ? x.Surname2.toUpperCase() + " " + x.Surname1.toUpperCase()
+            ? x.Surname2.toUpperCase() + ", " + x.Surname1.toUpperCase()
             : x.Surname1.toUpperCase() + " " + x.FirstName1;
         x.FullName = fullName;
         x.fullNameReversed = fullNameReversed;
@@ -493,8 +468,31 @@ export default {
           this.categoryData.CompType == 0
             ? x.DisplayZeroRank
             : x.DisplayCumulativeRank;
+        x.RunningOrderNumber = i + 1;
         return x;
       });
+      console.log(this.resultsData);
+    },
+    formattedNumber(numberAsString, decimalPlaces) {
+      let parsedNumber = parseFloat(numberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      return parsedNumber.toFixed(decimalPlaces);
+    },
+    checkLinkStatus(link) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", link.url, true);
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            //do nothing if link is good
+          } else {
+            link.disabled = true;
+          }
+        }
+      };
+
+      xhr.send();
     },
   },
 };
