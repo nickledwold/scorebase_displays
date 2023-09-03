@@ -40,16 +40,35 @@
           </table>
         </div>
 
-        <div class="results-roundstatus">
+        <div
+          class="results-roundstatus"
+          v-if="this.resultsData && this.resultsData.length > 0"
+        >
           <table cellspacing="0" align="center">
             <tr>
-              <td class="roundstatusroundofficial">Q1</td>
-              <td class="spacer"></td>
-              <td class="roundstatusroundprovisional">F1</td>
+              <template
+                v-for="(round, index) in getRoundsForAllCompetitors()"
+                :key="round"
+              >
+                <td class="roundstatusround">{{ round }}</td>
+                <td
+                  v-if="index !== getRoundsForAllCompetitors().length - 1"
+                  class="spacer"
+                ></td>
+              </template>
             </tr>
-            <td class="roundstatusofficial">Official</td>
-            <td class="spacer"></td>
-            <td class="roundstatusprovisional">Provisional</td>
+            <template
+              v-for="(round, index) in getRoundsForAllCompetitors()"
+              :key="round"
+            >
+              <td :class="getRoundStatusClass(round)">
+                {{ getRoundStatusString(round) }}
+              </td>
+              <td
+                v-if="index !== getRoundsForAllCompetitors().length - 1"
+                class="spacer"
+              ></td>
+            </template>
           </table>
         </div>
 
@@ -74,11 +93,28 @@
           <div class="results-btnfilterimg">
             <img src="../assets/filter.png" width="20" />
           </div>
-          <button id="mybutton" class="results-btn active" onclick="">
+          <button
+            id="mybutton"
+            class="results-btn"
+            :class="{ active: this.roundFilterString === '' }"
+            @click="updateRoundFilter('')"
+          >
             All
           </button>
-          <button class="results-btn" onclick="">Q</button>
-          <button class="results-btn" onclick="">F</button>
+          <button
+            class="results-btn"
+            :class="{ active: this.roundFilterString === 'Q' }"
+            @click="updateRoundFilter('Q')"
+          >
+            Q
+          </button>
+          <button
+            class="results-btn"
+            :class="{ active: this.roundFilterString === 'F' }"
+            @click="updateRoundFilter('F')"
+          >
+            F
+          </button>
         </div>
 
         <div
@@ -112,6 +148,7 @@
               <div
                 v-for="round in getRoundsForCompetitor(result.Exercises)"
                 :key="round"
+                v-show="roundFilter(round)"
               >
                 <table class="results-scores-table">
                   <tr class="results-headers">
@@ -359,59 +396,45 @@
                         <table class="results-median">
                           <tr>
                             <td class="results-medianheadtitle">Element</td>
-                            <td class="results-medianhead">1</td>
-                            <td class="results-medianhead">2</td>
-                            <td class="results-medianhead">3</td>
-                            <td class="results-medianhead">4</td>
-                            <td class="results-medianhead">5</td>
-                            <td class="results-medianhead">6</td>
-                            <td class="results-medianhead">7</td>
-                            <td class="results-medianhead">8</td>
-                            <td class="results-medianhead">9</td>
-                            <td class="results-medianhead">10</td>
-                            <td class="results-medianhead">L</td>
+                            <td
+                              v-for="median in exercise.Medians.filter(
+                                (median) => median.MedSum != null
+                              )"
+                              :key="median"
+                              class="results-medianhead"
+                            >
+                              {{ median.DeductionNumber }}
+                            </td>
                           </tr>
                           <tr>
                             <td class="results-medianheadtitle">Median 1</td>
-                            <td class="results-medianscore">1</td>
-                            <td class="results-medianscore">1</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
+                            <td
+                              v-for="median in exercise.Medians"
+                              :key="median"
+                              class="results-medianscore"
+                            >
+                              {{ median.Med1 }}
+                            </td>
                           </tr>
                           <tr>
                             <td class="results-medianheadtitle">Median 2</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">3</td>
+                            <td
+                              v-for="median in exercise.Medians"
+                              :key="median"
+                              class="results-medianscore"
+                            >
+                              {{ median.Med2 }}
+                            </td>
                           </tr>
                           <tr>
                             <td class="results-medianheadtitle">Sum</td>
-                            <td class="results-medianscore">4</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">5</td>
-                            <td class="results-medianscore">6</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">2</td>
-                            <td class="results-medianscore">4</td>
-                            <td class="results-medianscore">3</td>
-                            <td class="results-medianscore">4</td>
-                            <td class="results-medianscore">5</td>
-                            <td class="results-medianscore">6</td>
+                            <td
+                              v-for="median in exercise.Medians"
+                              :key="median"
+                              class="results-medianscore"
+                            >
+                              {{ median.MedSum }}
+                            </td>
                           </tr>
                         </table>
                       </td>
@@ -423,13 +446,28 @@
                     <td class="results-scores-round">
                       {{ getRoundName(round) }} Total
                     </td>
-                    <td class="results-scores-tri-Tot">52.47</td>
+                    <td class="results-scores-tri-Tot">
+                      {{
+                        formattedNumber(
+                          result.RoundTotals.filter(
+                            (roundTotal) => roundTotal.Round == round
+                          )[0].RoundTotal,
+                          2
+                        )
+                      }}
+                    </td>
                   </tr>
                 </table>
                 <table class="results-round-rank-table">
                   <tr>
                     <td class="results-scores-roundrank">Round Rank</td>
-                    <td class="results-scores-roundrank-tot">1</td>
+                    <td class="results-scores-roundrank-tot">
+                      {{
+                        result.RoundTotals.filter(
+                          (roundTotal) => roundTotal.Round == round
+                        )[0].RoundRank
+                      }}
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -480,6 +518,7 @@ export default {
       noResults: false,
       categoryRounds: {},
       mediansVisible: {},
+      roundFilterString: "",
     };
   },
   created() {
@@ -527,7 +566,6 @@ export default {
       let competitorsWithScores = tempData.filter(
         (competitor) => competitor.Exercises.length > 0
       );
-      console.log(competitorsWithScores);
       if (competitorsWithScores.length == 0) {
         this.noResults = true;
         tempData.sort((a, b) => {
@@ -581,11 +619,41 @@ export default {
       parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
       return parsedNumber.toFixed(decimalPlaces);
     },
+    roundFilter(round) {
+      if (this.roundFilterString == "") return true;
+      if (this.roundFilterString == round[0]) return true;
+      return false;
+    },
+    updateRoundFilter(roundFilter) {
+      this.roundFilterString = roundFilter;
+      console.log("roundfilterstring:" + this.roundFilterString);
+    },
     getRoundsForCompetitor(exercises) {
       const roundData = exercises.map((exercise) => ({
         RoundName: exercise.RoundName,
         RoundOrder: exercise.RoundOrder,
       }));
+      const sortedRoundData = roundData.sort(
+        (a, b) => a.RoundOrder - b.RoundOrder
+      );
+      const uniqueRoundNamesSet = new Set(
+        sortedRoundData.map((round) => round.RoundName)
+      );
+      const uniqueSortedRoundNames = Array.from(uniqueRoundNamesSet);
+      return uniqueSortedRoundNames;
+    },
+    getRoundsForAllCompetitors() {
+      const roundData = [];
+      if (!this.resultsData || this.resultsData.length == 0) return roundData;
+      this.resultsData.forEach((competitor) => {
+        competitor.Exercises.forEach((exercise) => {
+          const round = {
+            RoundName: exercise.RoundName,
+            RoundOrder: exercise.RoundOrder,
+          };
+          roundData.push(round);
+        });
+      });
       const sortedRoundData = roundData.sort(
         (a, b) => a.RoundOrder - b.RoundOrder
       );
@@ -621,6 +689,22 @@ export default {
         display: this.mediansVisible[key] ? "table-cell" : "none",
       };
     },
+    getRoundStatusClass(round) {
+      let categoryRound = this.categoryRounds.filter(
+        (item) => item.RoundName == round
+      )[0];
+      if (!categoryRound) return "roundstatusprovisional";
+      return categoryRound.SignedOff == 1
+        ? "roundstatusofficial"
+        : "roundstatusprovisional";
+    },
+    getRoundStatusString(round) {
+      let categoryRound = this.categoryRounds.filter(
+        (item) => item.RoundName == round
+      )[0];
+      if (!categoryRound) return "Provisional";
+      return categoryRound.SignedOff == 1 ? "Official" : "Provisional";
+    },
     checkLinkStatus(link) {
       const xhr = new XMLHttpRequest();
       xhr.open("GET", link.url, true);
@@ -642,5 +726,5 @@ export default {
 </script>
 
 <style scoped>
-@import "../stylesheets/online.style.css";
+@import "../stylesheets/results.style.css";
 </style>

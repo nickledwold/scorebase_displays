@@ -146,7 +146,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../stylesheets/results.style.css";
+@import "../stylesheets/online-categories.style.css";
 
 .collapse-enter-active,
 .collapse-leave-active {
