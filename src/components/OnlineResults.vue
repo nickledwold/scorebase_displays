@@ -413,7 +413,7 @@
                               :key="median"
                               class="results-medianscore"
                             >
-                              {{ median.Med1 }}
+                              {{ formatMedian(median.Med1) }}
                             </td>
                           </tr>
                           <tr>
@@ -423,7 +423,7 @@
                               :key="median"
                               class="results-medianscore"
                             >
-                              {{ median.Med2 }}
+                              {{ formatMedian(median.Med2) }}
                             </td>
                           </tr>
                           <tr>
@@ -433,7 +433,7 @@
                               :key="median"
                               class="results-medianscore"
                             >
-                              {{ median.MedSum }}
+                              {{ formatMedian(median.MedSum) }}
                             </td>
                           </tr>
                         </table>
@@ -618,6 +618,16 @@ export default {
       let parsedNumber = parseFloat(numberAsString);
       parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
       return parsedNumber.toFixed(decimalPlaces);
+    },
+    formatMedian(median) {
+      let medianAsFloat = parseFloat(median);
+      let medianAsInt = parseInt(median);
+
+      medianAsFloat = isNaN(medianAsFloat) ? null : medianAsFloat;
+      medianAsInt = isNaN(medianAsInt) ? null : medianAsInt;
+      let returnedMedian =
+        medianAsFloat == medianAsInt ? medianAsInt : medianAsFloat.toFixed(2);
+      return returnedMedian;
     },
     roundFilter(round) {
       if (this.roundFilterString == "") return true;
