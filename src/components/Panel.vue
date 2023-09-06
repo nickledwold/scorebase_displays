@@ -444,7 +444,7 @@ export default {
             this.latestExercise = await this.getLatestExerciseFromLatestScore();
             await this.fetchCategory();
             this.showLatestScore = true;
-            setTimeout(() => (this.showLatestScore = false), 8000);
+            setTimeout(() => (this.showLatestScore = false), 9000);
           }
         })
         .catch((error) => {

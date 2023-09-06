@@ -155,8 +155,14 @@
                       <b>{{
                         isValueNullOrEmpty(competitor.Exercises)
                           ? "-"
-                          : formattedNumber(
+                          : competitor.CompType == 1 &&
+                            this.currentRound[0] == "F"
+                          ? formattedNumber(
                               competitor.Exercises[0].TotalScore,
+                              2
+                            )
+                          : formattedNumber(
+                              competitor.Exercises[0].RoundTotal,
                               2
                             )
                       }}</b>
