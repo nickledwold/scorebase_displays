@@ -214,9 +214,7 @@
                         "
                         class="results-scores-tri-set-H"
                       >
-                        {{
-                          formattedNumber(exercise.HorizontalDisplacement, 2)
-                        }}
+                        {{ formattedNumber(exercise.HD, 2) }}
                       </td>
                       <td class="results-scores-tri-set-D">
                         {{ formattedNumber(exercise.Difficulty, 1) }}
@@ -230,8 +228,8 @@
                       >
                         {{
                           this.categoryData.Discipline == "TRS"
-                            ? formattedNumber(exercise.Synchronisation, 2)
-                            : formattedNumber(exercise.TimeOfFlight, 2)
+                            ? formattedNumber(exercise.Sync, 2)
+                            : formattedNumber(exercise.ToF, 2)
                         }}
                       </td>
                       <td class="results-scores-tri-set-P">
@@ -427,7 +425,13 @@
                             </td>
                           </tr>
                           <tr>
-                            <td class="results-medianheadtitle">Sum</td>
+                            <td class="results-medianheadtitle">
+                              {{
+                                this.categoryData.Discipline == "TRS"
+                                  ? "Average"
+                                  : "Sum"
+                              }}
+                            </td>
                             <td
                               v-for="median in exercise.Medians"
                               :key="median"

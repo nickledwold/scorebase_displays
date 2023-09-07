@@ -86,7 +86,7 @@ body {
   color: #ffffff;
   text-align: Left;
   width: 60%;
-  padding-top: 65px;
+  padding-top: 10px;
   padding-left: 30px;
   line-height: 100%;
   text-transform: uppercase;
@@ -173,6 +173,34 @@ body {
   max-width: 230px;
 }
 
+.panel-scoretable_header2 {
+  text-align: center;
+  font-family: Gotham Book, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 13px;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: hidden;
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.panel-scoretable_header3 {
+  text-align: center;
+  font-family: Gotham Book, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 13px;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: hidden;
+  min-width: 300px;
+  max-width: 300px;
+}
+
 .panel-scoretable_score {
   text-align: center;
   font-family: Gotham Light, sans-serif;
@@ -222,6 +250,33 @@ body {
   min-width: 20px;
   max-width: 20px;
   width: 20px;
+}
+.panel-scoretable_headerpen2 {
+  text-align: center;
+  font-family: Gotham Book, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 13px;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: hidden;
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.panel-scoretable_headerpen3 {
+  text-align: center;
+  font-family: Gotham Book, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 13px;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: hidden;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .panel-scoretable_scorepen {
@@ -398,11 +453,19 @@ body {
   font-size: 90px;
 }
 
-span2 {
+.panel-span2 {
   text-align: left;
   color: #ffffff;
   font-family: Gotham Book, sans-serif;
   text-transform: uppercase;
+}
+
+.panel-span3 {
+	text-align: left;
+	color:#ffffff;
+    font-family: Gotham Book, sans-serif;
+	text-transform: uppercase;
+	font-size: 40px;
 }
 
 .panel-holding-next,

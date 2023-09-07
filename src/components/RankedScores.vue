@@ -136,12 +136,17 @@
                       >
                         <b>{{
                           isValueNullOrEmpty(competitor.Exercises) ||
-                          competitor.Exercises.length < exercise.ExerciseNumber
+                          competitor.Exercises.find(
+                            (item) =>
+                              item.ExerciseNumber == exercise.ExerciseNumber
+                          ) == undefined
                             ? "-"
                             : formattedNumber(
-                                competitor.Exercises[
-                                  exercise.ExerciseNumber - 1
-                                ].Total,
+                                competitor.Exercises.find(
+                                  (item) =>
+                                    item.ExerciseNumber ==
+                                    exercise.ExerciseNumber
+                                ).Total,
                                 2
                               )
                         }}</b>
@@ -255,7 +260,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.time);
           this.currentTime = data.time;
         })
         .catch((error) => {
@@ -284,7 +288,7 @@ export default {
       this.currentCategory = this.categories[this.categoryIndex];
       await this.fetchExerciseNumbers();
       await this.fetchRounds();
-      if (this.isValueNullOrEmpty(this.rankedRound) && this.rounds.length > 0) {
+      if (this.rounds.length > 0) {
         if (this.exerciseNumbers.length > 0) {
           this.rankedRound = this.exerciseNumbers.slice(-1)[0].RoundName;
         } else {
@@ -311,10 +315,20 @@ export default {
       this.getExercisesForLatestRound();
       await this.fetchCompetitors();
       if (this.competitorsWithRanks.length == 0) {
-        await this.fetchQualifyingStartList();
+        await this.fetchQualifyingFirstEight();
         this.noScores = true;
       } else {
         await this.populateCompetitorExercises();
+        let competitorIdsForRound = await this.fetchStartListForRound();
+        this.competitorsWithRanks = this.competitorsWithRanks.filter(
+          (competitorWithRank) => {
+            return competitorIdsForRound.some(
+              (competitorInStartList) =>
+                competitorInStartList.CompetitorId ===
+                competitorWithRank.CompetitorId
+            );
+          }
+        );
         if (!this.compareArrays(this.competitors, this.competitorsWithRanks)) {
           this.competitors = this.competitorsWithRanks;
         }
@@ -388,7 +402,7 @@ export default {
           console.error("Error:", error);
         });
     },
-    async fetchQualifyingStartList() {
+    async fetchQualifyingFirstEight() {
       await fetch(
         "http://" +
           process.env.VUE_APP_API_IP_ADDRESS +
@@ -404,6 +418,27 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+    },
+    async fetchStartListForRound() {
+      let tempData;
+      await fetch(
+        "http://" +
+          process.env.VUE_APP_API_IP_ADDRESS +
+          ":" +
+          process.env.VUE_APP_API_PORT +
+          "/api/roundStartList?catId=" +
+          this.currentCategory.CatId +
+          "&roundName=" +
+          this.rankedRound
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          tempData = data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      return tempData;
     },
     async fetchRounds() {
       await fetch(

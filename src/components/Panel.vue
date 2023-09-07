@@ -128,7 +128,23 @@
               width="110"
             />
           </div>
-          <div class="panel-latestnameclub">
+          <div
+            class="panel-latestnameclub"
+            v-if="this.latestScore.Discipline === 'TRS'"
+          >
+            <table>
+              <tr>
+                <td class="panel-name1trs">{{ this.latestScore.Surname1 }}</td>
+              </tr>
+              <tr>
+                <td class="panel-name2trs">{{ this.latestScore.Surname2 }}</td>
+              </tr>
+              <tr>
+                <td class="panel-clubname">{{ this.latestScore.Club }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="panel-latestnameclub" v-else>
             <table>
               <tr>
                 <td class="panel-name1">{{ this.latestScore.Surname1 }}</td>
@@ -144,45 +160,48 @@
           <table class="panel-scoretable">
             <tr>
               <td colspan="7" class="panel-Exercise">
-                {{ this.latestExercise.RoundName }} | Exercise
+                <span class="panel-span2">{{
+                  this.latestExercise.RoundName
+                }}</span>
+                | Exercise
                 {{ this.latestExercise.Exercise }}
               </td>
             </tr>
 
             <tr>
-              <td
-                v-if="
-                  this.latestScore.Discipline === 'DMT' ||
-                  this.latestScore.Discipline === 'TUM'
-                "
-                class="panel-scoretable_headerblank"
-              ></td>
-              <td class="panel-scoretable_header">E</td>
-              <td
+              <template
                 v-if="
                   this.latestScore.Discipline === 'TRA' ||
                   this.latestScore.Discipline === 'TRS'
                 "
-                class="panel-scoretable_header"
               >
-                H
-              </td>
-              <td class="panel-scoretable_header">D</td>
-
-              <td
-                v-if="this.latestScore.Discipline == 'TRS'"
-                class="panel-scoretable_header"
-              >
-                S
-              </td>
-              <td
-                v-if="this.latestScore.Discipline == 'TRA'"
-                class="panel-scoretable_header"
-              >
-                T
-              </td>
-
-              <td class="panel-scoretable_headerpen">P</td>
+                <td class="panel-scoretable_header">E</td>
+                <td class="panel-scoretable_header">H</td>
+                <td class="panel-scoretable_header">D</td>
+                <td
+                  v-if="this.latestScore.Discipline == 'TRS'"
+                  class="panel-scoretable_header"
+                >
+                  S
+                </td>
+                <td
+                  v-if="this.latestScore.Discipline == 'TRA'"
+                  class="panel-scoretable_header"
+                >
+                  T
+                </td>
+                <td class="panel-scoretable_headerpen">P</td>
+              </template>
+              <template v-if="this.latestScore.Discipline === 'DMT'">
+                <td class="panel-scoretable_header2">E</td>
+                <td class="panel-scoretable_header2">D</td>
+                <td class="panel-scoretable_headerpen2">P</td>
+              </template>
+              <template v-if="this.latestScore.Discipline === 'TUM'">
+                <td class="panel-scoretable_header3">E</td>
+                <td class="panel-scoretable_header3">D</td>
+                <td class="panel-scoretable_headerpen3">P</td>
+              </template>
               <td class="panel-scoretable_headerblank"></td>
               <td class="panel-scoretable_headertotal">Total</td>
               <td
@@ -195,13 +214,6 @@
             </tr>
 
             <tr>
-              <td
-                v-if="
-                  this.latestScore.Discipline === 'DMT' ||
-                  this.latestScore.Discipline === 'TUM'
-                "
-                class="panel-scoretable_scoreblank"
-              ></td>
               <td class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Execution, 2) }}
               </td>
@@ -216,7 +228,18 @@
                   formattedNumber(this.latestExercise.HorizontalDisplacement, 2)
                 }}
               </td>
-              <td class="panel-scoretable_score">
+              <td
+                v-if="this.latestScore.Discipline === 'TUM'"
+                class="panel-scoretable_score"
+              >
+                {{ formattedNumber(this.latestExercise.Difficulty, 1)
+                }}<span class="panel-span3">
+                  {{
+                    "(+" + formattedNumber(this.latestExercise.Bonus, 1) + ")"
+                  }}</span
+                >
+              </td>
+              <td v-else class="panel-scoretable_score">
                 {{ formattedNumber(this.latestExercise.Difficulty, 1) }}
               </td>
               <td
@@ -244,13 +267,6 @@
               <td class="panel-scoretable_scoretotal">
                 {{ formattedNumber(this.latestExercise.Total, 2) }}
               </td>
-              <td
-                v-if="
-                  this.latestScore.Discipline === 'DMT' ||
-                  this.latestScore.Discipline === 'TUM'
-                "
-                class="panel-scoretable_scoreblank"
-              ></td>
             </tr>
           </table>
         </div>
@@ -262,7 +278,7 @@
         class="transition-container"
       >
         <div v-if="!showLatestScore" class="panel-holding-panel-title">
-          Panel {{ panelNumber }}<span class="panel-span"> |</span>
+          Panel {{ panelNumber }}<span class="panel-span"> | </span>
         </div>
         <div v-if="!showLatestScore" class="panel-holding-time">
           {{ currentTime }}
@@ -359,7 +375,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.time);
           this.currentTime = data.time;
         })
         .catch((error) => {
@@ -414,7 +429,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.latestCategory = data[0];
-          console.log(this.latestCategory);
         })
         .catch((error) => {
           console.error("Error:", error);
