@@ -5,6 +5,7 @@ import LatestScores from "./components/LatestScores.vue";
 import CommentaryInformationSystem from "./components/CommentaryInformationSystem.vue";
 import OnlineResults from "./components/OnlineResults.vue";
 import OnlineCategories from "./components/OnlineCategories.vue";
+import Clock from "./components/Clock.vue";
 import Home from "./components/Home.vue";
 
 const routerInstance = createRouter({
@@ -51,6 +52,12 @@ const routerInstance = createRouter({
       component: OnlineResults,
       name: "OnlineScoringResults",
       meta: { title: "Online Scoring Results" },
+    },
+    {
+      path: "/clock",
+      component: Clock,
+      name: "Clock",
+      meta: { title: "Clock" },
     },
   ],
 });

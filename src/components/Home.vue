@@ -9,6 +9,7 @@
       <li>/cis</li>
       <li>/online</li>
       <li>/online/{catId}</li>
+      <li>/clock</li>
     </ul>
   </div>
 </template>
