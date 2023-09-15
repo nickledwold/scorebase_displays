@@ -114,8 +114,8 @@
               this.panelStatus.NextToCompeteCategory === ''
             "
           >
-            <div class="holding-empty">
-              <img src="../assets/panelholding.webp" height="900" />
+            <div class="panel-holding-empty">
+              <img src="../assets/panelholding.png" width="1700" />
             </div>
           </div>
         </transition-group>

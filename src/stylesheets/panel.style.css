@@ -489,11 +489,11 @@ body {
 }
 
 .panel-holding-empty {
-  margin-top: 65px;
-  left: auto;
-  right: auto;
-  position: auto;
-  text-align: center;
+  margin-top: 185px;
+	left: auto;
+	right: auto;
+	position: auto;
+	text-align: center;
 }
 
 .panel-statuslabel {

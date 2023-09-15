@@ -7,6 +7,7 @@ import OnlineResults from "./components/OnlineResults.vue";
 import OnlineCategories from "./components/OnlineCategories.vue";
 import Clock from "./components/Clock.vue";
 import Home from "./components/Home.vue";
+import OnlineStartLists from "./components/OnlineStartLists.vue";
 
 const routerInstance = createRouter({
   history: createWebHistory(),
@@ -48,7 +49,7 @@ const routerInstance = createRouter({
       meta: { title: "Online Scoring Categories Display" },
     },
     {
-      path: "/online/:catId",
+      path: "/online/results/:catId",
       component: OnlineResults,
       name: "OnlineScoringResults",
       meta: { title: "Online Scoring Results" },
@@ -58,6 +59,12 @@ const routerInstance = createRouter({
       component: Clock,
       name: "Clock",
       meta: { title: "Clock" },
+    },
+    {
+      path: "/online/startlists/:catId/:roundName",
+      component: OnlineStartLists,
+      name: "StartLists",
+      meta: { title: "Online Start Lists" },
     },
   ],
 });
