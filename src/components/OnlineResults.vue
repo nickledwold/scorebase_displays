@@ -15,10 +15,12 @@
             <img src="../assets/scorebase.png" height="20" />
           </td>
           <td class="results-back">
-            <a href="/online"><img src="../assets/back.png" height="15" /></a>
+            <a :href="`/online`"
+              ><img src="../assets/back.png" height="15"
+            /></a>
           </td>
           <td class="results-selector">
-            <a class="online-a" href="/online">Category Selector</a>
+            <a class="online-a" :href="`/online`">Category Selector</a>
           </td>
         </table>
 
@@ -250,17 +252,17 @@
                         <div class="results-box">
                           <a
                             class="results-button"
-                            :href="exercise.Videos ? '#popup1' : '#'"
+                            :href="
+                              exercise.Videos
+                                ? `#popup-${exercise.CompetitorId}-${exercise.ExerciseNumber}`
+                                : '#'
+                            "
                             ><img
-                              :src="
-                                exercise.Videos
-                                  ? require('@/assets/videoicon.png')
-                                  : require('@/assets/NoVideo.png')
-                              "
+                              :src="this.getVideoImageSource(exercise)"
                               width="25"
                           /></a>
                         </div>
-                        <div id="popup1" class="results-overlay">
+                        <div :id="getPopupId(exercise)" class="results-overlay">
                           <div class="results-popup">
                             <p>
                               {{ result.fullNameReversed }}<br />Exercise
@@ -271,99 +273,169 @@
                             <a class="close" href="#">&times;</a>
                             <div class="content">
                               <table class="angletable" cellspacing="0">
-                                <tr>
-                                  <td colspan="7" class="anglevideotitle">
-                                    Angle 1
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="anglevideoname">LQ</td>
-                                  <td class="anglevideoa">
-                                    <a
-                                      href="video/LQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 1 (931).mp4"
-                                      target="_blank"
-                                      ><img
-                                        src="../assets/play.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglevideob">
-                                    <a
-                                      href="video/LQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 1 (931).mp4"
-                                      download
-                                      ><img
-                                        src="../assets/download.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglespace"></td>
-                                  <td class="anglevideoname">HQ</td>
-                                  <td class="anglevideoa">
-                                    <a
-                                      href="video/HQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 1 (931).mp4"
-                                      target="_blank"
-                                      ><img
-                                        src="../assets/play.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglevideob">
-                                    <a
-                                      href="video/HQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 1 (931).mp4"
-                                      download
-                                      ><img
-                                        src="../assets/download.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                  <td colspan="7" class="anglevideotitle">
-                                    Angle 2
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="anglevideoname">LQ</td>
-                                  <td class="anglevideoa">
-                                    <a
-                                      href="video/LQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 2 (931).mp4"
-                                      target="_blank"
-                                      ><img
-                                        src="../assets/play.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglevideob">
-                                    <a
-                                      href="video/LQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 2 (931).mp4"
-                                      download
-                                      ><img
-                                        src="../assets/download.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglespace"></td>
-                                  <td class="anglevideoname">HQ</td>
-                                  <td class="anglevideoa">
-                                    <a
-                                      href="video/HQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 2 (931).mp4"
-                                      target="_blank"
-                                      ><img
-                                        src="../assets/play.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                  <td class="anglevideob">
-                                    <a
-                                      href="video/HQ/National Age Group Finals - TRS - Synchro  Women Youth 1012 - BARNES JONES - Liverpool Trampoline Gymnastics Academy - Exercise 1 - Angle 2 (931).mp4"
-                                      download
-                                      ><img
-                                        src="../assets/download.png"
-                                        height="19"
-                                    /></a>
-                                  </td>
-                                </tr>
+                                <template
+                                  v-for="angle in getAnglesForExercise(
+                                    exercise.Videos
+                                  )"
+                                  :key="angle"
+                                >
+                                  <tr>
+                                    <td colspan="7" class="anglevideotitle">
+                                      Angle {{ angle }}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <div
+                                      v-if="
+                                        exercise.Videos.find(
+                                          (x) =>
+                                            x.Angle == angle &&
+                                            x.Variant == 'LQ'
+                                        )
+                                      "
+                                    >
+                                      <td class="anglevideoname">LQ</td>
+                                      <template
+                                        v-if="
+                                          !isExerciseLinkInvalid(
+                                            exercise,
+                                            angle,
+                                            'LQ'
+                                          )
+                                        "
+                                      >
+                                        <td class="anglevideoa">
+                                          <a
+                                            :href="
+                                              getExerciseVideoLink(
+                                                exercise.Videos,
+                                                angle,
+                                                'LQ'
+                                              )
+                                            "
+                                            target="_blank"
+                                            ><img
+                                              src="../assets/play.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                        <td class="anglevideob">
+                                          <a
+                                            :href="
+                                              getExerciseVideoLink(
+                                                exercise.Videos,
+                                                angle,
+                                                'LQ'
+                                              )
+                                            "
+                                            @click.prevent="
+                                              downloadItem(
+                                                exercise.Videos,
+                                                angle,
+                                                'LQ'
+                                              )
+                                            "
+                                            ><img
+                                              src="../assets/download.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                      </template>
+                                      <template v-else>
+                                        <td class="anglevideoa">
+                                          <a class="disabled-link">
+                                            <img
+                                              src="../assets/playdisabled.png"
+                                              height="19"
+                                            />
+                                          </a>
+                                        </td>
+                                        <td class="anglevideob">
+                                          <a class="disabled-link"
+                                            ><img
+                                              src="../assets/downloaddisabled.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                      </template>
+                                    </div>
+                                    <td class="anglespace"></td>
+                                    <div
+                                      v-if="
+                                        exercise.Videos.find(
+                                          (x) =>
+                                            x.Angle == angle &&
+                                            x.Variant == 'HQ'
+                                        )
+                                      "
+                                    >
+                                      <td class="anglevideoname">HQ</td>
+                                      <template
+                                        v-if="
+                                          !isExerciseLinkInvalid(
+                                            exercise,
+                                            angle,
+                                            'HQ'
+                                          )
+                                        "
+                                      >
+                                        <td class="anglevideoa">
+                                          <a
+                                            :href="
+                                              getExerciseVideoLink(
+                                                exercise.Videos,
+                                                angle,
+                                                'HQ'
+                                              )
+                                            "
+                                            target="_blank"
+                                            ><img
+                                              src="../assets/play.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                        <td class="anglevideob">
+                                          <a
+                                            :href="
+                                              getExerciseVideoLink(
+                                                exercise.Videos,
+                                                angle,
+                                                'HQ'
+                                              )
+                                            "
+                                            @click.prevent="
+                                              downloadItem(
+                                                exercise.Videos,
+                                                angle,
+                                                'HQ'
+                                              )
+                                            "
+                                            ><img
+                                              src="../assets/download.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                      </template>
+                                      <template v-else>
+                                        <td class="anglevideoa">
+                                          <a class="disabled-link">
+                                            <img
+                                              src="../assets/playdisabled.png"
+                                              height="19"
+                                            />
+                                          </a>
+                                        </td>
+                                        <td class="anglevideob">
+                                          <a class="disabled-link"
+                                            ><img
+                                              src="../assets/downloaddisabled.png"
+                                              height="19"
+                                          /></a>
+                                        </td>
+                                      </template>
+                                    </div>
+                                  </tr>
+                                </template>
                               </table>
                               <h3>
                                 High quality videos may not be immediately
@@ -475,6 +547,29 @@
                   </tr>
                 </table>
               </div>
+              <template
+                v-if="
+                  result.CompType == 1 &&
+                  getRoundsForCompetitor(result.Exercises).length > 1
+                "
+              >
+                <table class="results-total-table" style="margin-top: 0">
+                  <tr>
+                    <td class="results-scores-round">Total</td>
+                    <td class="results-scores-tri-Tot">
+                      {{ formattedNumber(result.TotalScore, 2) }}
+                    </td>
+                  </tr>
+                </table>
+                <table class="results-round-rank-table" style="margin-top: 0">
+                  <tr>
+                    <td class="results-scores-roundrank">Rank</td>
+                    <td class="results-scores-roundrank-tot">
+                      {{ result.DisplayCumulativeRank }}
+                    </td>
+                  </tr>
+                </table>
+              </template>
             </div>
           </div>
         </div>
@@ -490,11 +585,16 @@
 </template>
 
 <script>
+import { fetchWithRetry } from "../apiUtils";
+
 export default {
   name: "OnlineResults",
   computed: {
     catId() {
       return this.$route.params.catId;
+    },
+    event() {
+      return this.$route.params.event;
     },
     filteredResults() {
       return this.searchParam == ""
@@ -530,93 +630,86 @@ export default {
   },
   methods: {
     async fetchCategory() {
-      await fetch(
+      const url =
         "http://" +
-          process.env.VUE_APP_API_IP_ADDRESS +
-          ":" +
-          process.env.VUE_APP_API_PORT +
-          "/api/categories?catId=" +
-          this.catId
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.categoryData = data[0];
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-      await this.fetchRounds();
-      this.fetchResults();
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/categories?catId=${this.catId}`;
+
+      try {
+        const data = await fetchWithRetry(url);
+        this.categoryData = data[0];
+        this.updateTitle();
+        await this.fetchRounds();
+        this.fetchResults();
+      } catch (error) {
+        console.error("Error fetching category:", error);
+      }
     },
     async fetchResults() {
-      let tempData;
-      await fetch(
+      const url =
         "http://" +
-          process.env.VUE_APP_API_IP_ADDRESS +
-          ":" +
-          process.env.VUE_APP_API_PORT +
-          "/api/onlineResults?catId=" +
-          this.catId +
-          "&compType=" +
-          this.categoryData.CompType
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          tempData = data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/onlineResults?catId=${this.catId}&compType=${this.categoryData.CompType}`;
+
+      try {
+        const tempData = await fetchWithRetry(url);
+        let competitorsWithScores = tempData.filter(
+          (competitor) => competitor.Exercises.length > 0
+        );
+
+        if (competitorsWithScores.length == 0) {
+          this.noResults = true;
+          tempData.sort((a, b) => {
+            if (a.Q1Flight < b.Q1Flight) return -1;
+            if (a.Q1Flight > b.Q1Flight) return 1;
+            if (a.Q1StartNo < b.Q1StartNo) return -1;
+            if (a.Q1StartNo > b.Q1StartNo) return 1;
+            return 0;
+          });
+        } else {
+          this.noResults = false;
+        }
+
+        this.resultsData = tempData.map((x, i) => {
+          let fullName =
+            this.categoryData.Discipline == "TRS"
+              ? x.Surname1 + ", " + x.Surname2
+              : x.FirstName1 + " " + x.Surname1;
+          let fullNameReversed =
+            this.categoryData.Discipline == "TRS"
+              ? x.Surname2.toUpperCase() + ", " + x.Surname1.toUpperCase()
+              : x.Surname1.toUpperCase() + " " + x.FirstName1;
+          x.FullName = fullName;
+          x.fullNameReversed = fullNameReversed;
+          x.Rank =
+            this.categoryData.CompType == 0
+              ? x.DisplayZeroRank
+              : x.DisplayCumulativeRank;
+          x.RunningOrderNumber = i + 1;
+          return x;
         });
-      let competitorsWithScores = tempData.filter(
-        (competitor) => competitor.Exercises.length > 0
-      );
-      if (competitorsWithScores.length == 0) {
-        this.noResults = true;
-        tempData.sort((a, b) => {
-          if (a.Q1Flight < b.Q1Flight) return -1;
-          if (a.Q1Flight > b.Q1Flight) return 1;
-          if (a.Q1StartNo < b.Q1StartNo) return -1;
-          if (a.Q1StartNo > b.Q1StartNo) return 1;
-          return 0;
-        });
-      } else {
-        this.noResults = false;
+      } catch (error) {
+        console.error("Error fetching results:", error);
       }
-      this.resultsData = tempData.map((x, i) => {
-        let fullName =
-          this.categoryData.Discipline == "TRS"
-            ? x.Surname1 + ", " + x.Surname2
-            : x.FirstName1 + " " + x.Surname1;
-        let fullNameReversed =
-          this.categoryData.Discipline == "TRS"
-            ? x.Surname2.toUpperCase() + ", " + x.Surname1.toUpperCase()
-            : x.Surname1.toUpperCase() + " " + x.FirstName1;
-        x.FullName = fullName;
-        x.fullNameReversed = fullNameReversed;
-        x.Rank =
-          this.categoryData.CompType == 0
-            ? x.DisplayZeroRank
-            : x.DisplayCumulativeRank;
-        x.RunningOrderNumber = i + 1;
-        return x;
-      });
     },
     async fetchRounds() {
-      await fetch(
+      const url =
         "http://" +
-          process.env.VUE_APP_API_IP_ADDRESS +
-          ":" +
-          process.env.VUE_APP_API_PORT +
-          "/api/rounds?catId=" +
-          this.categoryData.CatId
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.categoryRounds = data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/rounds?catId=${this.categoryData.CatId}`;
+
+      try {
+        const data = await fetchWithRetry(url);
+        this.categoryRounds = data;
+      } catch (error) {
+        console.error("Error fetching rounds:", error);
+      }
     },
     formattedNumber(numberAsString, decimalPlaces) {
       let parsedNumber = parseFloat(numberAsString);
@@ -640,7 +733,6 @@ export default {
     },
     updateRoundFilter(roundFilter) {
       this.roundFilterString = roundFilter;
-      console.log("roundfilterstring:" + this.roundFilterString);
     },
     getRoundsForCompetitor(exercises) {
       const roundData = exercises.map((exercise) => ({
@@ -719,21 +811,66 @@ export default {
       if (!categoryRound) return "Provisional";
       return categoryRound.SignedOff == 1 ? "Official" : "Provisional";
     },
-    checkLinkStatus(link) {
+    updateTitle() {
+      document.title =
+        this.categoryData.Discipline +
+        " " +
+        this.categoryData.Category +
+        " - Live Results";
+    },
+    getVideoImageSource(exercise) {
+      if (exercise.Videos) {
+        return new URL("../assets/videoicon.png", import.meta.url).href;
+      } else {
+        return new URL("../assets/NoVideo.png", import.meta.url).href;
+      }
+    },
+    getAnglesForExercise(videos) {
+      if (!videos) return [];
+      const uniqueAngles = new Set(videos.map((item) => item.Angle));
+      return Array.from(uniqueAngles);
+    },
+    getExerciseVideoLink(videos, angle, variant) {
+      if (!videos) return "";
+      var video = videos.find((x) => x.Angle == angle && x.Variant == variant);
+      if (!video) return "";
+      return `${process.env.VUE_APP_VIDEO_LOCATION}/${video.Variant}/${video.Filename}`;
+    },
+    downloadItem(videos, angle, variant) {
+      if (!videos) return "";
+      var video = videos.find((x) => x.Angle == angle && x.Variant == variant);
+      if (!video) return "";
+      fetch(this.getExerciseVideoLink(videos, angle, variant))
+        .then((response) => response.blob())
+        .then((blob) => {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = video.Filename;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    getPopupId(exercise) {
+      return `popup-${exercise.CompetitorId}-${exercise.ExerciseNumber}`;
+    },
+    isExerciseLinkInvalid(exercise, angle, variant) {
+      let link = this.getExerciseVideoLink(exercise.Videos, angle, variant);
       const xhr = new XMLHttpRequest();
-      xhr.open("GET", link.url, true);
+      try {
+        xhr.open("GET", link, false);
+        xhr.send();
 
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            //do nothing if link is good
-          } else {
-            link.disabled = true;
-          }
+        if (xhr.status >= 200 && xhr.status < 300) {
+          return false;
+        } else {
+          return true;
         }
-      };
-
-      xhr.send();
+      } catch (error) {
+        return true;
+      }
     },
   },
 };
@@ -741,4 +878,7 @@ export default {
 
 <style scoped>
 @import "../stylesheets/results.style.css";
+.disabled-link {
+  pointer-events: none;
+}
 </style>
