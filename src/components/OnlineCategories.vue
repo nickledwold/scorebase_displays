@@ -201,7 +201,6 @@ export default {
         const data = await fetchWithRetry(url);
         this.categories = data;
         this.loadingCategories = false;
-        console.log(data);
       } catch (error) {
         this.loadingError =
           "Error loading Categories, please refresh the page.";
@@ -220,7 +219,6 @@ export default {
         const data = await fetchWithRetry(url);
         this.startListRounds = data;
         this.loadingStartLists = false;
-        console.log(data);
       } catch (error) {
         this.loadingError =
           "Error loading Start Lists, please refresh the page.";

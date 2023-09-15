@@ -218,7 +218,18 @@
                       >
                         {{ formattedNumber(exercise.HD, 2) }}
                       </td>
-                      <td class="results-scores-tri-set-D">
+                      <td
+                        v-if="this.categoryData.Discipline == 'TUM'"
+                        class="results-scores-tri-set-D"
+                      >
+                        {{ formattedNumber(exercise.Difficulty, 1) }}
+                        <span class="results-span3">
+                          {{
+                            " (+" + formattedNumber(exercise.Bonus, 1) + ")"
+                          }}</span
+                        >
+                      </td>
+                      <td v-else class="results-scores-tri-set-D">
                         {{ formattedNumber(exercise.Difficulty, 1) }}
                       </td>
                       <td

@@ -419,6 +419,13 @@
   background-color: rgba(197, 197, 197);
   color: #000000;
 }
+.cis-span3 {
+  text-align: left;
+  color: black;
+  font-family: Gotham Book, sans-serif;
+  text-transform: uppercase;
+  font-size: 10px;
+}
 .cis-scoretable_headertot {
   text-align: center;
   font-size: 14px;

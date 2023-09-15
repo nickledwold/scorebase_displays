@@ -133,7 +133,21 @@
                           )
                     }}
                   </td>
-                  <td class="cis-scoretable_score">
+                  <td
+                    v-if="panelStatus.latestScore.Discipline == 'TUM'"
+                    class="cis-scoretable_score"
+                  >
+                    {{
+                      formattedNumber(panelStatus.latestExercise.Difficulty, 1)
+                    }}<span class="cis-span3">
+                      {{
+                        "(+" +
+                        formattedNumber(panelStatus.latestExercise.Bonus, 1) +
+                        ")"
+                      }}</span
+                    >
+                  </td>
+                  <td v-else class="cis-scoretable_score">
                     {{
                       formattedNumber(panelStatus.latestExercise.Difficulty, 1)
                     }}
@@ -454,6 +468,7 @@ export default {
             RoundName: this.categoryRoundExercise.RoundName,
             Execution: latestScore[`${exercise.propertyPrefix}E`],
             Difficulty: latestScore[`${exercise.propertyPrefix}D`],
+            Bonus: latestScore[`${exercise.propertyPrefix}B`],
             HorizontalDisplacement: latestScore[`${exercise.propertyPrefix}HD`],
             TimeOfFlight: latestScore[`${exercise.propertyPrefix}ToF`],
             Synchronisation: latestScore[`${exercise.propertyPrefix}S`],
@@ -514,7 +529,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.time);
           this.currentTime = data.time;
         })
         .catch((error) => {
@@ -523,7 +537,6 @@ export default {
     },
     getImageSource(discipline) {
       if (this.isValueNullOrEmpty(discipline)) discipline = "TRA";
-      console.log(discipline);
       return require(`@/assets/${discipline}.png`);
     },
     isValueNullOrEmpty(value) {

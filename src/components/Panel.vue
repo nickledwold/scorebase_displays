@@ -489,6 +489,7 @@ export default {
             RoundName: this.categoryRoundExercise.RoundName,
             Execution: this.latestScore[`${exercise.propertyPrefix}E`],
             Difficulty: this.latestScore[`${exercise.propertyPrefix}D`],
+            Bonus: this.latestScore[`${exercise.propertyPrefix}B`],
             HorizontalDisplacement:
               this.latestScore[`${exercise.propertyPrefix}HD`],
             TimeOfFlight: this.latestScore[`${exercise.propertyPrefix}ToF`],

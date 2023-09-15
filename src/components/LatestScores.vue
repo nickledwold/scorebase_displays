@@ -130,7 +130,20 @@
                         )
                   }}
                 </td>
-                <td class="latest-scoretable_score">
+                <td
+                  v-if="panelStatus.latestScore.Discipline == 'TUM'"
+                  class="latest-scoretable_score"
+                >
+                  {{ formattedNumber(panelStatus.latestExercise.Difficulty, 1)
+                  }}<span class="latest-span3">
+                    {{
+                      "(+" +
+                      formattedNumber(panelStatus.latestExercise.Bonus, 1) +
+                      ")"
+                    }}</span
+                  >
+                </td>
+                <td v-else class="latest-scoretable_score">
                   {{
                     formattedNumber(panelStatus.latestExercise.Difficulty, 1)
                   }}
@@ -247,7 +260,6 @@ export default {
         );
       }
       this.panelStatuses = this.tempPanelStatuses;
-      console.log(this.panelStatuses);
     },
     async fetchCategory(catId) {
       let tempData;
@@ -311,6 +323,7 @@ export default {
             RoundName: this.categoryRoundExercise.RoundName,
             Execution: latestScore[`${exercise.propertyPrefix}E`],
             Difficulty: latestScore[`${exercise.propertyPrefix}D`],
+            Bonus: latestScore[`${exercise.propertyPrefix}B`],
             HorizontalDisplacement: latestScore[`${exercise.propertyPrefix}HD`],
             TimeOfFlight: latestScore[`${exercise.propertyPrefix}ToF`],
             Synchronisation: latestScore[`${exercise.propertyPrefix}S`],
@@ -352,7 +365,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.time);
           this.currentTime = data.time;
         })
         .catch((error) => {

@@ -8,7 +8,8 @@
       <li>/latest</li>
       <li>/cis</li>
       <li>/online</li>
-      <li>/online/{catId}</li>
+      <li>/online/results/{catId}</li>
+      <li>/online/startlists/{catId}/{roundName}</li>
       <li>/clock</li>
     </ul>
   </div>
