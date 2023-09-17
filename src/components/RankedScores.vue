@@ -44,7 +44,9 @@
                   style="
                     text-align: center;
                     font-family: Gotham Book, sans-serif;
-                    padding-left: 10;
+                    padding-left: 10px;
+                    width: 120px;
+                    max-width: 120px;
                   "
                 >
                   Rank
@@ -53,7 +55,7 @@
                   style="
                     text-align: left;
                     font-family: Gotham Book, sans-serif;
-                    padding-left: 15;
+                    padding-left: 15px;
                   "
                   colspan="2"
                 >

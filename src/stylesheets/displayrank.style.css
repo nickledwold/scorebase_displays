@@ -79,15 +79,12 @@ body {
 
 
 .ranked-banner {
-	padding-top:3px;
 	padding-left: 20px;
 	margin:0px;
 	align:center;
 	overflow: hidden;
 	width:100%;
 	vertical-align: middle;
-	margin-bottom: 10px;
-
 }
 .ranked-comp-group {	
 	color:#ffffff;
@@ -158,7 +155,7 @@ body {
     text-align:center;
 	padding-top:0px;
 	padding-left: 10px;
-	width: 100px;
+	width: 50px;
 	table-layout: fixed;
 	background-color:rgba(0, 0, 0, 0.2);
 	font-weight:bold;

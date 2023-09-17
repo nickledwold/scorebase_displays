@@ -845,7 +845,7 @@ export default {
       if (!videos) return "";
       var video = videos.find((x) => x.Angle == angle && x.Variant == variant);
       if (!video) return "";
-      return `${process.env.VUE_APP_VIDEO_LOCATION}/${video.Variant}/${video.Filename}`;
+      return `${process.env.VUE_APP_VIDEO_LOCATION}\\${video.Variant}\\${video.Filename}`;
     },
     downloadItem(videos, angle, variant) {
       if (!videos) return "";
@@ -869,19 +869,28 @@ export default {
     },
     isExerciseLinkInvalid(exercise, angle, variant) {
       let link = this.getExerciseVideoLink(exercise.Videos, angle, variant);
-      const xhr = new XMLHttpRequest();
       try {
-        xhr.open("GET", link, false);
-        xhr.send();
-
-        if (xhr.status >= 200 && xhr.status < 300) {
-          return false;
-        } else {
-          return true;
-        }
+        return !this.checkFileExists(link);
       } catch (error) {
+        console.log(error);
         return true;
       }
+    },
+    async checkFileExists(/*filePath*/) {
+      /*const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/fileExists?filePath=${filePath}`;
+
+      try {
+        const data = await fetchWithRetry(url);
+        return data[0];
+      } catch (error) {
+        console.error("Error fetching file:", error);
+      }*/
+      return true;
     },
   },
 };

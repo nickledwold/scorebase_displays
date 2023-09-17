@@ -235,7 +235,9 @@
                 {{ formattedNumber(this.latestExercise.Difficulty, 1)
                 }}<span class="panel-span3">
                   {{
-                    "(+" + formattedNumber(this.latestExercise.Bonus, 1) + ")"
+                    "   (+" +
+                    formattedNumber(this.latestExercise.Bonus, 1) +
+                    ")"
                   }}</span
                 >
               </td>

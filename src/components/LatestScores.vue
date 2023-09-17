@@ -59,7 +59,7 @@
                         ", " +
                         panelStatus.latestScore.Surname2.toUpperCase()
                       : panelStatus.latestScore.Surname1.toUpperCase() +
-                        ", " +
+                        " " +
                         panelStatus.latestScore.FirstName1
                   }}
                 </td>
@@ -137,7 +137,7 @@
                   {{ formattedNumber(panelStatus.latestExercise.Difficulty, 1)
                   }}<span class="latest-span3">
                     {{
-                      "(+" +
+                      "   (+" +
                       formattedNumber(panelStatus.latestExercise.Bonus, 1) +
                       ")"
                     }}</span
