@@ -183,8 +183,7 @@
                   <b>{{
                     !panelStatus.latestScore.ZeroRank
                       ? "-"
-                      : panelStatus.latestCategory.CompType == 0 &&
-                        panelStatus.latestScore.F1Total > 0
+                      : panelStatus.latestCategory.CompType == 0
                       ? panelStatus.latestScore.DisplayZeroRank
                       : panelStatus.latestScore.DisplayCumulativeRank
                   }}</b>
