@@ -110,7 +110,11 @@
                           : competitor.DisplayCumulativeRank
                       }}
                     </td>
-                    <td rowspan="2" class="ranked-scores-flag">
+                    <td
+                      v-if="competitor.Nation"
+                      rowspan="2"
+                      class="ranked-scores-flag"
+                    >
                       <img
                         :src="getFlagImageSource(competitor.Nation)"
                         width="40"
@@ -127,6 +131,11 @@
                       {{ competitor.Surname1.toUpperCase() }}
                       {{ competitor.FirstName1 }}
                     </td>
+                    <td
+                      v-if="!competitor.Nation"
+                      rowspan="2"
+                      class="ranked-scores-flag"
+                    ></td>
                     <template
                       v-for="exercise in this.roundExercises"
                       :key="exercise.ExerciseNumber"

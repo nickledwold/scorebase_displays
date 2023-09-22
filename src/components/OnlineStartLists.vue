@@ -38,7 +38,11 @@
             </tr>
             <tr>
               <td class="results-bannerlive">
-                START LIST - {{ this.roundName }}
+                {{
+                  this.roundName
+                    ? `START LIST - ` + this.roundName
+                    : `START LIST`
+                }}
               </td>
             </tr>
           </table>
@@ -130,6 +134,7 @@ export default {
     return {
       currentYear: new Date().getFullYear(),
       categoryData: {},
+      currentRoundName: "",
       resultsData: {},
       searchParam: "",
       mediansVisible: {},
@@ -141,13 +146,18 @@ export default {
   },
   methods: {
     updateTitle() {
-      document.title =
-        this.categoryData.Discipline +
-        " " +
-        this.categoryData.Category +
-        " - " +
-        this.roundName +
-        " Start List";
+      document.title = this.roundName
+        ? this.categoryData.Discipline +
+          " " +
+          this.categoryData.Category +
+          " - " +
+          this.roundName +
+          " Start List"
+        : this.categoryData.Discipline +
+          " " +
+          this.categoryData.Category +
+          " - " +
+          "Start List";
     },
     async fetchCategory() {
       const url =
@@ -161,19 +171,38 @@ export default {
         const data = await fetchWithRetry(url);
         this.categoryData = data[0];
         this.updateTitle();
+        if (this.roundName) {
+          this.currentRoundName = this.roundName;
+        } else {
+          await this.fetchRounds();
+        }
         this.fetchResults();
       } catch (error) {
         console.error("Error fetching category:", error);
       }
     },
+    async fetchRounds() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/rounds?catId=${this.catId}`;
 
+      try {
+        const data = await fetchWithRetry(url);
+        this.currentRoundName = data[0].RoundName;
+      } catch (error) {
+        console.error("Error fetching rounds:", error);
+      }
+    },
     async fetchResults() {
       const url =
         "http://" +
         process.env.VUE_APP_API_IP_ADDRESS +
         ":" +
         process.env.VUE_APP_API_PORT +
-        `/api/roundStartListCompetitors?catId=${this.catId}&roundName=${this.roundName}`;
+        `/api/roundStartListCompetitors?catId=${this.catId}&roundName=${this.currentRoundName}`;
 
       try {
         const tempData = await fetchWithRetry(url);

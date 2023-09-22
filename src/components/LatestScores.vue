@@ -65,6 +65,7 @@
                 </td>
                 <td class="latest-flag" rowspan="1">
                   <img
+                    v-if="panelStatus.latestScore.Nation"
                     :src="getFlagImageSource(panelStatus.latestScore.Nation)"
                     width="40"
                   />

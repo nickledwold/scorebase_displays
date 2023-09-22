@@ -62,6 +62,7 @@
                 :key="competitorTransitionKey"
               >
                 <img
+                  v-if="this.panelStatus.NextToCompeteNation"
                   :src="
                     getFlagImageSource(this.panelStatus.NextToCompeteNation)
                   "
@@ -76,10 +77,9 @@
                   :key="categoryTransitionKey"
                 >
                   <img
+                    v-if="this.panelStatus.NextToCompeteNation"
                     :src="
-                      getFlagImageSource(
-                        this.panelStatus.NextToCompeteDiscipline
-                      )
+                      getImageSource(this.panelStatus.NextToCompeteDiscipline)
                     "
                     height="90"
                     style="
@@ -115,7 +115,11 @@
             "
           >
             <div class="panel-holding-empty">
-              <img src="../assets/panelholding.png" width="1700" />
+              <img
+                src="../assets/bglogoholding.png"
+                width="1300"
+                style="margin-top: 4%"
+              />
             </div>
           </div>
         </transition-group>
@@ -124,6 +128,7 @@
         <div v-if="this.latestScore && this.latestExercise">
           <div class="panel-latestflag">
             <img
+              v-if="this.latestScore.Nation"
               :src="getFlagImageSource(this.latestScore.Nation)"
               width="110"
             />

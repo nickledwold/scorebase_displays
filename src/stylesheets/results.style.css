@@ -85,6 +85,7 @@
   overflow-x: hidden;
   background-color: #ffffff;
   margin: 0px;
+  min-height: 96vh;
 }
 
 /*
@@ -175,6 +176,7 @@
   padding-top: 12px;
   text-align: center;
   vertical-align: middle;
+  min-height: 4vh;
 }
 
 .results-bannercat {

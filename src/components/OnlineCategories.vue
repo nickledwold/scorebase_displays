@@ -47,87 +47,96 @@
 
         <div class="w0-container" style="max-width: 800px">
           <div class="online-tabs">
-            <ul class="online-tab-links">
-              <li
-                v-for="(tab, index) in tabs"
-                :key="index"
-                :class="{ active: tab.active }"
-                @click="selectTab(index)"
-              >
-                <a>{{ tab.label }}</a>
-              </li>
-            </ul>
-
-            <div v-if="resultsOrStartLists == 'Results'">
-              <div
-                v-for="tab in filteredTabs"
-                :key="tab.label"
-                class="online-tab-content"
-              >
-                <div
-                  :id="tab.label"
-                  class="online-tab"
+            <div v-if="loadingCategories" class="loading-spinner">
+              <div class="spinner"></div>
+            </div>
+            <div v-else>
+              <ul class="online-tab-links">
+                <li
+                  v-for="(tab, index) in tabs"
+                  :key="index"
                   :class="{ active: tab.active }"
+                  @click="selectTab(index)"
                 >
-                  <div class="disciplinetitle">{{ tab.title }}</div>
-                  <hr class="discipline" />
-                  <div v-if="loadingCategories" class="loading-spinner">
-                    <div class="spinner"></div>
-                  </div>
-                  <div v-else>
-                    <transition name="collapse" mode="out-in">
-                      <div v-if="tab.active" :key="tab.label">
-                        <div
-                          v-for="category in filteredCategories(tab.label)"
-                          :key="category.CatId"
-                        >
-                          <a
-                            class="online-a"
-                            :href="`online/results/${category.CatId}`"
-                            >{{ category.Category }}</a
+                  <a>{{ tab.label }}</a>
+                </li>
+              </ul>
+
+              <div v-if="resultsOrStartLists == 'Results'">
+                <div
+                  v-for="tab in filteredTabs"
+                  :key="tab.label"
+                  class="online-tab-content"
+                >
+                  <div
+                    :id="tab.label"
+                    class="online-tab"
+                    :class="{ active: tab.active }"
+                  >
+                    <div class="disciplinetitle">{{ tab.title }}</div>
+                    <hr class="discipline" />
+                    <div>
+                      <transition name="collapse" mode="out-in">
+                        <div v-if="tab.active" :key="tab.label">
+                          <div
+                            v-for="category in filteredCategories(tab.label)"
+                            :key="category.CatId"
                           >
-                          <br />
+                            <a
+                              class="online-a"
+                              :href="`online/results/${category.CatId}`"
+                              >{{ category.Category }}</a
+                            >
+                            <br />
+                          </div>
+                          <div class="padding"></div>
                         </div>
-                        <div class="padding"></div>
-                      </div>
-                    </transition>
+                      </transition>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div v-else-if="resultsOrStartLists == 'Start Lists'">
-              <div
-                v-for="tab in filteredTabs"
-                :key="tab.label"
-                class="online-tab-content"
-              >
+              <div v-else-if="resultsOrStartLists == 'Start Lists'">
                 <div
-                  :id="tab.label"
-                  class="online-tab"
-                  :class="{ active: tab.active }"
+                  v-for="tab in filteredTabs"
+                  :key="tab.label"
+                  class="online-tab-content"
                 >
-                  <div class="disciplinetitle">{{ tab.title }}</div>
-                  <hr class="discipline" />
-                  <div v-if="loadingStartLists" class="loading-spinner">
-                    <div class="spinner"></div>
-                  </div>
-                  <div v-else>
-                    <transition name="collapse" mode="out-in">
-                      <div v-if="tab.active" :key="tab.label">
-                        <div
-                          v-for="round in filteredStartLists(tab.label)"
-                          :key="round.CategoryId"
-                        >
-                          <a
-                            class="online-a"
-                            :href="`online/startlists/${round.CategoryId}/${round.RoundName}`"
-                            >{{ round.Category }} - {{ round.RoundName }}</a
+                  <div
+                    :id="tab.label"
+                    class="online-tab"
+                    :class="{ active: tab.active }"
+                  >
+                    <div class="disciplinetitle">{{ tab.title }}</div>
+                    <hr class="discipline" />
+                    <div v-if="loadingStartLists" class="loading-spinner">
+                      <div class="spinner"></div>
+                    </div>
+                    <div v-else>
+                      <transition name="collapse" mode="out-in">
+                        <div v-if="tab.active" :key="tab.label">
+                          <div
+                            v-for="round in filteredStartLists(tab.label)"
+                            :key="round.CategoryId"
                           >
-                          <br />
+                            <a
+                              v-if="round.NumberOfRounds == 1"
+                              class="online-a"
+                              :href="`online/startlists/${round.CategoryId}`"
+                              >{{ round.Category }}</a
+                            >
+                            <a
+                              v-else
+                              class="online-a"
+                              :href="`online/startlists/${round.CategoryId}/${round.RoundName}`"
+                              >{{ round.Category + " - " + round.RoundName }}</a
+                            >
+                            <br />
+                          </div>
+                          <div class="padding"></div>
                         </div>
-                        <div class="padding"></div>
-                      </div>
-                    </transition>
+                      </transition>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -154,12 +163,7 @@ export default {
       loadingCategories: true,
       loadingStartLists: true,
       loadingError: "",
-      tabs: [
-        { label: "TRA", active: true, title: "Individual Trampoline" },
-        { label: "TRS", active: false, title: "Synchronised Trampoline" },
-        { label: "DMT", active: false, title: "Double Mini-Trampoline" },
-        { label: "TUM", active: false, title: "Tumbling" },
-      ],
+      tabs: [],
     };
   },
   computed: {
@@ -201,6 +205,35 @@ export default {
         const data = await fetchWithRetry(url);
         this.categories = data;
         this.loadingCategories = false;
+        const disciplineSet = new Set();
+        for (const item of this.categories) {
+          disciplineSet.add(item.Discipline);
+        }
+        let uniqueDisciplines = Array.from(disciplineSet);
+        if (uniqueDisciplines.some((discipline) => discipline === "TRA")) {
+          this.tabs.push({
+            label: "TRA",
+            active: true,
+            title: "Individual Trampoline",
+          });
+        }
+        if (uniqueDisciplines.some((discipline) => discipline === "TRS")) {
+          this.tabs.push({
+            label: "TRS",
+            active: false,
+            title: "Synchronised Trampoline",
+          });
+        }
+        if (uniqueDisciplines.some((discipline) => discipline === "DMT")) {
+          this.tabs.push({
+            label: "DMT",
+            active: false,
+            title: "Double Mini-Trampoline",
+          });
+        }
+        if (uniqueDisciplines.some((discipline) => discipline === "TUM")) {
+          this.tabs.push({ label: "TUM", active: false, title: "Tumbling" });
+        }
       } catch (error) {
         this.loadingError =
           "Error loading Categories, please refresh the page.";

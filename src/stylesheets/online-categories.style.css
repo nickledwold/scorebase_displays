@@ -778,12 +778,13 @@ hr {
   font-size: 16px;
   padding-left: 10px;
   padding-right: 10px;
+  padding-bottom: 10px;
   margin: 0 auto; /* Horizontally center the container */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: top;
-  height: 100vh; /* Adjust as needed */
+  min-height: 96vh;
 }
 
 .w3-panel {
@@ -1807,7 +1808,7 @@ hr {
 }
 
 .online-tab-links a {
-  padding: 10px 10px 19px 10px;
+  padding: 10px 10px 17px 10px;
   border-radius: 3px 3px 0px 0px;
   background: #1b1b1b;
   font-size: 15px;
@@ -1891,4 +1892,5 @@ li.active a:hover {
   padding-top: 12px;
   text-align: center;
   vertical-align: middle;
+  min-height: 4vh;
 }

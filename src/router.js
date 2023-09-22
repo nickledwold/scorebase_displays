@@ -66,6 +66,12 @@ const routerInstance = createRouter({
       name: "StartLists",
       meta: { title: "Online Start Lists" },
     },
+    {
+      path: "/online/startlists/:catId",
+      component: OnlineStartLists,
+      name: "StartListsNoRound",
+      meta: { title: "Online Start Lists" },
+    },
   ],
 });
 

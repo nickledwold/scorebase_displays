@@ -52,7 +52,9 @@
                 v-for="(round, index) in getRoundsForAllCompetitors()"
                 :key="round"
               >
-                <td class="roundstatusround">{{ round }}</td>
+                <td class="roundstatusround">
+                  {{ this.categoryRounds.length == 1 ? `STATUS` : round }}
+                </td>
                 <td
                   v-if="index !== getRoundsForAllCompetitors().length - 1"
                   class="spacer"
@@ -91,7 +93,7 @@
           placeholder="Search by name, club"
         />
 
-        <div class="results-filterBtns">
+        <div v-if="this.categoryRounds.length > 1" class="results-filterBtns">
           <div class="results-btnfilterimg">
             <img src="../assets/filter.png" width="20" />
           </div>
@@ -547,7 +549,11 @@
                 </table>
                 <table class="results-round-rank-table">
                   <tr>
-                    <td class="results-scores-roundrank">Round Rank</td>
+                    <td class="results-scores-roundrank">
+                      {{
+                        this.categoryRounds.length == 1 ? `Rank` : `Round Rank`
+                      }}
+                    </td>
                     <td class="results-scores-roundrank-tot">
                       {{
                         result.RoundTotals.filter(
@@ -781,6 +787,7 @@ export default {
       return uniqueSortedRoundNames;
     },
     getRoundName(round) {
+      if (this.categoryRounds.length == 1) return "";
       if (round[0] == "Q") {
         let qualificationRounds = this.categoryRounds.filter(
           (round) => round.RoundName[0] == "Q"
