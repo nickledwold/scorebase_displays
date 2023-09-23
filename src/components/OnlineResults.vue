@@ -297,12 +297,10 @@
                               <a
                                 class="close"
                                 @click="
-                                  exercise.Videos
-                                    ? togglePopup(
-                                        exercise.CompetitorId,
-                                        exercise.ExerciseNumber
-                                      )
-                                    : null
+                                  togglePopup(
+                                    exercise.CompetitorId,
+                                    exercise.ExerciseNumber
+                                  )
                                 "
                                 >&times;</a
                               >
