@@ -265,55 +265,68 @@
                         <div class="results-box">
                           <a
                             class="results-button"
-                            :href="
+                            @click="
                               exercise.Videos
-                                ? `#popup-${exercise.CompetitorId}-${exercise.ExerciseNumber}`
-                                : '#'
+                                ? togglePopup(
+                                    exercise.CompetitorId,
+                                    exercise.ExerciseNumber
+                                  )
+                                : null
                             "
                             ><img
                               :src="this.getVideoImageSource(exercise)"
                               width="25"
                           /></a>
                         </div>
-                        <div :id="getPopupId(exercise)" class="results-overlay">
-                          <div class="results-popup">
-                            <p>
-                              {{ result.fullNameReversed }}<br />Exercise
-                              {{ exercise.ExerciseNumber }}<br /><br />
-                            </p>
+                        <transition name="fade">
+                          <div
+                            v-if="
+                              exercisePopups[
+                                `${exercise.CompetitorId}-${exercise.ExerciseNumber}`
+                              ]
+                            "
+                            class="results-overlay"
+                          >
+                            <div class="results-popup">
+                              <p>
+                                {{ result.fullNameReversed }}<br />Exercise
+                                {{ exercise.ExerciseNumber }}<br /><br />
+                              </p>
 
-                            <h2>SELECT ANGLE</h2>
-                            <a class="close" href="#">&times;</a>
-                            <div class="content">
-                              <table class="angletable" cellspacing="0">
-                                <template
-                                  v-for="angle in getAnglesForExercise(
-                                    exercise.Videos
-                                  )"
-                                  :key="angle"
-                                >
-                                  <tr>
-                                    <td colspan="7" class="anglevideotitle">
-                                      Angle {{ angle }}
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <div
-                                      v-if="
-                                        exercise.Videos.find(
-                                          (x) =>
-                                            x.Angle == angle &&
-                                            x.Variant == 'LQ'
-                                        )
-                                      "
-                                    >
+                              <h2>SELECT ANGLE</h2>
+                              <a
+                                class="close"
+                                @click="
+                                  exercise.Videos
+                                    ? togglePopup(
+                                        exercise.CompetitorId,
+                                        exercise.ExerciseNumber
+                                      )
+                                    : null
+                                "
+                                >&times;</a
+                              >
+                              <div class="content">
+                                <table class="angletable" cellspacing="0">
+                                  <template
+                                    v-for="angle in getAnglesForExercise(
+                                      exercise.Videos
+                                    )"
+                                    :key="angle"
+                                  >
+                                    <tr>
+                                      <td colspan="7" class="anglevideotitle">
+                                        Angle {{ angle }}
+                                      </td>
+                                    </tr>
+                                    <tr>
                                       <td class="anglevideoname">LQ</td>
                                       <template
                                         v-if="
-                                          !isExerciseLinkInvalid(
-                                            exercise,
-                                            angle,
-                                            'LQ'
+                                          exercise.Videos.find(
+                                            (x) =>
+                                              x.Angle == angle &&
+                                              x.Variant == 'LQ'
                                           )
                                         "
                                       >
@@ -371,24 +384,14 @@
                                           /></a>
                                         </td>
                                       </template>
-                                    </div>
-                                    <td class="anglespace"></td>
-                                    <div
-                                      v-if="
-                                        exercise.Videos.find(
-                                          (x) =>
-                                            x.Angle == angle &&
-                                            x.Variant == 'HQ'
-                                        )
-                                      "
-                                    >
+                                      <td class="anglespace"></td>
                                       <td class="anglevideoname">HQ</td>
                                       <template
                                         v-if="
-                                          !isExerciseLinkInvalid(
-                                            exercise,
-                                            angle,
-                                            'HQ'
+                                          exercise.Videos.find(
+                                            (x) =>
+                                              x.Angle == angle &&
+                                              x.Variant == 'HQ'
                                           )
                                         "
                                       >
@@ -446,17 +449,17 @@
                                           /></a>
                                         </td>
                                       </template>
-                                    </div>
-                                  </tr>
-                                </template>
-                              </table>
-                              <h3>
-                                High quality videos may not be immediately
-                                available
-                              </h3>
+                                    </tr>
+                                  </template>
+                                </table>
+                                <h3>
+                                  High quality videos may not be immediately
+                                  available
+                                </h3>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </transition>
                       </td>
                     </tr>
 
@@ -641,6 +644,7 @@ export default {
       mediansVisible: {},
       roundFilterString: "",
       eventInfo: {},
+      exercisePopups: {},
     };
   },
   created() {
@@ -648,6 +652,11 @@ export default {
     this.fetchCategory();
   },
   methods: {
+    togglePopup(competitorId, exerciseNumber) {
+      this.exercisePopups[`${competitorId}-${exerciseNumber}`] =
+        !this.exercisePopups[`${competitorId}-${exerciseNumber}`];
+      console.log(this.exercisePopups);
+    },
     async fetchCategory() {
       const url =
         "http://" +
@@ -887,9 +896,6 @@ export default {
           console.error(error);
         });
     },
-    getPopupId(exercise) {
-      return `popup-${exercise.CompetitorId}-${exercise.ExerciseNumber}`;
-    },
     isExerciseLinkInvalid(exercise, angle, variant) {
       let link = this.getExerciseVideoLink(exercise.Videos, angle, variant);
       try {
@@ -923,5 +929,15 @@ export default {
 @import "../stylesheets/results.style.css";
 .disabled-link {
   pointer-events: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
