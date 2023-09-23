@@ -58,12 +58,17 @@
             <div :key="panelStatus.latestScore.CompetitorId">
               <table class="cis-panel-table-name">
                 <tr>
-                  <td class="cis-flag" rowspan="2">
+                  <td
+                    v-if="panelStatus.latestScore.Nation"
+                    class="cis-flag"
+                    rowspan="2"
+                  >
                     <img
                       :src="getFlagImageSource(panelStatus.latestScore.Nation)"
                       width="30"
                     />
                   </td>
+                  <td v-else class="cis-noflag" rowspan="2"></td>
                   <td class="cis-name">
                     {{
                       panelStatus.latestScore.Discipline == "TRS"
@@ -258,7 +263,7 @@
         v-for="panelStatus in this.panelStatuses"
         :key="panelStatus.PanelNo"
       >
-        <div v-if="!isValueNullOrEmpty(panelStatus.Status)">
+        <div v-if="!isValueNullOrEmpty(panelStatus.NextToCompeteFirstName1)">
           <table class="cis-panel-table">
             <tr>
               <transition name="slideup" mode="out-in">
@@ -289,6 +294,7 @@
             <tr>
               <transition name="slideup" mode="out-in">
                 <td
+                  v-if="panelStatus.NextToCompeteNation"
                   class="cis-flag"
                   rowspan="2"
                   :key="panelStatus.NextToCompeteNation"
@@ -298,6 +304,7 @@
                     width="30"
                   />
                 </td>
+                <td v-else class="cis-noflag" rowspan="2"></td>
               </transition>
               <transition name="slideup" mode="out-in">
                 <td

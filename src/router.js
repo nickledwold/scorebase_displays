@@ -6,6 +6,7 @@ import CommentaryInformationSystem from "./components/CommentaryInformationSyste
 import OnlineResults from "./components/OnlineResults.vue";
 import OnlineCategories from "./components/OnlineCategories.vue";
 import Clock from "./components/Clock.vue";
+import Clockv2 from "./components/Clockv2.vue";
 import Home from "./components/Home.vue";
 import OnlineStartLists from "./components/OnlineStartLists.vue";
 
@@ -58,6 +59,12 @@ const routerInstance = createRouter({
       path: "/clock",
       component: Clock,
       name: "Clock",
+      meta: { title: "Clock" },
+    },
+    {
+      path: "/clockv2/:panelNumber",
+      component: Clockv2,
+      name: "Clockv2",
       meta: { title: "Clock" },
     },
     {

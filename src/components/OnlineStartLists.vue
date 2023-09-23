@@ -33,7 +33,7 @@
           <table>
             <tr>
               <td class="results-eventtitle">
-                Jaffa Trampoline, Tumbling & DMT British Championships 2023
+                {{ this.eventInfo.EventName }}
               </td>
             </tr>
             <tr>
@@ -139,9 +139,11 @@ export default {
       searchParam: "",
       mediansVisible: {},
       roundFilterString: "",
+      eventInfo: {},
     };
   },
   created() {
+    this.fetchEventInfo();
     this.fetchCategory();
   },
   methods: {
@@ -158,6 +160,20 @@ export default {
           this.categoryData.Category +
           " - " +
           "Start List";
+    },
+    async fetchEventInfo() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        "/api/eventInfo";
+      try {
+        const data = await fetchWithRetry(url);
+        this.eventInfo = data[0];
+      } catch (error) {
+        console.error("Error fetching event info: ", error);
+      }
     },
     async fetchCategory() {
       const url =

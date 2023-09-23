@@ -134,6 +134,7 @@
 
 .results-eventtitle {
   padding: 5px;
+  text-align: center;
 }
 
 .results-eventlogo {
@@ -159,6 +160,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  width: 100vh;
 }
 
 .results-footer {

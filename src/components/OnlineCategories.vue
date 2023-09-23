@@ -15,7 +15,7 @@
       </div>
       <header class="wblue-container w3-center">
         <div class="wblue-content" style="max-width: 1920px">
-          Jaffa Trampoline, Tumbling & DMT British Championships 2023
+          {{ this.eventInfo.EventName }}
         </div>
       </header>
       <center>
@@ -164,6 +164,7 @@ export default {
       loadingStartLists: true,
       loadingError: "",
       tabs: [],
+      eventInfo: {},
     };
   },
   computed: {
@@ -189,6 +190,7 @@ export default {
     },
   },
   created() {
+    this.fetchEventInfo();
     this.fetchCategories();
     this.fetchStartListRounds();
   },
@@ -239,6 +241,24 @@ export default {
           "Error loading Categories, please refresh the page.";
         console.error("Error fetching categories:", error);
       }
+    },
+    async fetchEventInfo() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        "/api/eventInfo";
+      try {
+        const data = await fetchWithRetry(url);
+        this.eventInfo = data[0];
+      } catch (error) {
+        console.error("Error fetching event info: ", error);
+      }
+      this.updateTitle();
+    },
+    updateTitle() {
+      document.title = "SCOREBASE - " + this.eventInfo.EventName;
     },
     async fetchStartListRounds() {
       const url =

@@ -273,6 +273,16 @@
   width: 60px;
 }
 
+.cis-noflag {
+  text-align: center;
+  vertical-align: middle;
+  table-layout: fixed;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin: none;
+  width: 10px;
+}
+
 .cis-rank {
   text-align: center;
   font-size: 15px;
