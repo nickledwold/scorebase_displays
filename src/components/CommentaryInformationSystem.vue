@@ -348,6 +348,55 @@
                 <td v-else class="cis-statusstatusgo">ON NOW</td>
               </transition-group>
             </tr>
+            <tr>
+              <td class="latestspacer" colspan="3"></td>
+            </tr>
+            <tr>
+              <transition name="slideup" mode="out-in">
+                <td
+                  v-if="panelStatus.NextToCompeteNation"
+                  class="cis-flaglatest"
+                  rowspan="2"
+                  :key="panelStatus.NextToCompeteNation"
+                >
+                  <img
+                    :src="getFlagImageSource(panelStatus.NextToCompeteNation)"
+                    width="30"
+                  />
+                </td>
+                <td v-else class="cis-noflaglast" rowspan="2"></td>
+              </transition>
+              <transition name="slideup" mode="out-in">
+                <td
+                  class="cis-namestatuslast"
+                  :key="
+                    panelStatus.LastToCompeteSurname1 +
+                    panelStatus.LastToCompeteFirstName1
+                  "
+                >
+                  {{
+                    panelStatus.LastToCompeteDiscipline == "TRS"
+                      ? panelStatus.LastToCompeteSurname1.toUpperCase() +
+                        ", " +
+                        panelStatus.LastToCompeteSurname2.toUpperCase()
+                      : panelStatus.LastToCompeteSurname1.toUpperCase() +
+                        ", " +
+                        panelStatus.LastToCompeteFirstName1
+                  }}
+                </td>
+              </transition>
+              <td class="cis-statusstatuslast" rowspan="2">Previously On</td>
+            </tr>
+            <tr>
+              <transition name="slideup" mode="out-in">
+                <td
+                  class="cis-clubnamestatuslast"
+                  :key="panelStatus.LastToCompeteClub"
+                >
+                  {{ panelStatus.LastToCompeteClub }}
+                </td>
+              </transition>
+            </tr>
           </table>
         </div>
         <div v-else>
@@ -357,7 +406,7 @@
                 <img src="../assets/TRA.png" width="55" />
               </td>
               <td class="cis-categoryname">
-                Panel {{ panelStatus.PanelNo }} | Scores Coming Soon
+                Panel {{ panelStatus.PanelNo }} | Status Coming Soon
               </td>
               <td class="cis-exerciseno"></td>
             </tr>
@@ -371,6 +420,17 @@
             <tr>
               <td class="cis-clubnamestatus"></td>
               <td class="cis-statusstatussoon"></td>
+            </tr>
+            <tr>
+              <td class="cis-latestspacer" colspan="3"></td>
+            </tr>
+            <tr>
+              <td class="cis-noflaglast" rowspan="2"></td>
+              <td class="cis-namestatuslast"></td>
+              <td class="cis-statusstatuslast" rowspan="2"></td>
+            </tr>
+            <tr>
+              <td class="cis-clubnamestatuslast"></td>
             </tr>
           </table>
         </div>

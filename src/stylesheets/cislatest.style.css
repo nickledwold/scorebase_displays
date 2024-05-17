@@ -50,14 +50,15 @@
   background-color: #161616;
 }
 .cis-latesttitle {
-  color: #ffffff;
-  padding-right: 15px;
-  padding-top: 8px;
-  font-family: Gotham Bold;
-  font-size: 45px;
-  padding-bottom: 0px;
-  text-transform: uppercase;
-  text-align: left;
+	color: #ffffff;
+	padding-right: 5px;
+	padding-left: 10px;
+	padding-top: 8px;
+	font-family: Gotham Bold;
+	font-size: 45px;
+	padding-bottom: 0px;
+	text-transform: uppercase;
+	text-align: center;
 }
 .cis-panelstatuspanel {
   float: right;
@@ -68,14 +69,14 @@
   background-color: #161616;
 }
 .cis-statustitle {
-  color: #ffffff;
-  padding-left: 15px;
-  padding-top: 8px;
-  font-family: Gotham Light;
-  font-size: 45px;
-  padding-bottom: 0px;
-  text-transform: uppercase;
-  text-align: right;
+	color: #ffffff;
+	padding-right: 10px;
+	padding-top: 8px;
+	font-family: Gotham Bold;
+	font-size: 45px;
+	padding-bottom: 0px;
+	text-transform: uppercase;
+	text-align: center;
 }
 
 .cis-panel-table {
@@ -273,6 +274,28 @@
   width: 60px;
 }
 
+.cis-flaglast {
+	text-align:center;
+	vertical-align: middle;
+	table-layout: fixed;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: none;
+	width: 60px;
+	background-color: #252525;
+}
+
+.cis-noflaglast {
+	text-align:center;
+	vertical-align: middle;
+	table-layout: fixed;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: none;
+	width: 10px;
+	background-color: #252525;
+}
+
 .cis-noflag {
   text-align: center;
   vertical-align: middle;
@@ -299,7 +322,7 @@
 .cis-name {
   font-family: Gotham Book, sans-serif;
   text-align: left;
-  font-size: 14px;
+	font-size:18px;
   padding-top: 10px;
   padding-left: 0px;
   white-space: nowrap;
@@ -313,7 +336,7 @@
   font-family: Gotham Book, sans-serif;
   text-transform: uppercase;
   text-align: left;
-  font-size: 14px;
+	font-size:18px;
   padding-top: 5px;
   padding-left: 5px;
   white-space: nowrap;
@@ -326,7 +349,7 @@
 .cis-clubname {
   font-family: Gotham Light, sans-serif;
   text-align: left;
-  font-size: 14px;
+	font-size:16px;
   padding-top: 5px;
   padding-bottom: 10px;
   padding-left: 0px;
@@ -557,7 +580,7 @@
   font-family: Myriad Pro;
   width: 98%;
   table-layout: auto;
-  background-color: #252525;
+	background-color: #2036a3;
   float: left;
   height: 60px;
 }
@@ -595,6 +618,27 @@
   border: none;
   color: #ffffff;
   width: 200px;
+}
+
+.cis-statusstatuslast {
+	font-family: Gotham Bold, sans-serif;
+	text-align:center;
+	font-size:18px;
+	padding-top:5px;
+	padding-bottom:0px;
+	padding-left:2px;
+	padding-right: 2px;
+	vertical-align: middle;
+	white-space:nowrap;
+	table-layout: fixed;
+	line-height: 100%;
+	overflow: hidden;
+	text-transform: uppercase;
+	font-style: italic;
+	background-color: #1b1a1a;
+	border: none;
+	color: #c9c9c9;
+	width: 200px;
 }
 
 .cis-statusheadersoon {
@@ -686,28 +730,63 @@
 }
 
 .cis-namestatus {
-  font-family: Gotham Book, sans-serif;
-  text-align: left;
-  font-size: 16px;
-  padding-top: 8px;
-  padding-left: 0px;
-  white-space: nowrap;
-  font-weight: bold;
-  line-height: 100%;
-  table-layout: fixed;
-  overflow: hidden;
+	font-family: Gotham Book, sans-serif;
+	text-align:left;
+	font-size:26px;
+	padding-top:8px;
+	padding-left:0px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height:100%;
+	table-layout: fixed;
+	overflow: hidden;
 }
 
+.cis-namestatuslast {
+	font-family: Gotham Book, sans-serif;
+	text-align:left;
+	font-size:20px;
+	padding-top:8px;
+	padding-left:0px;
+	white-space:nowrap;
+	font-weight:bold;
+	line-height:100%;
+	table-layout: fixed;
+	overflow: hidden;
+	color: #d1d1d1;
+	background-color: #252525;
+
+}
 .cis-clubnamestatus {
-  font-family: Gotham Light, sans-serif;
-  text-align: left;
-  font-size: 16px;
-  padding-top: 6px;
-  padding-bottom: 0px;
-  padding-left: 0px;
-  vertical-align: top;
-  white-space: nowrap;
-  table-layout: fixed;
-  line-height: 100%;
-  overflow: hidden;
+	font-family: Gotham Light, sans-serif;
+	text-align:left;
+	font-size:20px;
+	padding-top:6px;
+	padding-bottom:10px;
+	padding-left:0px;
+	vertical-align: middle;
+	white-space:nowrap;
+	table-layout: fixed;
+	line-height: 100%;
+	overflow: hidden;
+}
+.cis-clubnamestatuslast {
+	font-family: Gotham Light, sans-serif;
+	text-align:left;
+	font-size:16px;
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:0px;
+	vertical-align: middle;
+	white-space:nowrap;
+	table-layout: fixed;
+	line-height: 100%;
+	overflow: hidden;
+	color: #d1d1d1;
+	background-color: #252525;
+}
+
+.cis-latestspacer {
+	height: 10px;
+	background-color: #161616;
 }
