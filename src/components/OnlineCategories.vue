@@ -14,7 +14,7 @@
         <br />
       </div>
       <header class="wblue-container w3-center">
-        <div class="wblue-content" style="max-width: 1920px">
+        <div class="wblue-content">
           {{ this.eventInfo.EventName }}
         </div>
       </header>

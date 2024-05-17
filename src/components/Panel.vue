@@ -77,7 +77,7 @@
                   :key="categoryTransitionKey"
                 >
                   <img
-                    v-if="this.panelStatus.NextToCompeteNation"
+                    v-if="this.panelStatus.NextToCompeteDiscipline"
                     :src="
                       getImageSource(this.panelStatus.NextToCompeteDiscipline)
                     "

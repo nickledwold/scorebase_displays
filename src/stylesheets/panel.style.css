@@ -471,21 +471,21 @@ body {
 .panel-holding-next,
 .panel-holding-on {
   float: left;
-  position: fixed;
-  top: 55px;
-  left: 0%;
-  text-align: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  color: #ffffff;
+	position: fixed;
+    top: 40px;
+	left: 0%;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 30px;
+	padding-right: 30px;
+	color:#ffffff;
   font-family: Gotham Book, sans-serif;
-  text-transform: uppercase;
-  font-size: 100px;
-  background-color: #000000;
-  box-shadow: 3px 8px 5px 0px rgba(0, 0, 0, 0.1);
-  z-index: 120;
+	text-transform: uppercase;
+	font-size: 100px;
+	background-color: #000000;
+	box-shadow: 3px 8px 5px 0px rgba(0,0,0,0.1);
+	z-index: 120;
 }
 
 .panel-holding-empty {
@@ -498,121 +498,137 @@ body {
 
 .panel-statuslabel {
   float: right;
-  position: fixed;
-  top: 695px;
-  right: 19%;
-  text-align: center;
-  height: 40px;
-  padding-top: 5px;
-  padding-bottom: 15px;
-  width: 262px;
-  z-index: 99;
-  color: #ffffff;
-  font-family: Gotham Light;
-  text-transform: uppercase;
-  font-size: 40px;
-  background-color: #000000;
-  -webkit-transform: rotate(270deg);
+	position: fixed;
+    top: 735px;
+	right: 25%;
+	text-align: center;
+    height: 40px;
+	padding-top:5px;
+	padding-bottom: 15px;
+	width: 240px;	
+	z-index: 99;
+	color:#ffffff;
+	font-family: Gotham Light;
+	text-transform: uppercase;
+	font-size: 40px;
+	background-color: #000000;
+	-webkit-transform: rotate(270deg);
 }
 
 .panel-holding-statusgo {
   float: right;
-  position: fixed;
-  top: 595px;
-  right: 0%;
-  text-align: center;
-  height: 200px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 60px;
-  width: 450px;
-  z-index: 99;
-  color: #ffffff;
-  font-family: Gotham Bold;
-  font-size: 110px;
-  background-color: #268f30;
-  box-shadow: 3px 8px 5px 0px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
+	position: fixed;
+    top: 646px;
+	right: 0%;
+	text-align: center;
+    height: 178px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top:35px;
+	padding-bottom: 25px;
+	width: 555px;	
+	z-index: 99;
+	color:#ffffff;
+    font-family: Gotham Bold;
+	font-size: 140px;
+	background-color: #268f30;
+	box-shadow: 3px 8px 5px 0px rgba(0,0,0,0.1);
+	text-transform: uppercase;
 }
 .panel-holding-statuswait {
   float: right;
-  position: fixed;
-  top: 595px;
-  right: 0%;
-  text-align: center;
-  height: 200px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 60px;
-  width: 450px;
-  z-index: 99;
-  color: #ffffff;
-  font-family: Gotham Bold;
-  font-size: 110px;
-  background-color: #dfaa2e;
-  box-shadow: 3px 8px 5px 0px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
+	position: fixed;
+    top: 646px;
+	right: 0%;
+	text-align: center;
+    height: 178px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top:35px;
+	padding-bottom: 25px;
+	width: 555px;	
+	z-index: 99;
+	color:#ffffff;
+    font-family: Gotham Bold;
+	font-size: 140px;
+	background-color: #dfaa2e;
+	box-shadow: 3px 8px 5px 0px rgba(0,0,0,0.1);
+	text-transform: uppercase;
 }
 
 .panel-namebg1 {
   position: fixed;
-  top: 210px;
-  left: 0%;
-  right: 0%;
-  text-align: left;
-  height: 310px;
-  width: 100%;
-  overflow: hidden;
-  padding: 30px;
-  color: #ffffff;
-  background-color: rgba(228, 228, 228, 0.1);
-  line-height: normal;
+    top: 197px;
+	left: 0%;
+	right: 0%;
+	text-align: left;
+	height: 370px;
+	width: 100%;
+	overflow: hidden;
+	padding: 30px;
+	color:#ffffff;
+	background-color: rgba(228, 228, 228, 0.1); 
+	line-height: normal;
 }
 
 .panel-holding-surname {
   text-align: left;
-  font-family: Gotham Bold, sans-serif;
-  text-transform: uppercase;
-  font-size: 100px;
-  padding-top: 0px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  max-width: 1750px;
-  max-height: 110px;
-  line-height: 100%;
+    font-family: Gotham Bold, sans-serif;
+	text-transform: uppercase;
+	font-size: 140px;
+	padding-top:0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	max-width: 1750px;
+	max-height: 130px;
+	line-height: 100%;
 }
 
 .panel-holding-forename {
   text-align: left;
-  font-family: Gotham Book, sans-serif;
-  text-transform: none;
-  font-size: 90px;
-  padding-top: 0px;
-  padding-bottom: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  max-width: 1850px;
-  max-height: 100px;
+    font-family: Gotham Book, sans-serif;
+	text-transform: none;
+	font-size: 130px;
+	padding-top:0px;
+	padding-bottom: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	max-width: 1850px;
+	max-height: 120px;
 }
 
 .panel-holding-name1trs {
   text-align: left;
-  font-family: Gotham Bold, sans-serif;
-  text-transform: uppercase;
-  font-size: 88px;
-  padding-top: 0px;
+    font-family: Gotham Bold, sans-serif;
+	text-transform: uppercase;
+	font-size: 125px;
+	padding-top:0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	max-width: 1750px;
+	max-height: 130px;
+	line-height: 100%;
 }
 
 .panel-holding-name2trs {
   text-align: left;
-  font-family: Gotham Bold, sans-serif;
-  text-transform: uppercase;
-  font-size: 88px;
-  padding-top: 0px;
+    font-family: Gotham Bold, sans-serif;
+	text-transform: uppercase;
+	font-size: 125px;
+	padding-top:0px;
+	padding-bottom: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	max-width: 1850px;
+	max-height: 120px;
 }
 
 .panel-holding-flag {
@@ -629,29 +645,29 @@ body {
 
 .panel-holding-club {
   text-align: left;
-  font-family: Gotham Light, sans-serif;
-  font-size: 55px;
-  padding-top: 25px;
-  padding-left: 0px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  max-width: 1850px;
-  max-height: 130px;
+    font-family: Gotham Light, sans-serif;
+	font-size: 70px;
+	padding-top:40px;
+	padding-left: 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	max-width: 1850px;
+	max-height: 130px;
 }
 
 .panel-catbg1 {
-  color: #ffffff;
-  text-transform: uppercase;
-  font-size: 140px;
-  border: 0px;
-  width: 73%;
-  border-collapse: collapse;
-  -webkit-transform: rotate(0deg);
-  position: absolute;
-  top: 665px;
-  z-index: 99;
+  color:#ffffff;
+	text-transform: uppercase;
+    font-size: 140px;
+	border:0px;
+	width: 65%;
+	border-collapse:collapse;
+	-webkit-transform: rotate(0deg);
+	position: absolute;
+    top: 690px;
+	z-index: 99;
 }
 
 .panel-holding-category {
