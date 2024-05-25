@@ -157,6 +157,7 @@
                 <table class="results-scores-table">
                   <tr class="results-headers">
                     <th class="results-scores-routine2">Exercise</th>
+                    <th class="results-scores-routine4"># Elements</th>
                     <th class="results-scores-routine3" colspan="2">E</th>
                     <th
                       v-if="
@@ -189,8 +190,11 @@
                     :key="exercise.ExerciseNumber"
                   >
                     <tr>
-                      <td class="results-scores-routine">
+                      <td class="results-scores-routine4">
                         {{ exercise.ExerciseNumber }}
+                      </td>
+                      <td class="results-scores-routine">
+                        {{ exercise.Elements }}
                       </td>
                       <td class="results-scores-tri-set-E">
                         {{ formattedNumber(exercise.Execution, 2) }}
@@ -328,21 +332,6 @@
                                           )
                                         "
                                       >
-                                        <td class="anglevideoa">
-                                          <a
-                                            :href="
-                                              getExerciseVideoLink(
-                                                exercise.Videos,
-                                                angle,
-                                                'LQ'
-                                              )
-                                            "
-                                            target="_blank"
-                                            ><img
-                                              src="../assets/play.png"
-                                              height="19"
-                                          /></a>
-                                        </td>
                                         <td class="anglevideob">
                                           <a
                                             :href="
@@ -393,21 +382,6 @@
                                           )
                                         "
                                       >
-                                        <td class="anglevideoa">
-                                          <a
-                                            :href="
-                                              getExerciseVideoLink(
-                                                exercise.Videos,
-                                                angle,
-                                                'HQ'
-                                              )
-                                            "
-                                            target="_blank"
-                                            ><img
-                                              src="../assets/play.png"
-                                              height="19"
-                                          /></a>
-                                        </td>
                                         <td class="anglevideob">
                                           <a
                                             :href="
@@ -488,6 +462,23 @@
                               class="results-medianhead"
                             >
                               {{ median.DeductionNumber }}
+                            </td>
+                          </tr>
+                          <tr
+                            v-for="(
+                              deductions, judgeNumber
+                            ) in getGroupedDeductions(exercise.Deductions)"
+                            :key="judgeNumber"
+                          >
+                            <td class="results-medianheadtitle">
+                              Judge {{ judgeNumber }}
+                            </td>
+                            <td
+                              v-for="deduction in deductions"
+                              :key="deduction.DeductionNumber"
+                              class="results-medianscore"
+                            >
+                              {{ deduction.DeductionValue }}
                             </td>
                           </tr>
                           <tr>
@@ -836,6 +827,15 @@ export default {
         display: this.mediansVisible[key] ? "table-cell" : "none",
       };
     },
+    getGroupedDeductions(deductions) {
+      return deductions.reduce((acc, deduction) => {
+        if (!acc[deduction.JudgeNumber]) {
+          acc[deduction.JudgeNumber] = [];
+        }
+        acc[deduction.JudgeNumber].push(deduction);
+        return acc;
+      }, {});
+    },
     getRoundStatusClass(round) {
       let categoryRound = this.categoryRounds.filter(
         (item) => item.RoundName == round
@@ -871,17 +871,31 @@ export default {
       const uniqueAngles = new Set(videos.map((item) => item.Angle));
       return Array.from(uniqueAngles);
     },
-    getExerciseVideoLink(videos, angle, variant) {
+    getExerciseVideoFilename(videos, angle, variant) {
       if (!videos) return "";
       var video = videos.find((x) => x.Angle == angle && x.Variant == variant);
       if (!video) return "";
-      return `${process.env.VUE_APP_VIDEO_LOCATION}\\${video.Variant}\\${video.Filename}`;
+      return video.Filename;
+    },
+    getExerciseVideoLink(videos, angle, variant) {
+      return (
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/videoFile?event=${
+          this.eventInfo.EventShortName
+        }&fileName=${encodeURIComponent(
+          this.getExerciseVideoFilename(videos, angle, variant)
+        )}&variant=${variant}`
+      );
     },
     downloadItem(videos, angle, variant) {
       if (!videos) return "";
       var video = videos.find((x) => x.Angle == angle && x.Variant == variant);
       if (!video) return "";
-      fetch(this.getExerciseVideoLink(videos, angle, variant))
+      const url = this.getExerciseVideoLink(videos, angle, variant);
+      fetch(url)
         .then((response) => response.blob())
         .then((blob) => {
           const link = document.createElement("a");
@@ -894,10 +908,9 @@ export default {
           console.error(error);
         });
     },
-    isExerciseLinkInvalid(exercise, angle, variant) {
-      let link = this.getExerciseVideoLink(exercise.Videos, angle, variant);
+    isExerciseLinkInvalid() {
       try {
-        return !this.checkFileExists(link);
+        return !this.checkFileExists();
       } catch (error) {
         console.log(error);
         return true;

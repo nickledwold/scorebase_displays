@@ -457,6 +457,9 @@ export default {
       this.updateTime();
       this.fetchPanelData();
     }, 1000);
+    setTimeout(() => {
+      location.reload();
+    }, 30000);
   },
   methods: {
     async fetchPanelData() {
