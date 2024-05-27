@@ -459,7 +459,7 @@ export default {
     }, 1000);
     setTimeout(() => {
       location.reload();
-    }, 30000);
+    }, 60000);
   },
   methods: {
     async fetchPanelData() {

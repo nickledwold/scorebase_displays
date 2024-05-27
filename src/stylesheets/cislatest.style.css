@@ -358,6 +358,9 @@
   table-layout: fixed;
   line-height: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  width: 400px;
+  max-width: 400px;
 }
 
 .cis-namecomingsoon {
