@@ -81,7 +81,7 @@
                     :src="
                       getImageSource(this.panelStatus.NextToCompeteDiscipline)
                     "
-                    height="90"
+                    height="120"
                     style="
                       padding-right: 10px;
                       padding-bottom: 10px;
