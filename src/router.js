@@ -3,6 +3,7 @@ import Panel from "./components/Panel.vue";
 import RankedScores from "./components/RankedScores.vue";
 import LatestScores from "./components/LatestScores.vue";
 import CommentaryInformationSystem from "./components/CommentaryInformationSystem.vue";
+import CommentaryInformationSystemPanelStatusOnly from "./components/CommentaryInformationSystemPanelStatusOnly.vue";
 import CommentaryInformationSystem2 from "./components/CommentaryInformationSystem2.vue";
 import CommentaryInformationSystem3 from "./components/CommentaryInformationSystem3.vue";
 import OnlineResults from "./components/OnlineResults.vue";
@@ -44,6 +45,14 @@ const routerInstance = createRouter({
       component: CommentaryInformationSystem,
       name: "CommentaryInformationSystem",
       meta: { title: "Commentary Information System Display" },
+    },
+    {
+      path: "/cisps",
+      component: CommentaryInformationSystemPanelStatusOnly,
+      name: "CommentaryInformationSystemPanelStatusOnly",
+      meta: {
+        title: "Commentary Information System Display - Panel Status Only",
+      },
     },
     {
       path: "/cis2",

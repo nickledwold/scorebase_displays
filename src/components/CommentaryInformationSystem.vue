@@ -527,29 +527,42 @@ export default {
       for (const exercise of exercises) {
         if (!exercise) continue;
         const totalProperty = `${exercise.propertyPrefix}Total`;
-        if (!this.isValueNullOrEmpty(latestScore[totalProperty])) {
-          await this.fetchCategoryRoundExercise(
-            latestScore.CatId,
-            exercise.exerciseNumber
-          );
-          tempLatestExercise = {
-            Exercise: exercise.exerciseNumber,
-            RoundName: this.categoryRoundExercise.RoundName,
-            Execution: latestScore[`${exercise.propertyPrefix}E`],
-            Difficulty: latestScore[`${exercise.propertyPrefix}D`],
-            Bonus: latestScore[`${exercise.propertyPrefix}B`],
-            HorizontalDisplacement: latestScore[`${exercise.propertyPrefix}HD`],
-            TimeOfFlight: latestScore[`${exercise.propertyPrefix}ToF`],
-            Synchronisation: latestScore[`${exercise.propertyPrefix}S`],
-            Penalty: latestScore[`${exercise.propertyPrefix}Pen`],
-            Total: latestScore[totalProperty],
-          };
+
+        if (
+          latestScore &&
+          typeof latestScore === "object" &&
+          !this.isValueNullOrEmpty(latestScore[totalProperty])
+        ) {
+          try {
+            await this.fetchCategoryRoundExercise(
+              latestScore.CatId,
+              exercise.exerciseNumber
+            );
+            tempLatestExercise = {
+              Exercise: exercise.exerciseNumber,
+              RoundName: this.categoryRoundExercise?.RoundName ?? "",
+              Execution: latestScore[`${exercise.propertyPrefix}E`] ?? null,
+              Difficulty: latestScore[`${exercise.propertyPrefix}D`] ?? null,
+              Bonus: latestScore[`${exercise.propertyPrefix}B`] ?? null,
+              HorizontalDisplacement:
+                latestScore[`${exercise.propertyPrefix}HD`] ?? null,
+              TimeOfFlight:
+                latestScore[`${exercise.propertyPrefix}ToF`] ?? null,
+              Synchronisation:
+                latestScore[`${exercise.propertyPrefix}S`] ?? null,
+              Penalty: latestScore[`${exercise.propertyPrefix}Pen`] ?? null,
+              Total: latestScore[totalProperty] ?? null,
+            };
+          } catch (error) {
+            console.error("Error fetching category round exercise:", error);
+          }
           break;
         }
       }
 
       return tempLatestExercise;
     },
+
     async fetchCategoryRoundExercise(catId, currentExercise) {
       await fetch(
         "http://" +

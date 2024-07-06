@@ -477,6 +477,9 @@
                               v-for="deduction in deductions"
                               :key="deduction.DeductionNumber"
                               class="results-medianscore"
+                              :style="
+                                getDeductionStyle(deduction, exercise.Medians)
+                              "
                             >
                               {{ deduction.DeductionValue }}
                             </td>
@@ -931,6 +934,37 @@ export default {
         console.error("Error fetching file:", error);
       }*/
       return true;
+    },
+    getDeductionStyle(deduction, medians) {
+      if (!medians) return ""; // Handle no median case
+      if (
+        !deduction ||
+        (!deduction.DeductionValue && deduction.DeductionValue != 0)
+      )
+        return;
+      let median = medians.find(
+        (median) =>
+          median.ExerciseNumber === deduction.ExerciseNumber &&
+          median.DeductionNumber === deduction.DeductionNumber
+      );
+      // Check if deduction matches the median based on ExerciseNumber and DeductionNumber
+      if (median) {
+        const difference1 = deduction.DeductionValue - median.Med1;
+        console.log("difference1: " + Math.abs(difference1));
+
+        const difference2 = deduction.DeductionValue - median.Med2;
+        console.log("difference2: " + Math.abs(difference2));
+
+        if (Math.abs(difference1) < 1 || Math.abs(difference2) < 1) {
+          return "background-color: rgb(5, 176, 80);"; // Deduction less than 1 of median
+        } else if (Math.abs(difference1) < 2 || Math.abs(difference2) < 2) {
+          return "background-color: rgb(255, 191, 0);"; // Deduction within 2 of median
+        } else {
+          return "background-color: rgb(217, 0, 2);"; // Deduction greater than 2 of median
+        }
+      } else {
+        return ""; // Return empty string if deduction doesn't match the median
+      }
     },
   },
 };

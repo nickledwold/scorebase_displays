@@ -68,6 +68,14 @@
   margin: none;
   background-color: #161616;
 }
+.cis-panelstatuspanel-left {
+  float: left;
+  width: 50%;
+  height: 93%;
+  padding: none;
+  margin: none;
+  background-color: #161616;
+}
 .cis-statustitle {
 	color: #ffffff;
 	padding-right: 10px;
@@ -272,6 +280,7 @@
   padding-right: 0px;
   margin: none;
   width: 60px;
+  background-color: #2036a3;
 }
 
 .cis-flaglast {
@@ -304,6 +313,7 @@
   padding-right: 0px;
   margin: none;
   width: 10px;
+  background-color: #2036a3
 }
 
 .cis-rank {
@@ -583,7 +593,6 @@
   font-family: Myriad Pro;
   width: 98%;
   table-layout: auto;
-	background-color: #2036a3;
   float: left;
   height: 60px;
 }
@@ -743,6 +752,7 @@
 	line-height:100%;
 	table-layout: fixed;
 	overflow: hidden;
+  background-color: #2036a3;background-color: #2036a3;
 }
 
 .cis-namestatuslast {
@@ -772,6 +782,7 @@
 	table-layout: fixed;
 	line-height: 100%;
 	overflow: hidden;
+  background-color: #2036a3;
 }
 .cis-clubnamestatuslast {
 	font-family: Gotham Light, sans-serif;
