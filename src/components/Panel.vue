@@ -174,27 +174,18 @@
             </tr>
 
             <tr>
-              <template
-                v-if="
-                  this.latestScore.Discipline === 'TRA' ||
-                  this.latestScore.Discipline === 'TRS'
-                "
-              >
+              <template v-if="this.latestScore.Discipline === 'TRA'">
+                <td class="panel-scoretable_header4">E</td>
+                <td class="panel-scoretable_header4">H</td>
+                <td class="panel-scoretable_header3">D</td>
+                <td class="panel-scoretable_header4">T</td>
+                <td class="panel-scoretable_headerpen">P</td>
+              </template>
+              <template v-if="this.latestScore.Discipline === 'TRS'">
                 <td class="panel-scoretable_header">E</td>
                 <td class="panel-scoretable_header">H</td>
                 <td class="panel-scoretable_header">D</td>
-                <td
-                  v-if="this.latestScore.Discipline == 'TRS'"
-                  class="panel-scoretable_header"
-                >
-                  S
-                </td>
-                <td
-                  v-if="this.latestScore.Discipline == 'TRA'"
-                  class="panel-scoretable_header"
-                >
-                  T
-                </td>
+                <td class="panel-scoretable_header">S</td>
                 <td class="panel-scoretable_headerpen">P</td>
               </template>
               <template v-if="this.latestScore.Discipline === 'DMT'">
@@ -234,8 +225,11 @@
                 }}
               </td>
               <td
-                v-if="this.latestScore.Discipline === 'TUM'"
-                class="panel-scoretable_score"
+                v-if="
+                  this.latestScore.Discipline === 'TUM' ||
+                  this.latestScore.Discipline === 'TRA'
+                "
+                class="panel-scoretable_score2"
               >
                 {{ formattedNumber(this.latestExercise.Difficulty, 1)
                 }}<span class="panel-span3">

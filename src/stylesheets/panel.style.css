@@ -201,6 +201,20 @@ body {
   max-width: 300px;
 }
 
+.panel-scoretable_header4 {
+  text-align: center;
+  font-family: Gotham Book, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 13px;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: hidden;
+  min-width: 150px;
+  max-width: 150px;
+}
+
 .panel-scoretable_score {
   text-align: center;
   font-family: Gotham Light, sans-serif;
@@ -210,6 +224,20 @@ body {
   padding-bottom: 10px;
   padding-left: 40px;
   padding-right: 40px;
+  border: none;
+  border-spacing: 0px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.panel-scoretable_score2 {
+  text-align: center;
+  font-family: Gotham Light, sans-serif;
+  color: white;
+  border-collapse: collapse;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
   border: none;
   border-spacing: 0px;
   background-color: rgba(0, 0, 0, 0.2);
