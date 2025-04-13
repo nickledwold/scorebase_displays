@@ -158,7 +158,7 @@
                   <tr class="results-headers">
                     <th class="results-scores-routine2">Exercise</th>
                     <th class="results-scores-routine4"># Elements</th>
-                    <th class="results-scores-routine3" colspan="2">E</th>
+                    <th class="results-scores-routine3">E</th>
                     <th
                       v-if="
                         this.categoryData.Discipline == 'TRA' ||
@@ -198,9 +198,8 @@
                       </td>
                       <td class="results-scores-tri-set-E">
                         {{ formattedNumber(exercise.Execution, 2) }}
-                      </td>
-                      <td class="results-scores-median-select">
                         <label
+                          v-if="exercise.Deductions.length > 0"
                           :id="
                             expand +
                             exercise.ExerciseNumber +
@@ -224,19 +223,29 @@
                       >
                         {{ formattedNumber(exercise.HD, 2) }}
                       </td>
-                      <td
-                        v-if="this.categoryData.Discipline == 'TUM'"
-                        class="results-scores-tri-set-D"
-                      >
-                        {{ formattedNumber(exercise.Difficulty, 1) }}
-                        <span class="results-span3">
-                          {{
-                            " (+" + formattedNumber(exercise.Bonus, 1) + ")"
-                          }}</span
+                      <td class="results-scores-tri-set-D">
+                        {{
+                          formattedNumber2(
+                            exercise.Difficulty,
+                            exercise.Bonus,
+                            1
+                          )
+                        }}
+                        <label
+                          v-if="exercise.Bonus > 0"
+                          :id="
+                            expand +
+                            exercise.ExerciseNumber +
+                            exercise.CompetitorId
+                          "
+                          @click="
+                            toggleDifficulty(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          "
+                          >[+]</label
                         >
-                      </td>
-                      <td v-else class="results-scores-tri-set-D">
-                        {{ formattedNumber(exercise.Difficulty, 1) }}
                       </td>
                       <td
                         v-if="
@@ -523,6 +532,38 @@
                         </table>
                       </td>
                     </tr>
+                    <tr>
+                      <td
+                        class="results-scores-difficulty"
+                        colspan="100%"
+                        :style="
+                          getDifficultyStyle(
+                            exercise.ExerciseNumber,
+                            exercise.CompetitorId
+                          )
+                        "
+                        :id="
+                          'difficulty' +
+                          exercise.ExerciseNumber +
+                          exercise.CompetitorId
+                        "
+                      >
+                        <table class="results-difficulty">
+                          <tr>
+                            <td class="results-medianhead">Difficulty</td>
+                            <td class="results-medianhead">Bonus</td>
+                          </tr>
+                          <tr>
+                            <td class="results-medianscore">
+                              {{ formattedNumber(exercise.Difficulty, 1) }}
+                            </td>
+                            <td class="results-medianscore">
+                              {{ formattedNumber(exercise.Bonus, 1) }}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
                   </template>
                 </table>
                 <table class="results-total-table">
@@ -634,6 +675,7 @@ export default {
       noResults: false,
       categoryRounds: {},
       mediansVisible: {},
+      difficultyVisible: {},
       roundFilterString: "",
       eventInfo: {},
       exercisePopups: {},
@@ -750,6 +792,14 @@ export default {
       parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
       return parsedNumber.toFixed(decimalPlaces);
     },
+    formattedNumber2(firstNumberAsString, secondNumberAsString, decimalPlaces) {
+      let parsedNumber = parseFloat(firstNumberAsString);
+      let parsedNumber2 = parseFloat(secondNumberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      parsedNumber2 = isNaN(parsedNumber2) ? 0 : parsedNumber2;
+      parsedNumber = parsedNumber + parsedNumber2;
+      return parsedNumber.toFixed(decimalPlaces);
+    },
     formatMedian(median) {
       let medianAsFloat = parseFloat(median);
       let medianAsInt = parseInt(median);
@@ -824,10 +874,20 @@ export default {
       const key = "medians" + exerciseNumber + competitorId;
       this.mediansVisible[key] = !this.mediansVisible[key];
     },
+    toggleDifficulty(exerciseNumber, competitorId) {
+      const key = "difficulty" + exerciseNumber + competitorId;
+      this.difficultyVisible[key] = !this.difficultyVisible[key];
+    },
     getMediansStyle(exerciseNumber, competitorId) {
       const key = "medians" + exerciseNumber + competitorId;
       return {
         display: this.mediansVisible[key] ? "table-cell" : "none",
+      };
+    },
+    getDifficultyStyle(exerciseNumber, competitorId) {
+      const key = "difficulty" + exerciseNumber + competitorId;
+      return {
+        display: this.difficultyVisible[key] ? "table-cell" : "none",
       };
     },
     getGroupedDeductions(deductions) {

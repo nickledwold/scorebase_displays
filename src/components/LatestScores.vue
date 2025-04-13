@@ -131,22 +131,13 @@
                         )
                   }}
                 </td>
-                <td
-                  v-if="panelStatus.latestScore.Discipline == 'TUM'"
-                  class="latest-scoretable_score"
-                >
-                  {{ formattedNumber(panelStatus.latestExercise.Difficulty, 1)
-                  }}<span class="latest-span3">
-                    {{
-                      "   (+" +
-                      formattedNumber(panelStatus.latestExercise.Bonus, 1) +
-                      ")"
-                    }}</span
-                  >
-                </td>
-                <td v-else class="latest-scoretable_score">
+                <td class="latest-scoretable_score">
                   {{
-                    formattedNumber(panelStatus.latestExercise.Difficulty, 1)
+                    formattedNumber2(
+                      panelStatus.latestExercise.Difficulty,
+                      panelStatus.latestExercise.Bonus,
+                      1
+                    )
                   }}
                 </td>
                 <td class="latest-scoretable_score">
@@ -399,6 +390,14 @@ export default {
     formattedNumber(numberAsString, decimalPlaces) {
       let parsedNumber = parseFloat(numberAsString);
       parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      return parsedNumber.toFixed(decimalPlaces);
+    },
+    formattedNumber2(firstNumberAsString, secondNumberAsString, decimalPlaces) {
+      let parsedNumber = parseFloat(firstNumberAsString);
+      let parsedNumber2 = parseFloat(secondNumberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      parsedNumber2 = isNaN(parsedNumber2) ? 0 : parsedNumber2;
+      parsedNumber = parsedNumber + parsedNumber2;
       return parsedNumber.toFixed(decimalPlaces);
     },
     compareArrays(array1, array2) {

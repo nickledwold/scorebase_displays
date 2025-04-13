@@ -224,24 +224,14 @@
                   formattedNumber(this.latestExercise.HorizontalDisplacement, 2)
                 }}
               </td>
-              <td
-                v-if="
-                  this.latestScore.Discipline === 'TUM' ||
-                  this.latestScore.Discipline === 'TRA'
-                "
-                class="panel-scoretable_score2"
-              >
-                {{ formattedNumber(this.latestExercise.Difficulty, 1)
-                }}<span class="panel-span3">
-                  {{
-                    "   (+" +
-                    formattedNumber(this.latestExercise.Bonus, 1) +
-                    ")"
-                  }}</span
-                >
-              </td>
-              <td v-else class="panel-scoretable_score">
-                {{ formattedNumber(this.latestExercise.Difficulty, 1) }}
+              <td class="panel-scoretable_score">
+                {{
+                  formattedNumber2(
+                    this.latestExercise.Difficulty,
+                    this.latestExercise.Bonus,
+                    1
+                  )
+                }}
               </td>
               <td
                 v-if="this.latestScore.Discipline == 'TRS'"
@@ -518,6 +508,14 @@ export default {
     formattedNumber(numberAsString, decimalPlaces) {
       let parsedNumber = parseFloat(numberAsString);
       parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      return parsedNumber.toFixed(decimalPlaces);
+    },
+    formattedNumber2(firstNumberAsString, secondNumberAsString, decimalPlaces) {
+      let parsedNumber = parseFloat(firstNumberAsString);
+      let parsedNumber2 = parseFloat(secondNumberAsString);
+      parsedNumber = isNaN(parsedNumber) ? 0 : parsedNumber;
+      parsedNumber2 = isNaN(parsedNumber2) ? 0 : parsedNumber2;
+      parsedNumber = parsedNumber + parsedNumber2;
       return parsedNumber.toFixed(decimalPlaces);
     },
   },

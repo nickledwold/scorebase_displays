@@ -692,6 +692,20 @@ td.spacer2 {
     margin-right:auto;
   }
 
+  .results-difficulty {
+    table-layout: fixed;
+    width: 500px;
+    padding-left: 2px;
+	  font-family: Encode Medium, sans-serif;
+	  font-size:14px;
+	  color: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align: center;
+    margin-left:auto; 
+    margin-right:auto;
+  }
+
   .results-dmt-median {
     table-layout: fixed;
     width: 150px;
@@ -1079,6 +1093,12 @@ td.spacer2 {
     table-layout: fixed;
   }
   .results-scores-tri-medians {
+	  column-span: all;
+    text-align: center;
+    margin-left:auto; 
+    margin-right:auto;
+  }
+  .results-scores-difficulty {
 	  column-span: all;
     text-align: center;
     margin-left:auto; 

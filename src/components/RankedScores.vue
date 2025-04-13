@@ -171,8 +171,7 @@
                       <b>{{
                         isValueNullOrEmpty(competitor.Exercises)
                           ? "-"
-                          : competitor.CompType == 1 &&
-                            this.currentRound[0] == "F"
+                          : this.currentCategory.CompType == 1
                           ? formattedNumber(
                               competitor.Exercises[0].TotalScore,
                               2
@@ -306,9 +305,20 @@ export default {
           this.rankedRound = this.rounds[0].RoundName;
         }
       }
-      this.exercisesInLatestRound = this.rounds.filter(
-        (item) => item.RoundName == this.rankedRound
-      )[0].NumberOfExercises;
+
+      if (this.currentCategory.CompType == 1) {
+        this.exercisesInLatestRound = this.rounds.reduce(
+          (sum, item) => sum + item.NumberOfExercises,
+          0
+        );
+      } else {
+        const matchedRound = this.rounds.find(
+          (item) => item.RoundName === this.rankedRound
+        );
+        this.exercisesInLatestRound = matchedRound
+          ? matchedRound.NumberOfExercises
+          : 0;
+      }
 
       let tempRound = this.rankedRound;
       if (this.rankedRound.charAt(0).toUpperCase() == "Q") {
@@ -342,6 +352,9 @@ export default {
         );
         if (!this.compareArrays(this.competitors, this.competitorsWithRanks)) {
           this.competitors = this.competitorsWithRanks;
+          console.log(
+            "Competitors: " + JSON.stringify(this.competitorsWithRanks)
+          );
         }
         this.noScores = false;
       }
@@ -383,7 +396,10 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      tempData = tempData.filter((item) => item.RoundName == this.rankedRound);
+      tempData =
+        this.currentCategory.CompType == 1
+          ? tempData
+          : tempData.filter((item) => item.RoundName == this.rankedRound);
       return tempData;
     },
     async populateCompetitorExercises() {
@@ -489,7 +505,11 @@ export default {
       return count;
     },
     getExercisesForLatestRound() {
-      if (this.exerciseNumbers == undefined) return [];
+      if (this.exerciseNumbers == undefined) return;
+      if (this.currentCategory.CompType == 1) {
+        this.roundExercises = this.exerciseNumbers;
+        return;
+      }
       let newArray = this.exerciseNumbers.filter(
         (item) => item.RoundName == this.rankedRound
       );
