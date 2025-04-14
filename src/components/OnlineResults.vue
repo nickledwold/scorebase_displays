@@ -199,7 +199,10 @@
                       <td class="results-scores-tri-set-E">
                         {{ formattedNumber(exercise.Execution, 2) }}
                         <label
-                          v-if="exercise.Deductions.length > 0"
+                          v-if="
+                            exercise.Deductions &&
+                            exercise.Deductions.length > 0
+                          "
                           :id="
                             expand +
                             exercise.ExerciseNumber +
@@ -222,6 +225,24 @@
                         class="results-scores-tri-set-H"
                       >
                         {{ formattedNumber(exercise.HD, 2) }}
+                        <label
+                          v-if="
+                            exercise.HDDeductions &&
+                            exercise.HDDeductions.length > 0
+                          "
+                          :id="
+                            expand +
+                            exercise.ExerciseNumber +
+                            exercise.CompetitorId
+                          "
+                          @click="
+                            toggleHDDeductions(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          "
+                          >[+]</label
+                        >
                       </td>
                       <td class="results-scores-tri-set-D">
                         {{
@@ -464,7 +485,7 @@
                           <tr>
                             <td class="results-medianheadtitle">Element</td>
                             <td
-                              v-for="median in exercise.Medians.filter(
+                              v-for="median in (exercise.Medians || []).filter(
                                 (median) => median.MedSum != null
                               )"
                               :key="median"
@@ -534,6 +555,73 @@
                     </tr>
                     <tr>
                       <td
+                        v-if="exercise.HDDeductions"
+                        class="results-scores-tri-medians"
+                        colspan="100%"
+                        :style="
+                          getHDDeductionsStyle(
+                            exercise.ExerciseNumber,
+                            exercise.CompetitorId
+                          )
+                        "
+                        :id="
+                          'hddeductions' +
+                          exercise.ExerciseNumber +
+                          exercise.CompetitorId
+                        "
+                      >
+                        <table class="results-median">
+                          <tr>
+                            <td class="results-medianheadtitle">Element</td>
+                            <td
+                              v-for="hddeduction in [
+                                ...new Map(
+                                  exercise.HDDeductions.filter(
+                                    (hddeduction) =>
+                                      hddeduction.DeductionValue != null
+                                  ).map((item) => [item.DeductionNumber, item])
+                                ).values(),
+                              ]"
+                              :key="hddeduction"
+                              class="results-medianhead"
+                            >
+                              {{ hddeduction.DeductionNumber }}
+                            </td>
+                          </tr>
+                          <tr
+                            v-for="(
+                              deductions, judgeNumber
+                            ) in getGroupedDeductions(exercise.HDDeductions)"
+                            :key="judgeNumber"
+                          >
+                            <td
+                              v-if="
+                                new Set(
+                                  exercise.HDDeductions.map(
+                                    (deduction) => deduction.JudgeNumber
+                                  )
+                                ).size > 1
+                              "
+                              class="results-medianheadtitle"
+                            >
+                              Deduction {{ judgeNumber }}
+                            </td>
+                            <td v-else class="results-medianheadtitle">
+                              Deduction
+                            </td>
+                            <td
+                              v-for="deduction in deductions"
+                              :key="deduction.DeductionNumber"
+                              class="results-medianscore"
+                            >
+                              {{ deduction.DeductionValue }}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
                         class="results-scores-difficulty"
                         colspan="100%"
                         :style="
@@ -574,9 +662,11 @@
                     <td class="results-scores-tri-Tot">
                       {{
                         formattedNumber(
-                          result.RoundTotals.filter(
-                            (roundTotal) => roundTotal.Round == round
-                          )[0].RoundTotal,
+                          (result.RoundTotals &&
+                            result.RoundTotals.filter(
+                              (roundTotal) => roundTotal.Round == round
+                            )[0]?.RoundTotal) ||
+                            0,
                           2
                         )
                       }}
@@ -676,6 +766,7 @@ export default {
       categoryRounds: {},
       mediansVisible: {},
       difficultyVisible: {},
+      hdDeductionsVisible: {},
       roundFilterString: "",
       eventInfo: {},
       exercisePopups: {},
@@ -874,6 +965,10 @@ export default {
       const key = "medians" + exerciseNumber + competitorId;
       this.mediansVisible[key] = !this.mediansVisible[key];
     },
+    toggleHDDeductions(exerciseNumber, competitorId) {
+      const key = "hddeductions" + exerciseNumber + competitorId;
+      this.hdDeductionsVisible[key] = !this.hdDeductionsVisible[key];
+    },
     toggleDifficulty(exerciseNumber, competitorId) {
       const key = "difficulty" + exerciseNumber + competitorId;
       this.difficultyVisible[key] = !this.difficultyVisible[key];
@@ -884,6 +979,12 @@ export default {
         display: this.mediansVisible[key] ? "table-cell" : "none",
       };
     },
+    getHDDeductionsStyle(exerciseNumber, competitorId) {
+      const key = "hddeductions" + exerciseNumber + competitorId;
+      return {
+        display: this.hdDeductionsVisible[key] ? "table-cell" : "none",
+      };
+    },
     getDifficultyStyle(exerciseNumber, competitorId) {
       const key = "difficulty" + exerciseNumber + competitorId;
       return {
@@ -891,6 +992,7 @@ export default {
       };
     },
     getGroupedDeductions(deductions) {
+      if (!deductions) return {}; // Add this check
       return deductions.reduce((acc, deduction) => {
         if (!acc[deduction.JudgeNumber]) {
           acc[deduction.JudgeNumber] = [];
