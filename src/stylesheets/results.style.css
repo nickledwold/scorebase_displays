@@ -694,7 +694,7 @@ td.spacer2 {
 
   .results-difficulty {
     table-layout: fixed;
-    width: 500px;
+    width: 200px;
     padding-left: 2px;
 	  font-family: Encode Medium, sans-serif;
 	  font-size:14px;
@@ -729,12 +729,13 @@ td.spacer2 {
  
   }
   .results-medianheadtitle {
-	  text-align:left;
+	  text-align:right;
 	  font-family: Encode Medium, sans-serif;
 	  font-size:12px;
 	  color: #000000;
     width:60px;
     table-layout: fixed;
+    padding-right: 10px;
   }
   .results-mediantabletitle {
 	  text-align:left;

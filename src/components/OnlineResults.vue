@@ -214,7 +214,12 @@
                               exercise.CompetitorId
                             )
                           "
-                          >[+]</label
+                          >{{
+                            this.getMediansLabel(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          }}</label
                         >
                       </td>
                       <td
@@ -241,7 +246,12 @@
                               exercise.CompetitorId
                             )
                           "
-                          >[+]</label
+                          >{{
+                            this.getHDDeductionsLabel(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          }}</label
                         >
                       </td>
                       <td class="results-scores-tri-set-D">
@@ -265,7 +275,12 @@
                               exercise.CompetitorId
                             )
                           "
-                          >[+]</label
+                          >{{
+                            this.getDifficultyLabel(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          }}</label
                         >
                       </td>
                       <td
@@ -280,6 +295,29 @@
                             ? formattedNumber(exercise.Sync, 2)
                             : formattedNumber(exercise.ToF, 2)
                         }}
+                        <label
+                          v-if="
+                            exercise.HDDeductions &&
+                            exercise.HDDeductions.length > 0
+                          "
+                          :id="
+                            expand +
+                            exercise.ExerciseNumber +
+                            exercise.CompetitorId
+                          "
+                          @click="
+                            toggleTSValues(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          "
+                          >{{
+                            this.getTSValuesLabel(
+                              exercise.ExerciseNumber,
+                              exercise.CompetitorId
+                            )
+                          }}</label
+                        >
                       </td>
                       <td class="results-scores-tri-set-P">
                         {{
@@ -481,6 +519,12 @@
                           exercise.CompetitorId
                         "
                       >
+                        <span
+                          colspan="100%"
+                          style="text-align: center; font-weight: bold"
+                        >
+                          Execution
+                        </span>
                         <table class="results-median">
                           <tr>
                             <td class="results-medianheadtitle">Element</td>
@@ -570,6 +614,12 @@
                           exercise.CompetitorId
                         "
                       >
+                        <span
+                          colspan="100%"
+                          style="text-align: center; font-weight: bold"
+                        >
+                          Horizontal Displacement
+                        </span>
                         <table class="results-median">
                           <tr>
                             <td class="results-medianheadtitle">Element</td>
@@ -604,7 +654,7 @@
                               "
                               class="results-medianheadtitle"
                             >
-                              Deduction {{ judgeNumber }}
+                              Gymnast {{ judgeNumber }}
                             </td>
                             <td v-else class="results-medianheadtitle">
                               Deduction
@@ -636,6 +686,12 @@
                           exercise.CompetitorId
                         "
                       >
+                        <span
+                          colspan="100%"
+                          style="text-align: center; font-weight: bold"
+                        >
+                          Difficulty
+                        </span>
                         <table class="results-difficulty">
                           <tr>
                             <td class="results-medianhead">Difficulty</td>
@@ -647,6 +703,67 @@
                             </td>
                             <td class="results-medianscore">
                               {{ formattedNumber(exercise.Bonus, 1) }}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        v-if="exercise.TSValues"
+                        class="results-scores-tri-medians"
+                        colspan="100%"
+                        :style="
+                          getTSValuesStyle(
+                            exercise.ExerciseNumber,
+                            exercise.CompetitorId
+                          )
+                        "
+                        :id="
+                          'tsvalues' +
+                          exercise.ExerciseNumber +
+                          exercise.CompetitorId
+                        "
+                      >
+                        <span
+                          v-if="this.categoryData.Discipline == 'TRS'"
+                          colspan="100%"
+                          style="text-align: center; font-weight: bold"
+                        >
+                          Synchronisation
+                        </span>
+                        <span
+                          v-else
+                          colspan="100%"
+                          style="text-align: center; font-weight: bold"
+                        >
+                          Time of Flight
+                        </span>
+                        <table class="results-median">
+                          <tr>
+                            <td class="results-medianheadtitle">Element</td>
+                            <td
+                              v-for="tsvalue in exercise.TSValues"
+                              :key="tsvalue"
+                              class="results-medianhead"
+                            >
+                              {{ tsvalue.SkillNumber }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              v-if="this.categoryData.Discipline == 'TRS'"
+                              class="results-medianheadtitle"
+                            >
+                              Sync
+                            </td>
+                            <td v-else class="results-medianheadtitle">Time</td>
+                            <td
+                              v-for="tsValue in exercise.TSValues"
+                              :key="tsValue.SkillNumber"
+                              class="results-medianscore"
+                            >
+                              {{ tsValue.Value }}
                             </td>
                           </tr>
                         </table>
@@ -767,6 +884,7 @@ export default {
       mediansVisible: {},
       difficultyVisible: {},
       hdDeductionsVisible: {},
+      tsValuesVisible: {},
       roundFilterString: "",
       eventInfo: {},
       exercisePopups: {},
@@ -973,6 +1091,26 @@ export default {
       const key = "difficulty" + exerciseNumber + competitorId;
       this.difficultyVisible[key] = !this.difficultyVisible[key];
     },
+    toggleTSValues(exerciseNumber, competitorId) {
+      const key = "tsvalues" + exerciseNumber + competitorId;
+      this.tsValuesVisible[key] = !this.tsValuesVisible[key];
+    },
+    getMediansLabel(exerciseNumber, competitorId) {
+      const key = "medians" + exerciseNumber + competitorId;
+      return this.mediansVisible[key] ? "[-]" : "[+]";
+    },
+    getHDDeductionsLabel(exerciseNumber, competitorId) {
+      const key = "hddeductions" + exerciseNumber + competitorId;
+      return this.hdDeductionsVisible[key] ? "[-]" : "[+]";
+    },
+    getDifficultyLabel(exerciseNumber, competitorId) {
+      const key = "difficulty" + exerciseNumber + competitorId;
+      return this.difficultyVisible[key] ? "[-]" : "[+]";
+    },
+    getTSValuesLabel(exerciseNumber, competitorId) {
+      const key = "tsvalues" + exerciseNumber + competitorId;
+      return this.tsValuesVisible[key] ? "[-]" : "[+]";
+    },
     getMediansStyle(exerciseNumber, competitorId) {
       const key = "medians" + exerciseNumber + competitorId;
       return {
@@ -983,6 +1121,12 @@ export default {
       const key = "hddeductions" + exerciseNumber + competitorId;
       return {
         display: this.hdDeductionsVisible[key] ? "table-cell" : "none",
+      };
+    },
+    getTSValuesStyle(exerciseNumber, competitorId) {
+      const key = "tsvalues" + exerciseNumber + competitorId;
+      return {
+        display: this.tsValuesVisible[key] ? "table-cell" : "none",
       };
     },
     getDifficultyStyle(exerciseNumber, competitorId) {
@@ -1112,11 +1256,7 @@ export default {
       // Check if deduction matches the median based on ExerciseNumber and DeductionNumber
       if (median) {
         const difference1 = deduction.DeductionValue - median.Med1;
-        console.log("difference1: " + Math.abs(difference1));
-
         const difference2 = deduction.DeductionValue - median.Med2;
-        console.log("difference2: " + Math.abs(difference2));
-
         if (Math.abs(difference1) < 1 || Math.abs(difference2) < 1) {
           return "background-color: rgb(5, 176, 80);"; // Deduction less than 1 of median
         } else if (Math.abs(difference1) < 2 || Math.abs(difference2) < 2) {
