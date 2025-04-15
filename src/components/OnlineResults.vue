@@ -521,7 +521,12 @@
                       >
                         <span
                           colspan="100%"
-                          style="text-align: center; font-weight: bold"
+                          style="
+                            text-align: center;
+                            font-weight: bold;
+                            margin-top: 10px;
+                            display: block;
+                          "
                         >
                           Execution
                         </span>
@@ -616,7 +621,12 @@
                       >
                         <span
                           colspan="100%"
-                          style="text-align: center; font-weight: bold"
+                          style="
+                            text-align: center;
+                            font-weight: bold;
+                            margin-top: 10px;
+                            display: block;
+                          "
                         >
                           Horizontal Displacement
                         </span>
@@ -688,7 +698,12 @@
                       >
                         <span
                           colspan="100%"
-                          style="text-align: center; font-weight: bold"
+                          style="
+                            text-align: center;
+                            font-weight: bold;
+                            margin-top: 10px;
+                            display: block;
+                          "
                         >
                           Difficulty
                         </span>
@@ -728,14 +743,24 @@
                         <span
                           v-if="this.categoryData.Discipline == 'TRS'"
                           colspan="100%"
-                          style="text-align: center; font-weight: bold"
+                          style="
+                            text-align: center;
+                            font-weight: bold;
+                            margin-top: 10px;
+                            display: block;
+                          "
                         >
                           Synchronisation
                         </span>
                         <span
                           v-else
                           colspan="100%"
-                          style="text-align: center; font-weight: bold"
+                          style="
+                            text-align: center;
+                            font-weight: bold;
+                            margin-top: 10px;
+                            display: block;
+                          "
                         >
                           Time of Flight
                         </span>
