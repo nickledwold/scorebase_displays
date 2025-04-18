@@ -203,11 +203,6 @@
                             exercise.Deductions &&
                             exercise.Deductions.length > 0
                           "
-                          :id="
-                            expand +
-                            exercise.ExerciseNumber +
-                            exercise.CompetitorId
-                          "
                           @click="
                             toggleMedians(
                               exercise.ExerciseNumber,
@@ -235,11 +230,6 @@
                             exercise.HDDeductions &&
                             exercise.HDDeductions.length > 0
                           "
-                          :id="
-                            expand +
-                            exercise.ExerciseNumber +
-                            exercise.CompetitorId
-                          "
                           @click="
                             toggleHDDeductions(
                               exercise.ExerciseNumber,
@@ -264,11 +254,6 @@
                         }}
                         <label
                           v-if="exercise.Bonus > 0"
-                          :id="
-                            expand +
-                            exercise.ExerciseNumber +
-                            exercise.CompetitorId
-                          "
                           @click="
                             toggleDifficulty(
                               exercise.ExerciseNumber,
@@ -299,11 +284,6 @@
                           v-if="
                             exercise.HDDeductions &&
                             exercise.HDDeductions.length > 0
-                          "
-                          :id="
-                            expand +
-                            exercise.ExerciseNumber +
-                            exercise.CompetitorId
                           "
                           @click="
                             toggleTSValues(
