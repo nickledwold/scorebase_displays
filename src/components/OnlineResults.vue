@@ -658,6 +658,56 @@
                             </td>
                           </tr>
                         </table>
+                        <div class="svg-container">
+                          <div
+                            v-for="(
+                              deductions, judgeNumber
+                            ) in getGroupedDeductions(exercise.HDDeductions)"
+                            :key="judgeNumber"
+                            class="trampoline-container"
+                          >
+                            <!-- Background trampoline image -->
+                            <img
+                              src="@/assets/trampoline.png"
+                              class="trampoline-image"
+                              alt="Trampoline"
+                            />
+
+                            <!-- SVG overlay for data points - positioned over the active area -->
+                            <svg
+                              viewBox="-200 -100 400 200"
+                              preserveAspectRatio="xMidYMid meet"
+                              class="trampoline-svg-overlay"
+                            >
+                              <!-- Data points -->
+                              <g
+                                v-for="(point, index) in deductions"
+                                :key="index"
+                              >
+                                <circle
+                                  :cx="point.XCoordinate"
+                                  :cy="-point.YCoordinate"
+                                  r="8"
+                                  fill="#1a1a1a"
+                                  stroke="white"
+                                  stroke-width="2"
+                                  opacity="0.5"
+                                />
+                                <text
+                                  :x="point.XCoordinate"
+                                  :y="-point.YCoordinate + 3"
+                                  text-anchor="middle"
+                                  font-size="10"
+                                  fill="white"
+                                  font-weight="bold"
+                                  font-family="Arial, sans-serif"
+                                >
+                                  {{ point.DeductionNumber }}
+                                </text>
+                              </g>
+                            </svg>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1291,5 +1341,35 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.svg-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trampoline-container {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  max-width: 500px;
+}
+
+.trampoline-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.trampoline-svg-overlay {
+  position: absolute;
+  top: 16%;
+  left: 8%;
+  width: 84%;
+  height: 68%;
+  pointer-events: auto;
+  cursor: pointer;
 }
 </style>
