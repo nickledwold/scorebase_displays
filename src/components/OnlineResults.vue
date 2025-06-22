@@ -688,7 +688,7 @@
                                   :cx="point.XCoordinate"
                                   :cy="-point.YCoordinate"
                                   r="8"
-                                  fill="#1a1a1a"
+                                  fill="#0066cc"
                                   stroke="white"
                                   stroke-width="2"
                                   opacity="0.5"
