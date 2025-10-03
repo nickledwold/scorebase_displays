@@ -1,7 +1,7 @@
 <template>
   <div>
     <video id="myVideo" playsinline autoplay muted loop>
-      <source src="../assets/panelvideo.mp4" type="video/mp4" />
+      <source src="../assets/Panel2025.webm" type="video/mp4" />
     </video>
     <div class="overlay">
       <div class="panel-holding-panel-title">Panel {{ panelNumber }}</div>
@@ -11,7 +11,7 @@
             v-for="(char, index) in timeChars"
             :key="index"
             class="time-char-container"
-            :class="{ 'colon-container': char === ':' }"
+            :style="{ '--char-width': getCharWidth(char) }"
           >
             <div
               class="time-char time-char-current"
@@ -57,6 +57,9 @@ export default {
     }, 1000);
   },
   methods: {
+    getCharWidth(char) {
+      return char === ":" ? "0.3em" : char === "1" ? "0.4em" : "0.65em";
+    },
     getPreviousChar(index) {
       if (this.animatingIndices.includes(index)) {
         return this.previousTime[index] || "";
@@ -124,23 +127,29 @@ export default {
   justify-content: center;
   z-index: 99;
   background-color: transparent;
+  position: relative;
+}
+
+/* Reserve space for widest possible time to maintain centering */
+.time-page-clock::before {
+  content: "88:88";
+  position: absolute;
+  visibility: hidden;
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: 0.1em; /* Adjust based on your spacing needs */
 }
 
 .time-char-container {
   position: relative;
   display: inline-block;
   perspective: 1000px;
-  width: 0.6em; /* Fixed width for digits */
-  min-width: 0.6em;
-  max-width: 0.6em;
   text-align: center;
-  overflow: hidden;
-}
-
-.colon-container {
-  width: 0.3em; /* Narrower width for colons */
-  min-width: 0.3em;
-  max-width: 0.3em;
+  /* Use CSS custom property for width that can be animated */
+  width: var(--char-width, 0.55em);
+  min-width: 0.35em;
+  /* Animate width changes smoothly */
+  transition: width 0.3s ease-in-out;
 }
 
 .time-char {

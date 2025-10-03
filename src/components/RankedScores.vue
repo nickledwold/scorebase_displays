@@ -1,14 +1,14 @@
 <template>
   <div>
     <video id="myVideo" playsinline autoplay muted loop>
-      <source src="../assets/rankvideo.mp4" type="video/mp4" />
+      <source src="../assets/Ranked2025.webm" type="video/mp4" />
     </video>
     <div id="displayrank" class="overlay">
       <div class="ranked-time">
         {{ currentTime }}
       </div>
       <div class="ranked-logos">
-        <img src="../assets/bg.png" height="50" />
+        <img src="../assets/bg-logo.png" height="50" />
       </div>
 
       <transition-group name="fade">
@@ -518,6 +518,9 @@ export default {
     },
     getFlagImageSource(countryCode) {
       if (countryCode == undefined) countryCode = "GBR";
+      if (countryCode.contains("/")) {
+        countryCode = countryCode.split("/")[0];
+      }
       return require(`@/assets/${countryCode}.png`);
     },
     formattedNumber(numberAsString, decimalPlaces) {

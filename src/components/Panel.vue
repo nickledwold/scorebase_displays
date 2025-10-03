@@ -1,7 +1,7 @@
 <template>
   <div>
     <video id="myVideo" playsinline autoplay muted loop>
-      <source src="../assets/panelvideo.mp4" type="video/mp4" />
+      <source src="../assets/Panel2025.webm" type="video/mp4" />
     </video>
 
     <transition-group name="slide">
@@ -496,6 +496,9 @@ export default {
     },
     getFlagImageSource(countryCode) {
       if (countryCode === undefined) countryCode = "GBR";
+      if (countryCode.contains("/")) {
+        countryCode = countryCode.split("/")[0];
+      }
       return require(`@/assets/${countryCode}.png`);
     },
     getImageSource(discipline) {
