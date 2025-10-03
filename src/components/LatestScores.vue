@@ -6,7 +6,7 @@
     <div id="displayrank" class="overlay">
       <div class="latest-time">| {{ currentTime }}</div>
       <div class="latest-logos">
-        <img src="../assets/bg.png" height="60" />
+        <img src="../assets/bg-logo.png" height="60" />
       </div>
 
       <template
