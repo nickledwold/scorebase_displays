@@ -256,7 +256,7 @@ export default {
     },
     getFlagImageSource(countryCode) {
       if (countryCode == undefined) countryCode = "GBR";
-      if (countryCode.contains("/")) {
+      if (countryCode.includes("/")) {
         countryCode = countryCode.split("/")[0];
       }
       return require(`@/assets/${countryCode}.png`);

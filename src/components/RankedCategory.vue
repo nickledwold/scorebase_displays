@@ -247,6 +247,7 @@ export default {
   },
   created() {
     this.updateTime();
+    this.fetchCategoryData();
 
     setInterval(() => {
       this.updateTime();
@@ -256,8 +257,8 @@ export default {
       } else {
         this.currentTimeInterval++;
       }
-      this.fetchDisplayCategories();
-    }, 2000);
+      this.fetchCategoryData();
+    }, 10000);
   },
   methods: {
     async updateTime() {
@@ -276,13 +277,14 @@ export default {
           console.error("Error:", error);
         });
     },
-    async fetchDisplayCategories() {
+    async fetchCategoryData() {
       await fetch(
         "http://" +
           process.env.VUE_APP_API_IP_ADDRESS +
           ":" +
           process.env.VUE_APP_API_PORT +
-          "/api/displayCategories"
+          "/api/categories?catId=" +
+          this.$route.params.catId
       )
         .then((response) => response.json())
         .then((data) => {
@@ -542,33 +544,14 @@ export default {
 .slideup-leave-active,
 .slideup-enter-active,
 .slideright-leave-active,
-.slideright-enter-active {
-  transition: 0.5s;
-}
-.slideup-enter-from {
-  transform: translateY(5%);
-  opacity: 0;
-}
-
-.slideup-leave-to {
-  transform: translateY(-5%);
-  opacity: 0;
-}
-
-.slideup-leave-from .slideup-enter-to {
-  transform: translateY(-5%);
-}
-
-.slideright-enter-from {
-  transform: translate(100%, 0);
-}
-
-.slideright-leave-to {
-  transform: translate(-100%, 0);
-}
-
+.slideright-enter-active,
+.slideup-enter-from,
+.slideup-leave-to,
+.slideup-leave-from .slideup-enter-to,
+.slideright-enter-from,
+.slideright-leave-to,
 .slideright-leave-from .slideright-enter-to {
-  transform: translate(-100%, 0);
+  transition: none !important;
 }
 
 .fade-enter-active,

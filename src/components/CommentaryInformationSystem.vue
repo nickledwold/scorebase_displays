@@ -344,13 +344,13 @@
             <tr>
               <transition name="slideup" mode="out-in">
                 <td
-                  v-if="panelStatus.NextToCompeteNation"
+                  v-if="panelStatus.LastToCompeteNation"
                   class="cis-flaglatest"
                   rowspan="2"
-                  :key="panelStatus.NextToCompeteNation"
+                  :key="panelStatus.LastToCompeteNation"
                 >
                   <img
-                    :src="getFlagImageSource(panelStatus.NextToCompeteNation)"
+                    :src="getFlagImageSource(panelStatus.LastToCompeteNation)"
                     width="30"
                   />
                 </td>
@@ -449,7 +449,7 @@ export default {
     }, 1000);
     setTimeout(() => {
       location.reload();
-    }, 60000);
+    }, 30000);
   },
   methods: {
     async fetchPanelData() {
@@ -615,8 +615,8 @@ export default {
       return (value == null || value == "" || value == undefined) && value != 0;
     },
     getFlagImageSource(countryCode) {
-      if (countryCode == undefined) countryCode = "GBR";
-      if (countryCode.contains("/")) {
+      if (countryCode == undefined || countryCode == "") countryCode = "GBR";
+      if (countryCode.includes("/")) {
         countryCode = countryCode.split("/")[0];
       }
       return require(`@/assets/${countryCode}.png`);

@@ -434,8 +434,8 @@ export default {
       return (value == null || value == "" || value == undefined) && value != 0;
     },
     getFlagImageSource(countryCode) {
-      if (countryCode == undefined) countryCode = "GBR";
-      if (countryCode.contains("/")) {
+      if (countryCode == undefined || countryCode == "") countryCode = "GBR";
+      if (countryCode.includes("/")) {
         countryCode = countryCode.split("/")[0];
       }
       return require(`@/assets/${countryCode}.png`);

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Panel from "./components/Panel.vue";
 import RankedScores from "./components/RankedScores.vue";
+import RankedCategory from "./components/RankedCategory.vue";
 import LatestScores from "./components/LatestScores.vue";
 import CommentaryInformationSystem from "./components/CommentaryInformationSystem.vue";
 import CommentaryInformationSystemPanelStatusOnly from "./components/CommentaryInformationSystemPanelStatusOnly.vue";
@@ -33,6 +34,12 @@ const routerInstance = createRouter({
       component: RankedScores,
       name: "Ranked",
       meta: { title: "Ranked Display" },
+    },
+    {
+      path: "/ranked/:catId",
+      component: RankedCategory,
+      name: "RankedCategory",
+      meta: { title: "Ranked Category" },
     },
     {
       path: "/latest",

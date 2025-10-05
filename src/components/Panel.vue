@@ -66,7 +66,8 @@
                   :src="
                     getFlagImageSource(this.panelStatus.NextToCompeteNation)
                   "
-                  width="90"
+                  width="140"
+                  style="padding-right: 15px"
                 />
               </div>
             </transition>
@@ -495,8 +496,8 @@ export default {
       return tempLatestExercise;
     },
     getFlagImageSource(countryCode) {
-      if (countryCode === undefined) countryCode = "GBR";
-      if (countryCode.contains("/")) {
+      if (countryCode == undefined || countryCode == "") countryCode = "GBR";
+      if (countryCode.includes("/")) {
         countryCode = countryCode.split("/")[0];
       }
       return require(`@/assets/${countryCode}.png`);
