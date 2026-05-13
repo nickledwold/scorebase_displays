@@ -95,12 +95,13 @@
                   }}
                 </th>
               </tr>
-              <template
-                v-for="competitor in this.competitors"
-                :key="competitor"
-              >
-                <transition-group name="list" tag="tbody" mode="out-in">
-                  <tr class="ranked-scores-row" :key="competitor">
+              <transition-group name="list">
+                <tbody
+                  v-for="competitor in this.competitors"
+                  :key="competitor.CompetitorId"
+                  class="ranked-scores-tbody"
+                >
+                  <tr class="ranked-scores-row">
                     <td rowspan="2" class="ranked-scores-pos-0">
                       {{
                         isValueNullOrEmpty(competitor.ZeroRank)
@@ -191,8 +192,8 @@
                   </tr>
 
                   <tr class="ranked-space-row"></tr>
-                </transition-group>
-              </template>
+                </tbody>
+              </transition-group>
             </table>
           </transition>
         </div>
@@ -585,21 +586,14 @@ export default {
   opacity: 0;
 }
 
-.list-move, /* apply transition to moving elements */
+.list-move,
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: transform 1.5s ease, opacity 1.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-.list-leave-active {
-  position: absolute;
 }
 </style>
