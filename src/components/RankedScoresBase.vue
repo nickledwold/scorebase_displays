@@ -12,7 +12,10 @@
       </div>
 
       <transition-group name="fade">
-        <div v-if="categories.length == 0" class="ranked-splash"></div>
+        <div
+          v-if="categories.length == 0 || !currentCategory.CatId"
+          class="ranked-splash"
+        ></div>
         <div v-else>
           <table class="ranked-banner">
             <tr>
@@ -37,8 +40,17 @@
               <td :key="roundTransitionKey">{{ currentRound }}</td>
             </transition>
           </div>
-          <transition name="slideright" mode="out-in">
-            <table class="ranked-scores-table" :key="tableTransitionKey">
+          <transition
+            name="slideright"
+            mode="out-in"
+            @before-leave="onOuterBeforeLeave"
+            @after-enter="onOuterAfterEnter"
+          >
+            <table
+              class="ranked-scores-table"
+              :class="{ 'pre-initial-load': outerTransitionActive }"
+              :key="tableTransitionKey"
+            >
               <tr class="ranked-header-row">
                 <th
                   style="
@@ -95,7 +107,7 @@
                   }}
                 </th>
               </tr>
-              <transition-group name="list">
+              <transition-group name="list" @before-enter="onListBeforeEnter">
                 <tbody
                   v-for="competitor in this.competitors"
                   :key="competitor.CompetitorId"
@@ -266,7 +278,14 @@ export default {
       currentTimeInterval: 0,
       exerciseNumbers: {},
       noScores: true,
+      outerTransitionActive: false,
+      isRowAnimationInProgress: false,
     };
+  },
+  watch: {
+    competitors() {
+      this.startRowAnimationWindow();
+    },
   },
   created() {
     this.updateTime();
@@ -284,6 +303,33 @@ export default {
     }, this.pollInterval);
   },
   methods: {
+    onOuterBeforeLeave() {
+      this.outerTransitionActive = true;
+    },
+    onOuterAfterEnter() {
+      this.outerTransitionActive = false;
+    },
+    onListBeforeEnter(el) {
+      const previousTransform = el.style.transform;
+      el.style.transform = "none";
+      const rect = el.getBoundingClientRect();
+      el.style.transform = previousTransform;
+      const distance = window.innerHeight - rect.top;
+      el.style.setProperty("--enter-distance", `${distance}px`);
+    },
+    startRowAnimationWindow() {
+      this.isRowAnimationInProgress = true;
+      clearTimeout(this._rowAnimationTimer);
+      // 1.5s row animation + 3s pause so viewers can absorb the result
+      this._rowAnimationTimer = setTimeout(() => {
+        this.isRowAnimationInProgress = false;
+      }, 4500);
+    },
+    async waitForRowAnimation() {
+      while (this.isRowAnimationInProgress) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+    },
     async updateTime() {
       await fetch(this.apiBaseUrl + "/api/serverClock")
         .then((response) => response.json())
@@ -307,7 +353,14 @@ export default {
       if (this.categoryIndex >= this.categories.length) {
         this.categoryIndex = 0;
       }
-      this.currentCategory = this.categories[this.categoryIndex];
+      const targetCategory = this.categories[this.categoryIndex];
+      if (
+        this.currentCategory.CatId &&
+        this.currentCategory.CatId !== targetCategory.CatId
+      ) {
+        await this.waitForRowAnimation();
+      }
+      this.currentCategory = targetCategory;
       await this.fetchExerciseNumbers();
       await this.fetchRounds();
       if (this.rounds.length > 0) {
@@ -592,8 +645,24 @@ export default {
   transition: transform 1.5s ease, opacity 1.5s ease;
 }
 
-.list-enter-from,
+.list-enter-from {
+  opacity: 0;
+  transform: translateY(var(--enter-distance, 100vh));
+}
+
 .list-leave-to {
   opacity: 0;
+}
+
+.pre-initial-load .list-enter-active,
+.pre-initial-load .list-leave-active,
+.pre-initial-load .list-move {
+  transition: none !important;
+}
+
+.pre-initial-load .list-enter-from,
+.pre-initial-load .list-leave-to {
+  opacity: 1;
+  transform: none;
 }
 </style>

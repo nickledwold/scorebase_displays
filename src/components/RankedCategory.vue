@@ -1,7 +1,7 @@
 <template>
   <RankedScoresBase
     :categories-endpoint="`/api/categories?catId=${$route.params.catId}`"
-    :poll-interval="10000"
+    :poll-interval="2000"
     :enable-slide-transitions="false"
   />
 </template>
