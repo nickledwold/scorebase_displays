@@ -280,6 +280,7 @@ export default {
       noScores: true,
       outerTransitionActive: false,
       isRowAnimationInProgress: false,
+      competitorsByCategory: {},
     };
   },
   watch: {
@@ -330,6 +331,15 @@ export default {
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
     },
+    async waitForOuterTransition() {
+      const startTime = Date.now();
+      while (!this.outerTransitionActive && Date.now() - startTime < 300) {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+      while (this.outerTransitionActive) {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+    },
     async updateTime() {
       await fetch(this.apiBaseUrl + "/api/serverClock")
         .then((response) => response.json())
@@ -354,11 +364,13 @@ export default {
         this.categoryIndex = 0;
       }
       const targetCategory = this.categories[this.categoryIndex];
-      if (
+      const isCategoryChange =
         this.currentCategory.CatId &&
-        this.currentCategory.CatId !== targetCategory.CatId
-      ) {
+        this.currentCategory.CatId !== targetCategory.CatId;
+      if (isCategoryChange) {
         await this.waitForRowAnimation();
+        this.competitors =
+          this.competitorsByCategory[targetCategory.CatId] || [];
       }
       this.currentCategory = targetCategory;
       await this.fetchExerciseNumbers();
@@ -400,13 +412,15 @@ export default {
       }
       this.getExercisesForLatestRound();
       await this.fetchCompetitors();
+      let freshCompetitors;
+      let freshNoScores;
       if (this.competitorsWithRanks.length == 0) {
-        await this.fetchQualifyingFirstEight();
-        this.noScores = true;
+        freshCompetitors = await this.fetchQualifyingFirstEight();
+        freshNoScores = true;
       } else {
         await this.populateCompetitorExercises();
         let competitorIdsForRound = await this.fetchStartListForRound();
-        this.competitorsWithRanks = this.competitorsWithRanks.filter(
+        freshCompetitors = this.competitorsWithRanks.filter(
           (competitorWithRank) => {
             return competitorIdsForRound.some(
               (competitorInStartList) =>
@@ -415,14 +429,16 @@ export default {
             );
           }
         );
-        if (!this.compareArrays(this.competitors, this.competitorsWithRanks)) {
-          this.competitors = this.competitorsWithRanks;
-          console.log(
-            "Competitors: " + JSON.stringify(this.competitorsWithRanks)
-          );
-        }
-        this.noScores = false;
+        freshNoScores = false;
       }
+      if (isCategoryChange) {
+        await this.waitForOuterTransition();
+      }
+      this.noScores = freshNoScores;
+      if (!this.compareArrays(this.competitors, freshCompetitors)) {
+        this.competitors = freshCompetitors;
+      }
+      this.competitorsByCategory[targetCategory.CatId] = freshCompetitors;
     },
     async fetchExerciseNumbers() {
       await fetch(
@@ -486,6 +502,7 @@ export default {
         });
     },
     async fetchQualifyingFirstEight() {
+      let result = [];
       await fetch(
         this.apiBaseUrl +
           "/api/qualifyingStartList?catId=" +
@@ -493,11 +510,12 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          this.competitors = data;
+          result = data;
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+      return result;
     },
     async fetchStartListForRound() {
       let tempData;
