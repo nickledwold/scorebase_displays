@@ -205,7 +205,16 @@
 <script>
 export default {
   name: "LatestScoresComponent",
-  computed: {},
+  computed: {
+    panelFilter() {
+      const panels = this.$route.params.panels;
+      if (!panels) return null;
+      return panels
+        .split(",")
+        .map((panel) => panel.trim())
+        .filter((panel) => panel !== "");
+    },
+  },
   data() {
     return {
       currentTime: "12:00",
@@ -240,7 +249,12 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-      for (let index = 0; index < this.panelStatuses.length; index++) {
+      if (this.panelFilter) {
+        this.tempPanelStatuses = this.tempPanelStatuses.filter((panelStatus) =>
+          this.panelFilter.includes(String(panelStatus.PanelNo))
+        );
+      }
+      for (let index = 0; index < this.tempPanelStatuses.length; index++) {
         this.tempPanelStatuses[index].latestScore =
           await this.fetchLatestScoreForPanel(
             this.tempPanelStatuses[index].PanelNo
