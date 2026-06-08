@@ -119,7 +119,7 @@
               <img
                 src="../assets/bglogoholding.png"
                 width="1300"
-                style="margin-top: 4%"
+                style="margin-top: 7%"
               />
             </div>
           </div>

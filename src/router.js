@@ -5,8 +5,6 @@ import RankedCategory from "./components/RankedCategory.vue";
 import LatestScores from "./components/LatestScores.vue";
 import CommentaryInformationSystem from "./components/CommentaryInformationSystem.vue";
 import CommentaryInformationSystemPanelStatusOnly from "./components/CommentaryInformationSystemPanelStatusOnly.vue";
-import CommentaryInformationSystem2 from "./components/CommentaryInformationSystem2.vue";
-import CommentaryInformationSystem3 from "./components/CommentaryInformationSystem3.vue";
 import OnlineResults from "./components/OnlineResults.vue";
 import OnlineCategories from "./components/OnlineCategories.vue";
 import Clock from "./components/Clock.vue";
@@ -60,18 +58,6 @@ const routerInstance = createRouter({
       meta: {
         title: "Commentary Information System Display - Panel Status Only",
       },
-    },
-    {
-      path: "/cis2",
-      component: CommentaryInformationSystem2,
-      name: "CommentaryInformationSystem2",
-      meta: { title: "Commentary Information System Display 2" },
-    },
-    {
-      path: "/cis3",
-      component: CommentaryInformationSystem3,
-      name: "CommentaryInformationSystem3",
-      meta: { title: "Commentary Information System Display 3 - auto reload" },
     },
     {
       path: "/online",
