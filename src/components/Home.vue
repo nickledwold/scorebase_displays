@@ -5,12 +5,16 @@
     <ul class="custom-list">
       <li>/panel/{panelNumber}</li>
       <li>/ranked</li>
+      <li>/ranked/{catId}</li>
       <li>/latest</li>
+      <li>/latest/{panels}</li>
       <li>/cis</li>
+      <li>/cisps</li>
       <li>/online</li>
       <li>/online/results/{catId}</li>
       <li>/online/startlists/{catId}/{roundName}</li>
       <li>/clock</li>
+      <li>/panelclock/{panelNumber}</li>
     </ul>
   </div>
 </template>

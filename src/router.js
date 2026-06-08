@@ -46,6 +46,12 @@ const routerInstance = createRouter({
       meta: { title: "Latest Display" },
     },
     {
+      path: "/latest/:panels",
+      component: LatestScores,
+      name: "LatestPanels",
+      meta: { title: "Latest Display" },
+    },
+    {
       path: "/cis",
       component: CommentaryInformationSystem,
       name: "CommentaryInformationSystem",
