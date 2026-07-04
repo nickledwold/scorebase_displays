@@ -226,6 +226,10 @@ export default {
       type: Number,
       default: 2000,
     },
+    rotationInterval: {
+      type: Number,
+      default: 8000,
+    },
     enableSlideTransitions: {
       type: Boolean,
       default: true,
@@ -274,8 +278,7 @@ export default {
       roundExercises: [],
       competitorsWithRanks: [],
       competitors: [],
-      maxTimeInterval: 4,
-      currentTimeInterval: 0,
+      lastCategorySwitchTime: Date.now(),
       exerciseNumbers: {},
       noScores: true,
       outerTransitionActive: false,
@@ -291,19 +294,21 @@ export default {
   created() {
     this.updateTime();
     this.fetchCategoryData();
-
-    setInterval(() => {
-      this.updateTime();
-      if (this.currentTimeInterval >= this.maxTimeInterval) {
-        this.currentTimeInterval = 0;
-        this.categoryIndex++;
-      } else {
-        this.currentTimeInterval++;
-      }
-      this.fetchCategoryData();
-    }, this.pollInterval);
+    this.scheduleNextTick();
   },
   methods: {
+    scheduleNextTick() {
+      this._tickTimer = setTimeout(async () => {
+        this.updateTime();
+        const now = Date.now();
+        if (now - this.lastCategorySwitchTime >= this.rotationInterval) {
+          this.lastCategorySwitchTime = now;
+          this.categoryIndex++;
+        }
+        await this.fetchCategoryData();
+        this.scheduleNextTick();
+      }, this.pollInterval);
+    },
     onOuterBeforeLeave() {
       this.outerTransitionActive = true;
     },
