@@ -11,6 +11,7 @@ import Clock from "./components/Clock.vue";
 import PanelClock from "./components/PanelClock.vue";
 import Home from "./components/Home.vue";
 import OnlineStartLists from "./components/OnlineStartLists.vue";
+import QrCodes from "./components/QrCodes.vue";
 
 const routerInstance = createRouter({
   history: createWebHistory(),
@@ -100,6 +101,18 @@ const routerInstance = createRouter({
       component: OnlineStartLists,
       name: "StartListsNoRound",
       meta: { title: "Online Start Lists" },
+    },
+    {
+      path: "/qrcodes",
+      component: QrCodes,
+      name: "QrCodes",
+      meta: { title: "QR Codes" },
+    },
+    {
+      path: "/qrcodes/:panelNumber",
+      component: QrCodes,
+      name: "QrCodesPanel",
+      meta: { title: "QR Codes" },
     },
   ],
 });

@@ -15,6 +15,8 @@
       <li>/online/startlists/{catId}/{roundName}</li>
       <li>/clock</li>
       <li>/panelclock/{panelNumber}</li>
+      <li>/qrcodes</li>
+      <li>/qrcodes/{panelNumber}</li>
     </ul>
   </div>
 </template>
