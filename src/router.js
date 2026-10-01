@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Panel from "./components/Panel.vue";
+import PanelLatestScore from "./components/PanelLatestScore.vue";
 import RankedScores from "./components/RankedScores.vue";
 import RankedCategory from "./components/RankedCategory.vue";
 import LatestScores from "./components/LatestScores.vue";
@@ -27,6 +28,12 @@ const routerInstance = createRouter({
       component: Panel,
       name: "Panel",
       meta: { title: "Panel Display" },
+    },
+    {
+      path: "/panelscore/:panelNumber",
+      component: PanelLatestScore,
+      name: "PanelLatestScore",
+      meta: { title: "Panel Latest Score Display" },
     },
     {
       path: "/ranked",

@@ -4,6 +4,7 @@
   <div class="center-container">
     <ul class="custom-list">
       <li>/panel/{panelNumber}</li>
+      <li>/panelscore/{panelNumber}</li>
       <li>/ranked</li>
       <li>/ranked/{catId}</li>
       <li>/latest</li>
