@@ -79,6 +79,13 @@ const routerInstance = createRouter({
       meta: { title: "Online Scoring Results" },
     },
     {
+      path: "/online/britishqualification/:discipline/:group",
+      component: OnlineResults,
+      name: "OnlineCombinedResults",
+      props: { combined: true },
+      meta: { title: "British Qualification" },
+    },
+    {
       path: "/clock",
       component: Clock,
       name: "Clock",

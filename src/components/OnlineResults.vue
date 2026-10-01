@@ -904,12 +904,21 @@ import { fetchWithRetry } from "../apiUtils";
 
 export default {
   name: "OnlineResults",
+  props: {
+    combined: { type: Boolean, default: false },
+  },
   computed: {
     catId() {
       return this.$route.params.catId;
     },
     event() {
       return this.$route.params.event;
+    },
+    discipline() {
+      return this.$route.params.discipline;
+    },
+    group() {
+      return this.$route.params.group;
     },
     filteredResults() {
       return this.searchParam == ""
@@ -947,9 +956,65 @@ export default {
   },
   created() {
     this.fetchEventInfo();
-    this.fetchCategory();
+    if (this.combined) {
+      this.fetchCombinedResults();
+    } else {
+      this.fetchCategory();
+    }
   },
   methods: {
+    async fetchCombinedResults() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        `/api/combinedResults?discipline=${encodeURIComponent(
+          this.discipline
+        )}&group=${encodeURIComponent(this.group)}`;
+
+      this.categoryData = {
+        Discipline: this.discipline,
+        Category: this.group,
+        CompType: 0,
+      };
+      try {
+        const data = await fetchWithRetry(url);
+        const group = data && data.length > 0 ? data[0] : null;
+        if (!group) {
+          this.resultsData = [];
+          return;
+        }
+        const roundName =
+          group.competitors?.[0]?.Exercises?.[0]?.RoundName ?? "Q1";
+        this.categoryRounds = [{ RoundName: roundName, SignedOff: 1 }];
+        this.resultsData = group.competitors.map((x, i) => {
+          x.FullName =
+            this.discipline == "TRS"
+              ? x.Surname1 + ", " + x.Surname2
+              : x.FirstName1 + " " + x.Surname1;
+          x.fullNameReversed =
+            this.discipline == "TRS"
+              ? (x.Surname2 || "").toUpperCase() +
+                ", " +
+                (x.Surname1 || "").toUpperCase()
+              : (x.Surname1 || "").toUpperCase() + " " + x.FirstName1;
+          x.Rank = x.DisplayRank;
+          x.RunningOrderNumber = i + 1;
+          // Surface the combined total/rank through the existing round total/rank tables.
+          x.RoundTotals = [
+            {
+              Round: roundName,
+              RoundTotal: x.CombinedTotal,
+              RoundRank: x.DisplayRank,
+            },
+          ];
+          return x;
+        });
+      } catch (error) {
+        console.error("Error fetching combined results:", error);
+      }
+    },
     togglePopup(competitorId, exerciseNumber) {
       this.exercisePopups[`${competitorId}-${exerciseNumber}`] =
         !this.exercisePopups[`${competitorId}-${exerciseNumber}`];

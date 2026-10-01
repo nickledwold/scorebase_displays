@@ -43,6 +43,18 @@
             @click="changeResultsOrStartListsOption('Start Lists')"
             >START LISTS</a
           >
+          <template v-if="hasCombinedResults">
+            <span style="font-family: Gotham Light"> / </span>
+            <a
+              class="online-a"
+              :class="{
+                'bold-font': resultsOrStartLists == 'British Qualification',
+                'light-font': resultsOrStartLists != 'British Qualification',
+              }"
+              @click="changeResultsOrStartListsOption('British Qualification')"
+              >BRITISH QUALIFICATION</a
+            >
+          </template>
         </div>
 
         <div class="w0-container" style="max-width: 800px">
@@ -140,6 +152,40 @@
                   </div>
                 </div>
               </div>
+              <div v-else-if="resultsOrStartLists == 'British Qualification'">
+                <div
+                  v-for="tab in filteredTabs"
+                  :key="tab.label"
+                  class="online-tab-content"
+                >
+                  <div
+                    :id="tab.label"
+                    class="online-tab"
+                    :class="{ active: tab.active }"
+                  >
+                    <div class="disciplinetitle">{{ tab.title }}</div>
+                    <hr class="discipline" />
+                    <transition name="collapse" mode="out-in">
+                      <div v-if="tab.active" :key="tab.label">
+                        <div
+                          v-for="combinedGroup in filteredCombinedGroups(
+                            tab.label
+                          )"
+                          :key="combinedGroup.groupName"
+                        >
+                          <a
+                            class="online-a"
+                            :href="`online/britishqualification/${combinedGroup.discipline}/${combinedGroup.groupName}`"
+                            >{{ combinedGroup.groupName }}</a
+                          >
+                          <br />
+                        </div>
+                        <div class="padding"></div>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -159,6 +205,7 @@ export default {
       currentYear: new Date().getFullYear(),
       categories: [],
       startListRounds: [],
+      combinedGroups: [],
       resultsOrStartLists: "Results",
       loadingCategories: true,
       loadingStartLists: true,
@@ -185,6 +232,16 @@ export default {
         );
       };
     },
+    hasCombinedResults() {
+      return this.combinedGroups.length > 0;
+    },
+    filteredCombinedGroups() {
+      return (tabLabel) => {
+        return this.combinedGroups.filter(
+          (group) => group.discipline === tabLabel
+        );
+      };
+    },
     filteredTabs: function () {
       return this.tabs.filter((tab) => tab.active);
     },
@@ -193,6 +250,7 @@ export default {
     this.fetchEventInfo();
     this.fetchCategories();
     this.fetchStartListRounds();
+    this.fetchCombinedGroups();
   },
   methods: {
     async fetchCategories() {
@@ -276,6 +334,27 @@ export default {
         this.loadingError =
           "Error loading Start Lists, please refresh the page.";
         console.error("Error fetching start list rounds:", error);
+      }
+    },
+    async fetchCombinedGroups() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        "/api/combinedResults";
+
+      try {
+        const data = await fetchWithRetry(url);
+        // Only the discipline/group identity is needed to build the selector.
+        this.combinedGroups = (data || []).map((group) => ({
+          discipline: group.discipline,
+          groupName: group.groupName,
+        }));
+      } catch (error) {
+        // Endpoint returns [] for non-NAGF events; treat any error as "none".
+        this.combinedGroups = [];
+        console.error("Error fetching combined groups:", error);
       }
     },
     selectTab(index) {
