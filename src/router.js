@@ -12,6 +12,7 @@ import Clock from "./components/Clock.vue";
 import PanelClock from "./components/PanelClock.vue";
 import Home from "./components/Home.vue";
 import OnlineStartLists from "./components/OnlineStartLists.vue";
+import OnlineSearchResults from "./components/OnlineSearchResults.vue";
 import QrCodes from "./components/QrCodes.vue";
 
 const routerInstance = createRouter({
@@ -84,6 +85,12 @@ const routerInstance = createRouter({
       component: OnlineResults,
       name: "OnlineScoringResults",
       meta: { title: "Online Scoring Results" },
+    },
+    {
+      path: "/online/resultSearch",
+      component: OnlineSearchResults,
+      name: "OnlineSearchResults",
+      meta: { title: "Search Results" },
     },
     {
       path: "/online/britishqualification/:discipline/:group",

@@ -18,7 +18,7 @@
           {{ this.eventInfo.EventName }}
         </div>
       </header>
-      <center>
+      <div style="max-width: 800px; margin: 0 auto">
         <div
           class="w3-card-4 w3-margin w3-white"
           style="max-width: 800px"
@@ -34,7 +34,7 @@
               'light-font': resultsOrStartLists != 'Results',
             }"
             @click="changeResultsOrStartListsOption('Results')"
-            >LIVE RESULTS</a
+            >RESULTS</a
           >
           <span
             class="results-list-toggle-separator"
@@ -72,9 +72,7 @@
 
         <div class="w0-container" style="max-width: 800px">
           <div class="online-tabs">
-            <div v-if="loadingCategories" class="loading-spinner">
-              <div class="spinner"></div>
-            </div>
+            <Loader v-if="loadingCategories" />
             <div v-else>
               <ul class="online-tab-links">
                 <li
@@ -83,7 +81,15 @@
                   :class="{ active: tab.active }"
                   @click="selectTab(index)"
                 >
-                  <a>{{ tab.label }}</a>
+                  <a v-if="tab.label !== 'Search'">{{ tab.label }}</a>
+                  <a v-else-if="resultsOrStartLists === 'Results'">
+                    <img
+                      src="../assets/search.png"
+                      width="20"
+                      height="20"
+                      class="centered-image"
+                    />
+                  </a>
                 </li>
               </ul>
 
@@ -100,7 +106,52 @@
                   >
                     <div class="disciplinetitle">{{ tab.title }}</div>
                     <hr class="discipline" />
-                    <div>
+                    <div v-if="tab.label == 'Search'">
+                      <div class="search-container">
+                        <input
+                          type="search"
+                          class="online-search"
+                          id="myInput"
+                          v-model="searchParam"
+                          placeholder="Search by name, club"
+                        />
+                        <a
+                          class="online-search-btn"
+                          :href="`/online/resultSearch?searchTerm=${encodeURIComponent(
+                            searchParam
+                          )}`"
+                        >
+                          Search
+                        </a>
+                      </div>
+                      <!--<transition name="expand">-->
+                      <div v-if="searchParam">
+                        <h3 v-if="filteredClubSuggestions.length > 0">Clubs</h3>
+                        <div
+                          v-for="suggestion in filteredClubSuggestions"
+                          :key="suggestion"
+                          @click="selectSuggestion(suggestion)"
+                        >
+                          <span class="suggestions">
+                            {{ suggestion }}
+                          </span>
+                        </div>
+                        <h3 v-if="filteredNameSuggestions.length > 0">
+                          Competitors
+                        </h3>
+                        <div
+                          v-for="suggestion in filteredNameSuggestions"
+                          :key="suggestion"
+                          @click="selectSuggestion(suggestion)"
+                        >
+                          <span class="suggestions">
+                            {{ suggestion }}
+                          </span>
+                        </div>
+                      </div>
+                      <!--</transition>-->
+                    </div>
+                    <div v-else>
                       <transition name="collapse" mode="out-in">
                         <div v-if="tab.active" :key="tab.label">
                           <div
@@ -134,9 +185,7 @@
                   >
                     <div class="disciplinetitle">{{ tab.title }}</div>
                     <hr class="discipline" />
-                    <div v-if="loadingStartLists" class="loading-spinner">
-                      <div class="spinner"></div>
-                    </div>
+                    <Loader v-if="loadingStartLists" />
                     <div v-else>
                       <transition name="collapse" mode="out-in">
                         <div v-if="tab.active" :key="tab.label">
@@ -204,15 +253,21 @@
         </div>
 
         <div class="online-footer">+ SCOREBASE {{ currentYear }}</div>
-      </center>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { fetchWithRetry } from "../apiUtils";
+import Loader from "./shared/Loader.vue";
+const localStorageKey = "activeTab";
+
 export default {
   name: "OnlineCategories",
+  components: {
+    Loader,
+  },
   data() {
     return {
       currentYear: new Date().getFullYear(),
@@ -224,7 +279,10 @@ export default {
       loadingStartLists: true,
       loadingError: "",
       tabs: [],
+      competitors: [],
+      clubs: [],
       eventInfo: {},
+      searchParam: "",
     };
   },
   computed: {
@@ -254,6 +312,16 @@ export default {
           (group) => group.discipline === tabLabel
         );
       };
+    },
+    filteredNameSuggestions() {
+      return this.competitors.filter((suggestion) =>
+        suggestion.toLowerCase().includes(this.searchParam.toLowerCase())
+      );
+    },
+    filteredClubSuggestions() {
+      return this.clubs.filter((suggestion) =>
+        suggestion.toLowerCase().includes(this.searchParam.toLowerCase())
+      );
     },
     filteredTabs: function () {
       return this.tabs.filter((tab) => tab.active);
@@ -306,6 +374,16 @@ export default {
         }
         if (uniqueDisciplines.some((discipline) => discipline === "TUM")) {
           this.tabs.push({ label: "TUM", active: false, title: "Tumbling" });
+        }
+        this.tabs.push({
+          label: "Search",
+          active: false,
+          title: "Search",
+        });
+        const storedDiscipline = localStorage.getItem(localStorageKey);
+        if (storedDiscipline !== null) {
+          let tabIndex = this.getIndexOfTab(storedDiscipline);
+          this.selectTab(tabIndex === -1 ? 0 : tabIndex);
         }
       } catch (error) {
         this.loadingError =
@@ -370,13 +448,50 @@ export default {
         console.error("Error fetching combined groups:", error);
       }
     },
+    async fetchCompetitorData() {
+      const url =
+        "http://" +
+        process.env.VUE_APP_API_IP_ADDRESS +
+        ":" +
+        process.env.VUE_APP_API_PORT +
+        "/api/competitorNamesAndClubs";
+      try {
+        const data = await fetchWithRetry(url);
+        let competitorsSet = new Set();
+        let clubsSet = new Set();
+        data.forEach((item) => {
+          if (item.competitorone.trim() !== "") {
+            competitorsSet.add(item.competitorone.trim());
+          }
+          if (item.competitortwo.trim() !== "") {
+            competitorsSet.add(item.competitortwo.trim());
+          }
+          clubsSet.add(item.Club.trim());
+        });
+        this.competitors = Array.from(competitorsSet);
+        this.clubs = Array.from(clubsSet);
+      } catch (error) {
+        console.error("Error fetching competitor names and clubs: ", error);
+      }
+    },
     selectTab(index) {
       this.tabs.forEach((tab, tabIndex) => {
         tab.active = tabIndex === index;
+        if (tabIndex === index)
+          localStorage.setItem(localStorageKey, tab.label);
       });
+      if (this.tabs[index].label === "Search") {
+        this.fetchCompetitorData();
+      }
+    },
+    getIndexOfTab(discipline) {
+      return this.tabs.findIndex((tab) => tab.label === discipline);
     },
     changeResultsOrStartListsOption(option) {
       this.resultsOrStartLists = option;
+    },
+    selectSuggestion(suggestion) {
+      this.searchParam = suggestion;
     },
   },
 };
@@ -401,6 +516,10 @@ export default {
 
 .light-font {
   font-family: Gotham Light;
+}
+
+.centered-image {
+  vertical-align: middle;
 }
 
 .results-list-toggle {
@@ -466,28 +585,17 @@ export default {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.loading-spinner {
-  display: flex;
-  justify-content: center;
+.search-container {
+  justify-content: space-between;
   align-items: center;
-  height: 10vh;
 }
 
-.spinner {
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top: 4px solid #3498db;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
+.suggestions {
+  padding: 5px; /* Adjust as needed */
+  border-radius: 5px;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.suggestions:hover {
+  background-color: #f5f5f5; /* Or any color you prefer */
 }
 </style>

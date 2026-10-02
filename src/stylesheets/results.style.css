@@ -88,17 +88,16 @@
   min-height: 96vh;
 }
 
-/*
-  a { 
-  color: inherit; 
-  text-decoration:none;
-  }
-  
-  a:hover { 
-  color: inherit; 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
   text-decoration: underline;
-  }
-  
+}
+/*
   .score-disp-page {
 	  overflow:hidden;
 	  width:100%;
@@ -533,59 +532,145 @@ td.spacer2 {
   }
 */
   .results-scores-pos {
-	  font-family: Encode Medium, sans-serif;
-	  font-size:20px;
-    text-align: center;
-	  background-color:#e2e1e1;
-    padding-top: 0px;
-	  color:#000000;
-    width: 50px;
-    min-width: 50px;
-    height: 40px;
-    overflow: hidden;
-    table-layout: fixed;
-  }
+  font-family: Encode Medium, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  background-color: #e2e1e1;
+  padding-top: 0px;
+  color: #000000;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  white-space: nowrap;
+  height: 40px;
+  overflow: hidden;
+  table-layout: fixed;
+}
 
-  .results-scores-qualificationstatus {
-	  font-family: Encode Medium, sans-serif;
-	  font-size:20px;
-    text-align: center;
-	  background-color:#ebebeb;
-    padding-top: 0px;
-	  color:#000000;
-    width: 50px;
-    min-width: 50px;
-    height: 40px;
-    overflow: hidden;
-    table-layout: fixed;
-  }
+.results-scores-flight {
+  font-family: Encode Medium, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  background-color: #e2e1e1;
+  padding-top: 0px;
+  color: #000000;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  white-space: nowrap;
+  height: 40px;
+  overflow: hidden;
+  table-layout: fixed;
+}
 
-  .results-scores-name {
-    background-color:#ebebeb;
-	  text-align:left;
-	  padding-top:6px;
-	  padding-left:7px;
-	  white-space:nowrap;
-	  font-weight:normal;
-    table-layout: fixed;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: auto;
-  }
-  
-  .results-scores-club {
-    background-color:#ebebeb;
-    text-align:left;
-	  font-style:normal;
-	  font-family: Encode Light, sans-serif;
-	  padding-left:7px;
-	  padding-bottom:8px;
-	  white-space:nowrap;
-    table-layout: fixed;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: auto;
-  }
+.results-scores-qualificationstatus {
+  font-family: Encode Medium, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  background-color: #ebebeb;
+  padding-top: 0px;
+  color: #000000;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  white-space: nowrap;
+  height: 40px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.results-scores-name {
+  background-color: #ebebeb;
+  text-align: left;
+  padding-top: 6px;
+  padding-left: 7px;
+  white-space: nowrap;
+  font-weight: normal;
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+  min-width: 50px;
+}
+
+.results-scores-name-startlist {
+  background-color: #ebebeb;
+  color: #000000;
+  text-align: left;
+  padding-top: 6px;
+  padding-left: 7px;
+  white-space: nowrap;
+  font-weight: normal;
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+  min-width: 50px;
+}
+
+.results-scores-name-startlist-header {
+  font-family: Encode Medium, sans-serif;
+  font-size: 12px;
+  background-color: #ebebeb;
+  color: #000000;
+  text-align: left;
+  padding-top: 0px;
+  padding-left: 7px;
+  white-space: nowrap;
+  font-weight: normal;
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+  min-width: 0;
+}
+
+.results-scores-flight-header {
+  font-family: Encode Medium, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  background-color: #e2e1e1;
+  padding-top: 0px;
+  color: #000000;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  white-space: nowrap;
+  height: 40px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.results-scores-pos-header {
+  font-family: Encode Medium, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  background-color: #e2e1e1;
+  padding-top: 0px;
+  color: #000000;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  white-space: nowrap;
+  height: 40px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.results-scores-club {
+  background-color: #ebebeb;
+  text-align: left;
+  font-style: normal;
+  font-family: Encode Light, sans-serif;
+  padding-left: 7px;
+  padding-bottom: 8px;
+  white-space: nowrap;
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+  min-width: 0;
+}
  /*
   .start-pos {
 	  font-family: Encode Medium, sans-serif;
@@ -908,6 +993,7 @@ td.spacer2 {
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
 }
 
 .results-popup {
@@ -919,6 +1005,7 @@ td.spacer2 {
   position: relative;
   transition: all 0.2s ease-in-out;
   
+  z-index: 10000;
 }
 
 .results-popup h2 {
@@ -1378,3 +1465,19 @@ td.spacer2 {
   
   }   
   */
+
+.results-difficultyhead {
+  text-align: center;
+  font-family: Encode Medium, sans-serif;
+  font-size: 12px;
+  color: #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.results-details-title {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}

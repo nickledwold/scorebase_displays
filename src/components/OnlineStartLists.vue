@@ -1,59 +1,23 @@
 <template>
-  <body class="results-body">
-    <head>
-      <title>
-        {{ this.categoryData.Discipline }} {{ this.categoryData.Category }} -
-        LIVE Results
-      </title>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-    </head>
+  <div class="results-body">
     <div class="results-background">
       <div class="results-container">
-        <table class="results-bannerhead">
-          <td class="results-scorebase">
-            <img src="../assets/scorebase.png" height="20" />
-          </td>
-          <td class="results-back">
-            <a :href="`/online`"
-              ><img src="../assets/back.png" height="15"
-            /></a>
-          </td>
-          <td class="results-selector">
-            <a class="online-a" :href="`/online`">Category Selector</a>
-          </td>
-        </table>
-
-        <div class="results-eventlogo">
-          <br />
-          <img src="../assets/bgcolour.png" height="40" />
-        </div>
-
-        <div class="results-banner">
-          <table>
-            <tr>
-              <td class="results-eventtitle">
-                {{ this.eventInfo.EventName }}
-              </td>
-            </tr>
-            <tr>
-              <td class="results-bannerlive">
-                {{
-                  this.roundName
-                    ? `START LIST - ` + this.roundName
-                    : `START LIST`
-                }}
-              </td>
-            </tr>
-          </table>
-        </div>
+        <ResultsHeader />
+        <EventBanner
+          :event-name="eventInfo.EventName"
+          :subtitle="roundName ? `START LIST - ${roundName}` : 'START LIST'"
+        />
         <div class="results-roundstatus"></div>
         <div class="results-bannercat">
           <table>
-            <td>
-              {{ this.categoryData.Discipline }}
-              {{ this.categoryData.Category }}
-            </td>
+            <tbody>
+              <tr>
+                <td>
+                  {{ this.categoryData.Discipline }}
+                  {{ this.categoryData.Category }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
@@ -65,44 +29,69 @@
           placeholder="Search by name, club"
         />
 
+        <div>
+          <table class="results-top-name">
+            <tbody>
+              <tr>
+                <td class="results-scores-pos-header">No</td>
+                <td class="results-scores-name-startlist-header">Competitor</td>
+                <td class="results-scores-flight-header">Flight</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <Loader v-if="loadingStartLists" />
         <div
+          v-else
           v-for="result in filteredResults"
           :key="result.CompetitorId"
           id="containerdiv"
         >
           <div class="result" id="resultdiv">
             <table class="results-top-name">
-              <tr class="results-name">
-                <td rowspan="2" class="results-scores-pos">
-                  {{ result.RunningOrderNumber }}
-                </td>
-                <td class="results-scores-name">
-                  {{ result.fullNameReversed }}
-                </td>
-              </tr>
-              <tr class="results-name">
-                <td class="results-scores-club">
-                  {{ result.DisplayClub }}
-                </td>
-              </tr>
+              <tbody>
+                <tr class="results-name">
+                  <td rowspan="2" class="results-scores-pos">
+                    {{ result.RunningOrderNumber }}
+                  </td>
+                  <td class="results-scores-name-startlist">
+                    {{ result.fullNameReversed }}
+                  </td>
+                  <td rowspan="2" class="results-scores-flight">
+                    {{ result.FlightNumber }}
+                  </td>
+                </tr>
+                <tr class="results-name">
+                  <td class="results-scores-club">
+                    {{ result.DisplayClub }}
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
         <div class="padding"></div>
       </div>
     </div>
-    <div class="results-footer">
-      &copy; + SCOREBASE
-      {{ currentYear }}
-      <br />
-    </div>
-  </body>
+    <ResultsFooter />
+  </div>
 </template>
 
 <script>
 import { fetchWithRetry } from "../apiUtils";
+import Loader from "./shared/Loader.vue";
+import ResultsHeader from "./shared/ResultsHeader.vue";
+import EventBanner from "./shared/EventBanner.vue";
+import ResultsFooter from "./shared/ResultsFooter.vue";
+
 export default {
   name: "OnlineStartLists",
+  components: {
+    Loader,
+    ResultsHeader,
+    EventBanner,
+    ResultsFooter,
+  },
   computed: {
     catId() {
       return this.$route.params.catId;
@@ -132,7 +121,6 @@ export default {
   },
   data() {
     return {
-      currentYear: new Date().getFullYear(),
       categoryData: {},
       currentRoundName: "",
       resultsData: {},
@@ -140,6 +128,7 @@ export default {
       mediansVisible: {},
       roundFilterString: "",
       eventInfo: {},
+      loadingStartLists: true,
     };
   },
   created() {
@@ -233,9 +222,10 @@ export default {
               : x.Surname1.toUpperCase() + " " + x.FirstName1;
           x.FullName = fullName;
           x.fullNameReversed = fullNameReversed;
-          x.RunningOrderNumber = i + 1;
+          x.RunningOrderNumber = x.StartNo == 999 ? "R" : i + 1;
           return x;
         });
+        this.loadingStartLists = false;
       } catch (error) {
         console.error("Error fetching results:", error);
       }
