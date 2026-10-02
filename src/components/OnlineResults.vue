@@ -141,7 +141,11 @@
                 <td class="results-scores-name">
                   {{ result.fullNameReversed }}
                 </td>
-                <td v-if="combined" rowspan="2" class="results-scores-flight">
+                <td
+                  v-if="combined"
+                  rowspan="2"
+                  class="results-scores-qualificationstatus"
+                >
                   {{ result.QualificationStatus }}
                 </td>
               </tr>

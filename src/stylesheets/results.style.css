@@ -452,6 +452,7 @@ td.spacer2 {
   color: #000000;
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 /*
   .results-top-name-start {
@@ -545,11 +546,11 @@ td.spacer2 {
     table-layout: fixed;
   }
 
-  .results-scores-flight {
+  .results-scores-qualificationstatus {
 	  font-family: Encode Medium, sans-serif;
 	  font-size:20px;
     text-align: center;
-	  background-color:#e2e1e1;
+	  background-color:#ebebeb;
     padding-top: 0px;
 	  color:#000000;
     width: 50px;
@@ -569,8 +570,7 @@ td.spacer2 {
     table-layout: fixed;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 850px;
-    min-width: 850px;
+    width: auto;
   }
   
   .results-scores-club {
@@ -584,8 +584,7 @@ td.spacer2 {
     table-layout: fixed;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 550px;
-    min-width: 550px;
+    width: auto;
   }
  /*
   .start-pos {
