@@ -23,9 +23,12 @@
           class="w3-card-4 w3-margin w3-white"
           style="max-width: 800px"
         ></div>
-        <div class="w3-card-4 w3-margin w3-grey" style="max-width: 800px">
+        <div
+          class="w3-card-4 w3-margin w3-grey results-list-toggle"
+          style="max-width: 800px"
+        >
           <a
-            class="online-a"
+            class="online-a results-list-toggle-option"
             :class="{
               'bold-font': resultsOrStartLists == 'Results',
               'light-font': resultsOrStartLists != 'Results',
@@ -33,9 +36,14 @@
             @click="changeResultsOrStartListsOption('Results')"
             >LIVE RESULTS</a
           >
-          <span style="font-family: Gotham Light"> / </span>
+          <span
+            class="results-list-toggle-separator"
+            style="font-family: Gotham Light"
+          >
+            /
+          </span>
           <a
-            class="online-a"
+            class="online-a results-list-toggle-option"
             :class="{
               'bold-font': resultsOrStartLists == 'Start Lists',
               'light-font': resultsOrStartLists != 'Start Lists',
@@ -44,9 +52,14 @@
             >START LISTS</a
           >
           <template v-if="hasCombinedResults">
-            <span style="font-family: Gotham Light"> / </span>
+            <span
+              class="results-list-toggle-separator"
+              style="font-family: Gotham Light"
+            >
+              /
+            </span>
             <a
-              class="online-a"
+              class="online-a results-list-toggle-option"
               :class="{
                 'bold-font': resultsOrStartLists == 'British Qualification',
                 'light-font': resultsOrStartLists != 'British Qualification',
@@ -388,6 +401,69 @@ export default {
 
 .light-font {
   font-family: Gotham Light;
+}
+
+.results-list-toggle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.results-list-toggle-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  border: none;
+  color: #151515;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.results-list-toggle-option.light-font {
+  background-color: #dddddd;
+  color: #111111;
+}
+
+.results-list-toggle-option.bold-font {
+  background-color: #1d1d1d;
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.results-list-toggle-option.light-font:hover {
+  color: #111111 !important;
+}
+
+.results-list-toggle-option.bold-font:hover {
+  color: #ffffff !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .results-list-toggle-option.light-font:hover {
+    background-color: #cfcfcf;
+  }
+
+  .results-list-toggle-option.bold-font:hover {
+    background-color: #2c2c2c;
+  }
+}
+
+.results-list-toggle-option:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #1d1d1d;
+}
+
+.results-list-toggle-separator {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .loading-spinner {
