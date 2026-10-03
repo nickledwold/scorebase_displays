@@ -12,14 +12,22 @@
       No QR codes available.
     </div>
     <div v-else ref="grid" class="qr-grid" :style="gridStyle">
-      <div v-for="code in qrCodes" :key="code.panel" class="qr-card">
+      <div
+        v-for="code in qrCodes"
+        :key="code.panel"
+        class="qr-card"
+        :class="{ 'qr-card--changed': changedPanels.includes(code.panel) }"
+      >
         <div class="qr-canvas-holder">
-          <canvas></canvas>
+          <canvas v-if="code.qrCodeUrl" :data-panel="code.panel"></canvas>
+          <div v-else class="qr-placeholder">No QR code</div>
         </div>
+        <!-- Always three lines, padded with a non-breaking space, so every card's
+             label block is the same height for layoutCards(). -->
         <div class="qr-card-text">
-          <div class="qr-name">{{ code.name }}</div>
-          <div class="qr-description">{{ code.description }}</div>
-          <div class="qr-url">{{ code.url }}</div>
+          <div class="qr-name">{{ nameLine(code) }}</div>
+          <div class="qr-club">{{ clubLine(code) }}</div>
+          <div class="qr-category">{{ categoryLine(code) }}</div>
         </div>
       </div>
     </div>
@@ -37,6 +45,19 @@ const QR_PIXEL_SIZE = 900;
 // Share of the code covered by the centre icon. Level H error correction
 // tolerates ~30% damage, so a quarter of the width stays comfortably readable.
 const LOGO_SCALE = 0.24;
+// How often the page asks the API which competitor each panel is showing.
+const POLL_INTERVAL_MS = 2000;
+// How long a card stays highlighted after its competitor or QR code changes.
+// Matches the qr-card-changed animation duration in the stylesheet.
+const CHANGE_HIGHLIGHT_MS = 3000;
+
+// Everything shown on a card, so any difference counts as a change.
+function codeSignature(code) {
+  return JSON.stringify([code.competitorId, code.qrCodeUrl, code.competitor]);
+}
+
+// Non-breaking space, so an empty label line still takes up its full height.
+const EMPTY_LINE = String.fromCharCode(160);
 
 // Decoded once and shared by every code on the page. Resolves to null if the
 // icon cannot be loaded, so a plain QR code is still rendered.
@@ -97,6 +118,9 @@ export default {
       loading: true,
       loadingError: "",
       qrBoxSize: 0,
+      changedPanels: [],
+      intervalId: null,
+      isFetching: false,
     };
   },
   computed: {
@@ -121,19 +145,45 @@ export default {
   },
   watch: {
     panelNumber() {
-      this.fetchQrCodes();
+      this.clearHighlights();
+      this.qrCodes = [];
+      this.fetchQrCodes(true);
     },
   },
   created() {
-    this.fetchQrCodes();
+    this.highlightTimers = {};
+    this.requestId = 0;
+    this.fetchQrCodes(true);
+    this.intervalId = setInterval(() => {
+      this.fetchQrCodes();
+    }, POLL_INTERVAL_MS);
   },
   mounted() {
     window.addEventListener("resize", this.scheduleLayout);
   },
   beforeUnmount() {
+    clearInterval(this.intervalId);
+    this.clearHighlights();
     window.removeEventListener("resize", this.scheduleLayout);
   },
   methods: {
+    // With no competitor matched the card falls back to the panel number.
+    nameLine(code) {
+      return code.competitor ? code.competitor.name : `Panel ${code.panel}`;
+    },
+    clubLine(code) {
+      return (code.competitor && code.competitor.club) || EMPTY_LINE;
+    },
+    categoryLine(code) {
+      if (!code.competitor) {
+        return EMPTY_LINE;
+      }
+      return (
+        [code.competitor.discipline, code.competitor.category]
+          .filter((part) => part)
+          .join(" ") || EMPTY_LINE
+      );
+    },
     scheduleLayout() {
       window.requestAnimationFrame(this.layoutCards);
     },
@@ -175,9 +225,19 @@ export default {
         )
       );
     },
-    async fetchQrCodes() {
-      this.loading = true;
-      this.loadingError = "";
+    // The initial fetch shows the spinner and retries; polls run silently, skip
+    // a tick while a request is still in flight, and leave retrying to the
+    // next tick so a slow API never stacks requests up.
+    async fetchQrCodes(initial = false) {
+      if (!initial && this.isFetching) {
+        return;
+      }
+      const requestId = ++this.requestId;
+      this.isFetching = true;
+      if (initial) {
+        this.loading = true;
+        this.loadingError = "";
+      }
 
       let url =
         "http://" +
@@ -191,36 +251,100 @@ export default {
       }
 
       try {
-        const data = await fetchWithRetry(url);
+        const data = await fetchWithRetry(url, initial ? 3 : 0);
+        // A newer request (e.g. after the panel number changed) owns the page.
+        if (requestId !== this.requestId) {
+          return;
+        }
         // Without a panelNumber the API returns { qrCodes: [...] }, with one it
         // returns a single QR code object.
-        this.qrCodes = Array.isArray(data?.qrCodes) ? data.qrCodes : [data];
+        const incoming = Array.isArray(data?.qrCodes) ? data.qrCodes : [data];
+
+        // Nothing on screen yet (first load, or recovering from a failed one),
+        // so there is nothing to compare against or highlight.
+        const firstLoad = initial || !this.qrCodes.length;
+        const previous = new Map(
+          this.qrCodes.map((code) => [code.panel, codeSignature(code)])
+        );
+        const changedPanels = firstLoad
+          ? []
+          : incoming
+              .filter(
+                (code) => previous.get(code.panel) !== codeSignature(code)
+              )
+              .map((code) => code.panel);
+        const panelsChanged =
+          incoming.length !== this.qrCodes.length ||
+          incoming.some((code) => !previous.has(code.panel));
+
         this.loading = false;
+        this.loadingError = "";
+        if (!firstLoad && !panelsChanged && !changedPanels.length) {
+          return;
+        }
+
+        this.qrCodes = incoming;
         await this.$nextTick();
         this.layoutCards();
-        await this.renderQrCodes();
+        // Cards keep their DOM (keyed by panel), so only changed codes need
+        // redrawing; everything is drawn on the first load.
+        await this.renderQrCodes(firstLoad ? null : new Set(changedPanels));
+        changedPanels.forEach((panel) => this.highlightPanel(panel));
       } catch (error) {
-        this.loadingError = "Error loading QR codes, please refresh the page.";
+        if (requestId !== this.requestId) {
+          return;
+        }
         this.loading = false;
+        // Keep showing the last good codes while polling recovers.
+        if (!this.qrCodes.length) {
+          this.loadingError = "Error loading QR codes, retrying...";
+        }
         console.error("Error fetching QR codes:", error);
+      } finally {
+        if (requestId === this.requestId) {
+          this.isFetching = false;
+        }
       }
     },
-    async renderQrCodes() {
+    // Restarts the highlight animation if the card is already highlighted, so
+    // back-to-back changes are each visible.
+    async highlightPanel(panel) {
+      clearTimeout(this.highlightTimers[panel]);
+      if (this.changedPanels.includes(panel)) {
+        this.changedPanels = this.changedPanels.filter((p) => p !== panel);
+        await this.$nextTick();
+        await new Promise((resolve) => window.requestAnimationFrame(resolve));
+      }
+      this.changedPanels = [...this.changedPanels, panel];
+      this.highlightTimers[panel] = setTimeout(() => {
+        this.changedPanels = this.changedPanels.filter((p) => p !== panel);
+        delete this.highlightTimers[panel];
+      }, CHANGE_HIGHLIGHT_MS);
+    },
+    clearHighlights() {
+      Object.values(this.highlightTimers || {}).forEach(clearTimeout);
+      this.highlightTimers = {};
+      this.changedPanels = [];
+    },
+    // Draws the codes for the given panels, or for every panel when null.
+    async renderQrCodes(panels = null) {
       const logo = await loadLogo();
-      // Queried from the DOM rather than held in a ref array so the canvases
-      // always line up with the codes in v-for order.
-      const canvases = this.$refs.grid
-        ? this.$refs.grid.querySelectorAll("canvas")
-        : [];
+      const grid = this.$refs.grid;
 
       await Promise.all(
-        this.qrCodes.map(async (code, index) => {
-          const canvas = canvases[index];
-          if (!canvas || !code?.url) {
+        this.qrCodes.map(async (code) => {
+          if (panels && !panels.has(code?.panel)) {
+            return;
+          }
+          // Only codes with a URL get a canvas, so look each one up by panel
+          // rather than by position.
+          const canvas =
+            grid && grid.querySelector(`canvas[data-panel="${code?.panel}"]`);
+          if (!canvas || !code?.qrCodeUrl) {
             return;
           }
           try {
-            await QRCode.toCanvas(canvas, code.url, {
+            await QRCode.toCanvas(canvas, code.qrCodeUrl, {
               errorCorrectionLevel: "H",
               width: QR_PIXEL_SIZE,
               margin: 2,
@@ -236,7 +360,7 @@ export default {
             canvas.style.removeProperty("width");
             canvas.style.removeProperty("height");
           } catch (error) {
-            console.error("Error rendering QR code for", code.url, error);
+            console.error("Error rendering QR code for", code.qrCodeUrl, error);
           }
         })
       );
@@ -360,6 +484,50 @@ export default {
   justify-self: center;
 }
 
+/* Flagged for CHANGE_HIGHLIGHT_MS after the panel's competitor or QR code
+   changes: a ring that pulses and fades out, while the new content fades in. */
+.qr-card--changed {
+  animation: qr-card-changed 3s ease-out;
+}
+
+.qr-card--changed .qr-canvas-holder,
+.qr-card--changed .qr-card-text {
+  animation: qr-content-in 0.6s ease-out;
+}
+
+@keyframes qr-card-changed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 196, 0, 1), 0 0 0 0 rgba(255, 196, 0, 0.6);
+    transform: scale(1);
+  }
+  10% {
+    box-shadow: 0 0 0 8px rgba(255, 196, 0, 1),
+      0 0 40px 14px rgba(255, 196, 0, 0.6);
+    transform: scale(1.03);
+  }
+  25% {
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 196, 0, 1),
+      0 0 28px 8px rgba(255, 196, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 196, 0, 0), 0 0 0 0 rgba(255, 196, 0, 0);
+  }
+}
+
+@keyframes qr-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .qr-canvas-holder {
   width: var(--qr-box, 200px);
   height: var(--qr-box, 200px);
@@ -382,18 +550,32 @@ export default {
   margin-top: 0.8vh;
 }
 
-.qr-description {
+.qr-club {
   font-family: Gotham Book;
   font-size: clamp(11px, 1.6vh, 18px);
   color: #2b2b2b;
   margin-top: 0.5vh;
 }
 
-.qr-url {
-  font-family: Gotham Light;
-  font-size: clamp(9px, 1.3vh, 15px);
+.qr-category {
+  font-family: Gotham Book;
+  font-size: clamp(11px, 1.6vh, 18px);
   color: #6b6b6b;
-  margin-top: 0.6vh;
+  margin-top: 0.4vh;
+}
+
+.qr-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #c8c8c8;
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-family: Gotham Book;
+  font-size: clamp(12px, 2vh, 24px);
+  color: #9a9a9a;
 }
 
 /* Kept to one line each so the label block has a fixed height, which is what
@@ -403,8 +585,8 @@ export default {
 }
 
 .qr-name,
-.qr-description,
-.qr-url {
+.qr-club,
+.qr-category {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
